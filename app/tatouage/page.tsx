@@ -55,7 +55,7 @@ const TatouagePage = () => {
     // Charger le script PayPal
     const loadPayPalScript = () => {
       const script = document.createElement("script");
-      script.src = "https://www.paypal.com/sdk/js?client-id=ASMZTL9ga3WDTk72pnLjRzt4puDA-VD6g_llf4BB5ckQ3Oqn38uJwgblg2yMpQxtK93fbEcyeHsIBUKs&components=messages,buttons&currency=EUR";
+      script.src = `https://www.paypal.com/sdk/js?client-id=${process.env.NEXT_PUBLIC_PAYPAL_CLIENT_ID}&components=messages,buttons&currency=EUR`;
       script.async = true;
       script.dataset.ppPreferences = '{"messaging":{"display":{"offerType":"PAY_LATER_PAY_IN_4"}}}';
       document.body.appendChild(script);
