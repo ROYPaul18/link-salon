@@ -1,0 +1,42 @@
+@import url('https://fonts.googleapis.com/css2?family=Arcane+Nine&family=Artisual+Deco&family=Reglarik&family=Rehat&display=swap');
+@import url('https://fonts.cdnfonts.com/css/artisual-deco-black-personal-use-only');
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --background: #ffffff;
+  --foreground: #171717;
+}
+@media (prefers-color-scheme: dark) {
+  :root {
+    --background: #0a0a0a;
+    --foreground: #ededed;
+  }
+}
+body {
+  color: var(--foreground);
+  background: var(--background);
+}
+.font-arcane-nine {
+  font-family: 'Arcane Nine', sans-serif;
+}
+
+.font-artisual-deco {
+  font-family: 'Artisual Deco Regular PERSONAL USE ONLY', sans-serif;
+}
+
+.font-reglarik {
+  font-family: 'Reglarik', sans-serif;
+}
+
+.font-rehat {
+  font-family: 'Rehat', sans-serif;
+}
+input::placeholder {
+  color: #671C16; /* Remplacez par la couleur souhaitée */
+  opacity: 1; /* Assurez-vous que l'opacité est à 1 pour une meilleure visibilité */
+}
+
+
+

@@ -1,0 +1,115 @@
+'use client'
+import React, { useState } from "react";
+import Link from "next/link";
+import Image from "next/image";
+
+const Header = () => {
+  const [menuOpen, setMenuOpen] = useState(false);
+
+  const toggleMenu = () => {
+    setMenuOpen(!menuOpen);
+  };
+
+  return (
+    <header className="relative z-20 text-gold font-arcane-nine">
+      <div className="flex justify-center items-center p-4 md:p-8">
+        <div className="z-30 mr-24">
+          <Link href={"/"}>
+            <Image src={"/img/logo.png"} width={72} height={72} alt="logo" className="w-16 md:w-24"/>
+          </Link>
+        </div>
+
+        {/* Hamburger button for mobile */}
+        <button 
+          className="z-30 md:hidden flex flex-col justify-center items-center w-10 h-10"
+          onClick={toggleMenu}
+          aria-label="Toggle menu"
+        >
+          <span className={`block w-6 h-0.5 bg-gold mb-1.5 transition-transform duration-300 ${menuOpen ? 'rotate-45 translate-y-2' : ''}`}></span>
+          <span className={`block w-6 h-0.5 bg-gold mb-1.5 transition-opacity duration-300 ${menuOpen ? 'opacity-0' : 'opacity-100'}`}></span>
+          <span className={`block w-6 h-0.5 bg-gold transition-transform duration-300 ${menuOpen ? '-rotate-45 -translate-y-2' : ''}`}></span>
+        </button>
+
+        {/* Desktop navigation */}
+        <nav className="hidden md:block">
+          <ul className="flex justify-center items-center space-x-8 lg:space-x-12 text-lg xl:text-2xl">
+            <li>
+              <Link href={"/tatouage"} className="hover:text-white transition-colors duration-300">Tatouage</Link>
+            </li>
+            <li>
+              <Link href={"/salon"} className="hover:text-white transition-colors duration-300">Salon de thé</Link>
+            </li>
+            <li>
+              <Link href={"/prothese"} className="hover:text-white transition-colors duration-300">Prothésiste</Link>
+            </li>
+            <li>
+              <Link href={"/piercing"} className="hover:text-white transition-colors duration-300">Piercing</Link>
+            </li>
+            <li>
+              <Link href={"/event"} className="hover:text-white transition-colors duration-300">Événement</Link>
+            </li>
+          </ul>
+        </nav>
+
+        {/* Mobile navigation overlay */}
+        <div 
+          className={`fixed inset-0 bg-black bg-opacity-90 z-20 transition-opacity duration-300 md:hidden ${
+            menuOpen ? 'opacity-100' : 'opacity-0 pointer-events-none'
+          }`}
+        >
+          <nav className="h-full flex items-center justify-center">
+            <ul className="flex flex-col items-center space-y-8 text-2xl">
+              <li>
+                <Link 
+                  href={"/tatouage"} 
+                  className="hover:text-white transition-colors duration-300"
+                  onClick={() => setMenuOpen(false)}
+                >
+                  Tatouage
+                </Link>
+              </li>
+              <li>
+                <Link 
+                  href={"/salon"} 
+                  className="hover:text-white transition-colors duration-300"
+                  onClick={() => setMenuOpen(false)}
+                >
+                  Salon de thé
+                </Link>
+              </li>
+              <li>
+                <Link 
+                  href={"/prothese"} 
+                  className="hover:text-white transition-colors duration-300"
+                  onClick={() => setMenuOpen(false)}
+                >
+                  Prothésiste
+                </Link>
+              </li>
+              <li>
+                <Link 
+                  href={"/piercing"} 
+                  className="hover:text-white transition-colors duration-300"
+                  onClick={() => setMenuOpen(false)}
+                >
+                  Piercing
+                </Link>
+              </li>
+              <li>
+                <Link 
+                  href={"/event"} 
+                  className="hover:text-white transition-colors duration-300"
+                  onClick={() => setMenuOpen(false)}
+                >
+                  Événement
+                </Link>
+              </li>
+            </ul>
+          </nav>
+        </div>
+      </div>
+    </header>
+  );
+};
+
+export default Header;
