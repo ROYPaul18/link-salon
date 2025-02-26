@@ -110,7 +110,7 @@ const TatouagePage = () => {
               <div className="md:w-1/2">
                 <div className="h-64 md:h-full relative">
                   <Image 
-                    src="/img/tattoo-sample.jpg" 
+                    src="/img/test/png" 
                     alt="Exemple de tatouage"
                     fill
                     className="object-cover"
