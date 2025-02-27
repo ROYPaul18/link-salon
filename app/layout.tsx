@@ -20,6 +20,7 @@ export const metadata: Metadata = {
 };
 
 // Définition des polices personnalisées via URL
+const googleFontsURL = 'https://fonts.googleapis.com/css2?family=Arcane+Nine&family=Artisual+Deco&family=Reglarik&family=Rehat&display=swap';
 
 export default function RootLayout({
   children,
@@ -28,6 +29,9 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="fr">
+      <head>
+        <link rel="stylesheet" href={googleFontsURL} />
+      </head>
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
