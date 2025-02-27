@@ -12,7 +12,6 @@
     
   },
   "dependencies": {
-    "@paypal/react-paypal-js": "^8.8.2",
     "@prisma/client": "^6.4.1",
     "next": "15.1.6",
     "prisma": "^6.4.1",

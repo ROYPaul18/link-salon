@@ -20,7 +20,8 @@ export const metadata: Metadata = {
 };
 
 // Définition des polices personnalisées via URL
-const googleFontsURL = 'https://fonts.googleapis.com/css2?family=Arcane+Nine&family=Artisual+Deco&family=Reglarik&family=Rehat&display=swap';
+const googleFontsURL =
+  "https://fonts.googleapis.com/css2?family=Arcane+Nine&family=Artisual+Deco&family=Reglarik&family=Rehat&display=swap";
 
 export default function RootLayout({
   children,
