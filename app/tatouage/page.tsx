@@ -1,7 +1,6 @@
 import React from "react";
 import Header from "../ui/header";
 import Footer from "../ui/footer";
-import Image from "next/image";
 import Link from "next/link";
 
 const Page = () => {
