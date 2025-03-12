@@ -8,6 +8,9 @@ export default {
   ],
   theme: {
     extend: {
+      boxShadow: {
+        'text-outline': '2px 2px 0 black, -2px -2px 0 black, 2px -2px 0 black, -2px 2px 0 black',
+      },
       colors: {
         background: "var(--background)",
         foreground: "var(--foreground)",

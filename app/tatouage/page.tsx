@@ -14,55 +14,51 @@ const Page = () => {
         loop
         autoPlay
         muted
+        playsInline
       />
       <div className="absolute top-0 left-0 w-full h-full bg-black opacity-70 -z-10"></div>
-      {/* Header */}
-      <Header />
-      {/* Conteneur principal avec alignement vertical */}
-      <div className="flex-grow flex items-center justify-center">
+      <Header />      
+      <div className="flex-grow flex items-center justify-center px-4 py-8">
         {/* Conteneur de l'image et des liens */}
-        <div className="relative max-w-6xl my-auto">
-          {/* Image principale */}
-          <Image
-            src="/img/membre.png"
-            alt="Liste des Tatoueurs"
-            width={1200}
-            height={1200}
-            className="w-full h-auto"
-            priority
-          />
-          {/* Zones cliquables positionnées en % - ajustées pour correspondre aux images */}
-          <div className="absolute top-0 left-0 w-full h-full">
-            {/* Pour faciliter le développement, vous pouvez temporairement ajouter 
-                une bordure ou un fond semi-transparent pour visualiser les zones */}
-            <Link href="/gael">
-              <div 
-                className="absolute top-[45%] left-[12%] w-[16%] h-[12%] cursor-pointer hover:bg-white hover:bg-opacity-20 rounded-lg"
-                title="Gaël"
-              ></div>
+        <div className="relative w-full max-w-6xl my-auto">
+          {/* Navigation des artistes - Mobile first puis adaptation desktop */}
+          <div
+            className="w-full font-rehat text-3xl sm:text-4xl md:text-5xl lg:text-6xl text-gold flex flex-col sm:flex-row sm:space-x-4 md:space-x-8 lg:space-x-12 space-y-6 sm:space-y-0 items-center justify-center"
+            style={{
+              textShadow:
+                "2px 2px 0 #4C2A27, -2px -2px 0 #4C2A27, 2px -2px 0 #4C2A27, -2px 2px 0 #4C2A27",
+            }}
+          >
+            <Link href="/tatouage/gael">
+              <div className="cursor-pointer rounded-lg transition-transform duration-300 hover:scale-110" title="Gaël">
+                Gael
+              </div>
             </Link>
-            <Link href="/chloe">
-              <div 
-                className="absolute top-[45%] left-[36%] w-[16%] h-[12%] cursor-pointer hover:bg-white hover:bg-opacity-20 rounded-lg"
-                title="Chloé"
-              ></div>
+            
+            <Link href="/tatouage/chloe">
+              <div className="cursor-pointer rounded-lg transition-transform duration-300 hover:scale-110" title="Chloé">
+                Chloé
+              </div>
             </Link>
-            <Link href="/axelle">
-              <div 
-                className="absolute top-[45%] left-[60%] w-[16%] h-[12%] cursor-pointer hover:bg-white hover:bg-opacity-20 rounded-lg"
-                title="Axelle"
-              ></div>
+            
+            <Link href="/tatouage/axelle">
+              <div className="cursor-pointer rounded-lg transition-transform duration-300 hover:scale-110" title="Axelle">
+                Axelle
+              </div>
             </Link>
-            <Link href="/autres">
-              <div 
-                className="absolute top-[45%] left-[84%] w-[16%] h-[12%] cursor-pointer hover:bg-white hover:bg-opacity-20 rounded-lg"
-                title="Autres"
-              ></div>
+            
+            <Link href="/tatouage/autres">
+              <div className="cursor-pointer rounded-lg transition-transform duration-300 hover:scale-110" title="Autres">
+                Autres
+              </div>
             </Link>
+          </div>
+          
+          <div className="font-rehat text-xl sm:text-2xl text-gold mt-8 text-center">
+            Choisi ton artiste
           </div>
         </div>
       </div>
-      {/* Footer collé en bas */}
       <Footer />
     </div>
   );

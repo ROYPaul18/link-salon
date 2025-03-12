@@ -20,7 +20,7 @@ const Page = () => {
       <main className="relative z-10 min-h-screen">
         {/* Section harmonisée - celle-ci reste identique */}
         <section className="flex flex-col md:flex-row justify-between md:space-x-2 min-h-[40vh] md:min-h-[60vh] mt-6 md:mt-12 ml-12">
-          <div className="w-full md:w-1/2 mb-8 md:mb-0 text-left md:text-left">
+          <div className="w-full md:w-1/3 mb-8 md:mb-0 text-left md:text-left">
             <h1 className="text-5xl md:text-5xl 2xl:text-8xl font-artisual-deco text-gold mb-4 md:mb-8">
               Salon de thé
             </h1>
@@ -29,7 +29,7 @@ const Page = () => {
               calme, hors du temps. Le salon en libre accès vous propose :
             </p>
           </div>
-          <div className="w-full md:w-1/2 flex justify-center">
+          <div className="w-full md:w-2/3 flex justify-center">
             <video
               src="/video/salon.mp4"
               loop

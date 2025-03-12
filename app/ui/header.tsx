@@ -12,7 +12,7 @@ const Header = () => {
 
   return (
     <header className="relative z-20 text-gold font-arcane-nine">
-      <div className="flex justify-center items-center p-4 md:p-8">
+      <div className="flex justify-between lg:justify-center items-center p-4 md:p-8">
         <div className="z-30 mr-24">
           <Link href={"/"}>
             <Image src={"/img/logo.png"} width={72} height={72} alt="logo" className="w-16 md:w-24"/>
