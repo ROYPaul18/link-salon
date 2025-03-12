@@ -78,13 +78,13 @@ const EventsPage = () => {
           alt="Background image"
           fill
           priority
-          className="object-cover fixed top-0 left-0 z-0"
+          className="object-fit fixed top-0 left-0 z-0"
         />
       </div>
 
       <div className="relative flex-grow">
         <div className="relative z-10 py-16 px-4 max-w-6xl mx-auto">
-          <h1 className="text-center font-artisual-deco text-gold text-2xl 2xl:text-8xl mb-10">
+          <h1 className="text-center font-artisual-deco text-gold text-4xl 2xl:text-8xl mb-10">
             Événements
           </h1>
 

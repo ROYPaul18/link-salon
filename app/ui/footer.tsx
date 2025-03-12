@@ -24,7 +24,7 @@ const Footer = () => {
           <ul className="flex flex-col md:flex-row items-center md:items-start gap-4 md:gap-8 text-lg xl:text-2xl">
             <li>
               <Link
-                href={"/tatouage"}
+                href={"https://paul-roy.vercel.app"}
                 className="hover:text-white transition-colors duration-300"
               >
                 Développé par Paul Roy
@@ -44,13 +44,13 @@ const Footer = () => {
         {/* Social media links */}
         <div className="flex gap-4 text-lg xl:text-2xl">
           <Link
-            href={"https://instagram.com"}
+            href={"https://www.instagram.com/link_house_soye/"}
             className="hover:text-white transition-colors duration-300"
           >
             Instagram
           </Link>
           <Link
-            href={"https://facebook.com"}
+            href={"https://www.facebook.com/linksalondetatouage"}
             className="hover:text-white transition-colors duration-300"
           >
             Facebook

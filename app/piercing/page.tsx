@@ -2,6 +2,7 @@ import React from "react";
 import Image from "next/image";
 import Header from "../ui/header";
 import Footer from "../ui/footer";
+import Link from "next/link";
 
 const Page = () => {
   return (
@@ -11,7 +12,7 @@ const Page = () => {
         alt="Background image"
         fill
         priority
-        className="object-cover fixed top-0 left-0 z-0"
+        className="object-fit fixed top-0 left-0 z-0"
       />
       <Header />
       <main className="relative z-10 min-h-screen">
@@ -22,34 +23,41 @@ const Page = () => {
             <div className="w-full md:w-6/12">
               <div className="w-full aspect-[4/3] relative">
                 <Image
-                  src="/img/test.png"
+                  src="/img/axel.png"
                   alt="Image principale"
                   fill
-                  className="object-cover"
+                  className="object-fit"
                 />
               </div>
             </div>
 
             {/* Right side - Text content */}
-            <div className="w-full md:w-6/12 text-gold flex-col justify-between h-full">
-              <div>
-                <h1 className="text-3xl md:text-5xl 2xl:text-7xl font-artisual-deco mb-4 md:mb-6">
-                  Clothilde
-                </h1>
-                <p className="font-reglarik mb-4 md:mb-8 text-base md:text-xl 2xl:text-xl">
-                  Clothilde est à votre disposition pour implanter de nouveaux
-                  bijoux sur votre corps. Laissez son professionnalisme vous
-                  aider à choisir l&apos;emplacement de votre piercing, et en un tour
-                  de main (et d&apos;aiguille), admirez votre nouveau style !
-                  <br></br>
-                  Pour consulter ses diverses prestations, ou pour la contacter
-                  et prendre votre rendez vous :
-                </p>
-              </div>
-              <div>
-                <a href="#" className="font-reglarik text-gold hover:underline">
-                  Lien vers le site
+            <div className="w-full md:w-6/12 text-gold flex flex-col justify-between">
+              <h1 className="text-3xl md:text-5xl 2xl:text-8xl font-artisual-deco mb-4 md:mb-6">
+                Clothilde
+              </h1>
+              <p className="font-reglarik mb-4 md:mb-8 leading-relaxed text-base md:text-xl 2xl:text-4xl">
+                Clothilde est à votre disposition pour implanter de nouveaux
+                bijoux sur votre corps. Laissez son professionnalisme vous aider
+                à choisir l&apos;emplacement de votre piercing, et en un tour de
+                main (et d&apos;aiguille), admirez votre nouveau style !
+                <br></br>
+                Pour consulter ses diverses prestations, ou pour la contacter et
+                prendre votre rendez vous :
+              </p>
+              <div className="flex space-x-4 font-rehat text-base md:text-xl 2xl:text-4xl">
+                <a
+                  href="tattooaxelle@gmail.com"
+                  className=" text-gold hover:underline"
+                >
+                  tattooaxelle@gmail.com
                 </a>
+                <Link
+                  href="https://www.instagram.com/axelletattoo?igsh=MTFtYm13NjZ2MndraA%3D%3D"
+                  className="text-gold hover:underline"
+                >
+                  Instagram
+                </Link>
               </div>
             </div>
           </div>

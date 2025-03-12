@@ -32,7 +32,7 @@ const Header = () => {
 
         {/* Desktop navigation */}
         <nav className="hidden md:block">
-          <ul className="flex justify-center items-center space-x-8 lg:space-x-12 text-lg xl:text-2xl">
+          <ul className="flex justify-center items-center space-x-8 lg:space-x-12 text-lg xl:text-2xl 2xl:text-4xl">
             <li>
               <Link href={"/tatouage"} className="hover:text-white transition-colors duration-300">Tatouage</Link>
             </li>

@@ -81,7 +81,7 @@ export default function Dashboard() {
 
   const handleLogout = () => {
     sessionStorage.removeItem("admin-auth");
-    router.push("/admin");
+    router.push("/");
   };
 
   if (!isAuth) return null;
@@ -95,7 +95,7 @@ export default function Dashboard() {
         alt="Background image"
         fill
         priority
-        className="object-cover fixed top-0 left-0 z-0"
+        className="object-fit fixed top-0 left-0 z-0"
       />
 
       <div className="flex-grow z-10 relative py-8">

@@ -37,7 +37,7 @@ export default function AdminLogin() {
           alt="Background image"
           fill
           priority
-          className="object-cover fixed top-0 left-0 z-0"
+          className="object-fit fixed top-0 left-0 z-0"
         />
       </div>
       <div className="flex-grow flex items-center justify-center py-8 z-10">
