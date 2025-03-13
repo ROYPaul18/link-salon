@@ -78,7 +78,7 @@ const ArtistPage = () => {
         { type: "instagram", label: "Instagram", url: "https://www.instagram.com/beaudy_ink_tattoo?igsh=MWwwczB5ZmFudjJjbQ==" },
         { type: "website", label: "Site web", url: "https://www.beaudy-ink.com" }
       ],
-      image: "/img/axel.png",
+      image: "/img/chloe.png",
       gallery: [
         "/img/test.png",
         "/img/test.png",
