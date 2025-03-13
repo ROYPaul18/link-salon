@@ -19,13 +19,13 @@ const Page = () => {
       <Header />
       <main className="relative z-10 min-h-screen">
         {/* Section harmonisée - celle-ci reste identique */}
-        <section className="flex flex-col md:flex-row justify-between md:space-x-2 min-h-[40vh] md:min-h-[60vh] mt-6 md:mt-12 ml-12">
-          <div className="w-full md:w-1/3 mb-8 md:mb-0 text-left md:text-left">
-            <h1 className="text-5xl md:text-5xl 2xl:text-8xl font-artisual-deco text-gold mb-4 md:mb-8">
+        <section className="flex flex-col-reverse md:flex-row justify-between md:space-x-2 min-h-[50vh] md:min-h-[60vh] mt-6 md:mt-12 ml-0 md:ml-12 ">
+          <div className="w-full md:w-1/3 my-8  md:mb-0 text-left md:text-left px-4 ">
+            <h1 className="text-5xl md:text-5xl 2xl:text-8xl font-artisual-deco text-gold sm:my-4 mb-4 md:mb-8">
               Salon de thé
             </h1>
             <p className="font-reglarik text-gold text-base md:text-2xl 2xl:text-3xl leading-relaxed max-w-xl mx-auto md:mx-0">
-              Détendez vous au milieu des plantes et profitez d&apos;un instant
+              Détendez-vous au milieu des plantes et profitez d&apos;un instant
               calme, hors du temps. Le salon en libre accès vous propose :
             </p>
           </div>
@@ -37,6 +37,7 @@ const Page = () => {
               autoPlay
               muted
               disablePictureInPicture
+              playsInline
             />
           </div>
         </section>
@@ -113,7 +114,7 @@ const Page = () => {
             </div>
             <div className="w-full md:w-1/2 md:pl-12 flex flex-col ">
               <h1 className="text-5xl 2xl:text-8xl font-artisual-deco text-gold mb-6 md:mb-12 2xl:mb-24 text-left">
-                Espace de travail 
+                Espace de travail
               </h1>
               <p className="font-reglarik text-gold text-xl 2xl:text-3xl leading-relaxed">
                 Prenez place dans votre coin favori, pour lire, travailler (seul
@@ -130,7 +131,7 @@ const Page = () => {
           <section className="flex flex-col md:flex-row justify-between mt-16 md:mt-24 mb-16 md:mb-20">
             <div className="w-full md:w-1/2 order-2 md:order-1 md:pr-12 flex flex-col">
               <h1 className="text-5xl 2xl:text-8xl font-artisual-deco text-gold mb-6 md:mb-10 text-left">
-                Musique 
+                Musique
               </h1>
               <p className="font-reglarik text-gold text-xl 2xl:text-3xl leading-relaxed">
                 Une enceinte connectée diffuse de la musique, que vous pouvez

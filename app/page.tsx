@@ -16,7 +16,7 @@ export default function Home() {
         quality={100}
       />
       <Header />
-      <main className="relative z-10 min-h-screen px-4 md:px-8 2xl:px-20 space-y-16 md:space-y-24">
+      <main className="relative z-10 min-h-screen  md:px-8 2xl:px-20 space-y-16 md:space-y-24">
         {/* Section d'introduction */}
         <section className="flex flex-col md:flex-row justify-between md:space-x-2 min-h-[40vh] md:min-h-[50vh] mt-6 md:mt-12">
           <div className="w-full text-center">
@@ -62,27 +62,27 @@ export default function Home() {
         ].map(({ title, desc, img, video, reverse }, index) => (
           <section
             key={index}
-            className={`flex flex-col md:flex-row justify-between mt-16 md:mt-24 px-12 ${
+            className={`flex flex-col md:flex-row justify-between mt-16 md:mt-24 sm:px-0 md:px-8 lg:px-12 ${
               reverse ? "md:flex-row-reverse" : ""
             }`}
           >
             <div className="w-full md:w-1/2 flex justify-center md:justify-start">
               <div className="w-full">
                 {video ? (
-                  <video src={video} autoPlay muted loop disablePictureInPicture className="" />
+                  <video src={video} autoPlay muted loop disablePictureInPicture playsInline className="" />
                 ) : (
                   <Image
                     src={img || "/img/default.png"}
                     height={800}
                     width={800}
                     alt={title}
-                    className="w-full h-auto"
+                    className="w-full h-auto sm:py-2"
                   />
                 )}
               </div>
             </div>
-            <div className="w-full md:w-1/2 md:px-8 flex flex-col">
-              <h1 className="text-5xl 2xl:text-8xl font-artisual-deco text-gold mb-6 md:mb-8 text-left">
+            <div className="w-full md:w-1/2 px-4 md:px-8 flex flex-col">
+              <h1 className="text-5xl 2xl:text-8xl font-artisual-deco text-gold my-4 md:mb-8 text-left">
                 {title}
               </h1>
               <p className="text-xl 2xl:text-3xl font-reglarik text-gold leading-relaxed">
