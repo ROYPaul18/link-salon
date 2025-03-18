@@ -4,16 +4,6 @@ import { NextRequest } from "next/server";
 
 const prisma = new PrismaClient();
 
-// Définir l'interface pour le modèle Tatoueur
-type Tatoueur = {
-  id: string;
-  name: string;
-  Description: string;
-  Technique: string;
-  Style: string;
-  Link: string[];
-};
-
 // GET - Récupérer tous les tatoueurs ou un tatoueur spécifique
 export async function GET(request: NextRequest) {
   try {

@@ -40,7 +40,7 @@ const Page = () => {
             <div className="w-full md:w-6/12">
               <div className="w-full aspect-[4/3] relative">
                 <Image
-                  src="/img/axel.png"
+                  src="/img/piercing.png"
                   alt="Image principale"
                   fill
                   className="object-fit"

@@ -19,7 +19,7 @@ const Header = () => {
           </Link>
         </div>
 
-        {/* Hamburger button for mobile */}
+        {/* Bouton hamburger pour mobile */}
         <button 
           className="z-30 md:hidden flex flex-col justify-center items-center w-10 h-10"
           onClick={toggleMenu}
@@ -30,7 +30,7 @@ const Header = () => {
           <span className={`block w-6 h-0.5 bg-gold transition-transform duration-300 ${menuOpen ? '-rotate-45 -translate-y-2' : ''}`}></span>
         </button>
 
-        {/* Desktop navigation */}
+        {/* Navigation bureau */}
         <nav className="hidden md:block">
           <ul className="flex justify-center items-center space-x-8 lg:space-x-12 text-lg xl:text-2xl 2xl:text-4xl">
             <li>
@@ -51,12 +51,22 @@ const Header = () => {
           </ul>
         </nav>
 
-        {/* Mobile navigation overlay */}
+        {/* Overlay de navigation mobile */}
         <div 
-          className={`fixed inset-0 bg-black bg-opacity-90 z-20 transition-opacity duration-300 md:hidden ${
-            menuOpen ? 'opacity-100' : 'opacity-0 pointer-events-none'
-          }`}
+          className={`fixed inset-0  z-20 transition-opacity duration-300 md:hidden ${menuOpen ? 'opacity-100' : 'opacity-0 pointer-events-none'}`}
         >
+          {/* Image de fond */}
+          {menuOpen && (
+            <Image
+              src="/img/bg.jpeg"
+              alt="Background image"
+              fill
+              priority
+              className="object-cover z-[-1]"
+              sizes="100vw"
+              quality={100}
+            />
+          )}
           <nav className="h-full flex items-center justify-center">
             <ul className="flex flex-col items-center space-y-8 text-2xl">
               <li>

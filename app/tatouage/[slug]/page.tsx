@@ -91,7 +91,7 @@ const ArtistPage = () => {
       name: "Autres artistes",
       description: "Découvrez nos autres artistes invités et collaborateurs qui travaillent occasionnellement dans notre studio.",
       contacts: [],
-      image: "/img/axel.png",
+      image: "/img/piercing.png",
       gallery: [
         "/img/test.png",
         "/img/test.png",
