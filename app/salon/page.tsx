@@ -49,7 +49,7 @@ const Page = () => {
               {/* Image size increased */}
               <div className="w-full">
                 <Image
-                  src={"/img/test.png"}
+                  src={"/img/cafe.jpg"}
                   width={800}
                   height={800}
                   alt="photo du salon"
@@ -88,7 +88,7 @@ const Page = () => {
               {/* Image size increased */}
               <div className="w-full">
                 <Image
-                  src={"/img/test.png"}
+                  src={"/img/jeu.jpg"}
                   width={800}
                   height={800}
                   alt="photo du salon"
@@ -104,7 +104,7 @@ const Page = () => {
               {/* Image size increased */}
               <div className="w-full">
                 <Image
-                  src={"/img/test.png"}
+                  src={"/img/travail.jpg"}
                   width={800}
                   height={800}
                   alt="photo du salon"
@@ -143,7 +143,7 @@ const Page = () => {
               {/* Image size increased */}
               <div className="w-full">
                 <Image
-                  src={"/img/test.png"}
+                  src={"/img/Musique.jpg"}
                   width={800}
                   height={800}
                   alt="photo du salon"

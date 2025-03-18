@@ -3,6 +3,7 @@
 import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import EventForm from "@/app/ui/form/EventForm";
+import TattooArtistForm from "@/app/ui/form/TattooArtistForm"; 
 import Header from "../ui/header";
 import Footer from "../ui/footer";
 import Image from "next/image";
@@ -18,11 +19,24 @@ interface Event {
   updatedAt: string;
 }
 
+interface TattooArtist {
+  id: string;
+  name: string;
+  Description: string;
+  Technique: string;
+  Style: string;
+  Link: string[];
+}
+
 export default function Dashboard() {
   const [isAuth, setIsAuth] = useState(false);
   const [events, setEvents] = useState<Event[]>([]);
+  const [tattooArtists, setTattooArtists] = useState<TattooArtist[]>([]);
   const [loading, setLoading] = useState(true);
-  const [showForm, setShowForm] = useState(false);
+  const [loadingArtists, setLoadingArtists] = useState(true);
+  const [showEventForm, setShowEventForm] = useState(false);
+  const [showArtistForm, setShowArtistForm] = useState(false);
+  const [activeTab, setActiveTab] = useState("events"); // 'events' ou 'artists'
   const router = useRouter();
 
   useEffect(() => {
@@ -32,6 +46,7 @@ export default function Dashboard() {
     } else {
       setIsAuth(true);
       fetchEvents();
+      fetchTattooArtists();
     }
   }, [router]);
 
@@ -50,6 +65,21 @@ export default function Dashboard() {
     }
   };
 
+  const fetchTattooArtists = async () => {
+    try {
+      setLoadingArtists(true);
+      const response = await fetch("/api/tattooArtist");
+      if (response.ok) {
+        const data = await response.json();
+        setTattooArtists(data);
+      }
+    } catch (error) {
+      console.error("Erreur lors de la récupération des tatoueurs:", error);
+    } finally {
+      setLoadingArtists(false);
+    }
+  };
+
   const handleDeleteEvent = async (id: string) => {
     if (confirm("Êtes-vous sûr de vouloir supprimer cet événement ?")) {
       try {
@@ -58,9 +88,27 @@ export default function Dashboard() {
         });
 
         if (response.ok) {
-          fetchEvents(); 
+          fetchEvents();
         } else {
           alert("Erreur lors de la suppression de l'événement");
+        }
+      } catch (error) {
+        console.error("Erreur lors de la suppression:", error);
+      }
+    }
+  };
+
+  const handleDeleteArtist = async (id: string) => {
+    if (confirm("Êtes-vous sûr de vouloir supprimer ce tatoueur ?")) {
+      try {
+        const response = await fetch(`/api/tattooArtist?id=${id}`, {
+          method: "DELETE",
+        });
+
+        if (response.ok) {
+          fetchTattooArtists();
+        } else {
+          alert("Erreur lors de la suppression du tatoueur");
         }
       } catch (error) {
         console.error("Erreur lors de la suppression:", error);
@@ -110,77 +158,198 @@ export default function Dashboard() {
             </button>
           </div>
 
-          <div className="mb-8 z-10">
+          {/* Onglets */}
+          <div className="flex border-b border-gold mb-6">
             <button
-              onClick={() => setShowForm(!showForm)}
-              className="bg-gold text-redlink px-4 py-2 rounded mb-4"
+              onClick={() => setActiveTab("events")}
+              className={`px-4 py-2 ${
+                activeTab === "events" 
+                  ? "bg-gold text-redlink font-bold" 
+                  : "text-gold hover:bg-redlink"
+              }`}
             >
-              {showForm ? "Masquer le formulaire" : "Ajouter un événement"}
+              Événements
             </button>
-
-            {showForm && (
-              <EventForm
-                onSuccess={() => {
-                  fetchEvents();
-                  setShowForm(false);
-                }}
-              />
-            )}
+            <button
+              onClick={() => setActiveTab("artists")}
+              className={`px-4 py-2 ${
+                activeTab === "artists" 
+                  ? "bg-gold text-redlink font-bold" 
+                  : "text-gold hover:bg-redlink"
+              }`}
+            >
+              Tatoueurs Vacataires
+            </button>
           </div>
 
-          <div className="mb-8">
-            <h2 className="text-2xl font-bold mb-4 text-gold">Liste des événements</h2>
+          {/* Section Événements */}
+          {activeTab === "events" && (
+            <>
+              <div className="mb-8 z-10">
+                <button
+                  onClick={() => setShowEventForm(!showEventForm)}
+                  className="bg-gold text-redlink px-4 py-2 rounded mb-4"
+                >
+                  {showEventForm ? "Masquer le formulaire" : "Ajouter un événement"}
+                </button>
 
-            {loading ? (
-              <p className="text-gray-500">Chargement des événements...</p>
-            ) : events.length === 0 ? (
-              <p className="text-gray-500">Aucun événement trouvé.</p>
-            ) : (
-              <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
-                {events.map((event) => (
-                  <div
-                    key={event.id}
-                    className="overflow-hidden shadow-md bg-gold"
-                  >
-                    {event.image && (
-                      <div className="h-48 overflow-hidden">
-                        <Image
-                          src={event.image}
-                          alt={event.title}
-                          className="w-full h-full object-cover"
-                        />
-                      </div>
-                    )}
-
-                    <div className="p-4">
-                      <h3 className="text-xl font-bold mb-2 text-redlink">{event.title}</h3>
-                      <p className="text-redlink mb-1">
-                        <span className="font-medium">Date:</span>{" "}
-                        {formatDate(event.time)}
-                      </p>
-                      <p className="text-redlink mb-1">
-                        <span className="font-medium">Durée:</span>{" "}
-                        {event.duration} minutes
-                      </p>
-                      <p className="text-redlink mb-3">
-                        <span className="font-medium">Lieu:</span>{" "}
-                        {event.location}
-                      </p>
-
-                      <div className="flex justify-end mt-4">
-                        <button
-                          onClick={() => handleDeleteEvent(event.id)}
-                          className="bg-redlink text-gold px-3 py-1 rounded text-sm"
-                        >
-                          Supprimer
-                        </button>
-                      </div>
-                    </div>
-                  </div>
-                ))}
+                {showEventForm && (
+                  <EventForm
+                    onSuccess={() => {
+                      fetchEvents();
+                      setShowEventForm(false);
+                    }}
+                  />
+                )}
               </div>
-            )}
-          </div>
+
+              <div className="mb-8">
+                <h2 className="text-2xl font-bold mb-4 text-gold">Liste des événements</h2>
+
+                {loading ? (
+                  <p className="text-gray-500">Chargement des événements...</p>
+                ) : events.length === 0 ? (
+                  <p className="text-gray-500">Aucun événement trouvé.</p>
+                ) : (
+                  <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
+                    {events.map((event) => (
+                      <div
+                        key={event.id}
+                        className="overflow-hidden shadow-md bg-gold"
+                      >
+                        {event.image && (
+                          <div className="h-48 overflow-hidden">
+                            <Image
+                              src={event.image}
+                              alt={event.title}
+                              width={400}
+                              height={200}
+                              className="w-full h-full object-cover"
+                            />
+                          </div>
+                        )}
+
+                        <div className="p-4">
+                          <h3 className="text-xl font-bold mb-2 text-redlink">{event.title}</h3>
+                          <p className="text-redlink mb-1">
+                            <span className="font-medium">Date:</span>{" "}
+                            {formatDate(event.time)}
+                          </p>
+                          <p className="text-redlink mb-1">
+                            <span className="font-medium">Durée:</span>{" "}
+                            {event.duration} minutes
+                          </p>
+                          <p className="text-redlink mb-3">
+                            <span className="font-medium">Lieu:</span>{" "}
+                            {event.location}
+                          </p>
+
+                          <div className="flex justify-end mt-4">
+                            <button
+                              onClick={() => handleDeleteEvent(event.id)}
+                              className="bg-redlink text-gold px-3 py-1 rounded text-sm"
+                            >
+                              Supprimer
+                            </button>
+                          </div>
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+                )}
+              </div>
+            </>
+          )}
+
+          {/* Section Tatoueurs Vacataires */}
+          {activeTab === "artists" && (
+            <>
+              <div className="mb-8 z-10">
+                <button
+                  onClick={() => setShowArtistForm(!showArtistForm)}
+                  className="bg-gold text-redlink px-4 py-2 rounded mb-4"
+                >
+                  {showArtistForm ? "Masquer le formulaire" : "Ajouter un tatoueur"}
+                </button>
+
+                {showArtistForm && (
+                  <TattooArtistForm
+                    onSuccess={() => {
+                      fetchTattooArtists();
+                      setShowArtistForm(false);
+                    }}
+                  />
+                )}
+              </div>
+
+              <div className="mb-8">
+                <h2 className="text-2xl font-bold mb-4 text-gold">Liste des tatoueurs vacataires</h2>
+
+                {loadingArtists ? (
+                  <p className="text-gray-500">Chargement des tatoueurs...</p>
+                ) : tattooArtists.length === 0 ? (
+                  <p className="text-gray-500">Aucun tatoueur trouvé.</p>
+                ) : (
+                  <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
+                    {tattooArtists.map((artist) => (
+                      <div
+                        key={artist.id}
+                        className="overflow-hidden shadow-md bg-gold"
+                      >
+                        <div className="p-4">
+                          <h3 className="text-xl font-bold mb-2 text-redlink">{artist.name}</h3>
+                          
+                          <p className="text-redlink mb-1">
+                            <span className="font-medium">Style:</span>{" "}
+                            {artist.Style}
+                          </p>
+                          
+                          <p className="text-redlink mb-1">
+                            <span className="font-medium">Technique:</span>{" "}
+                            {artist.Technique}
+                          </p>
+                          
+                          <div className="mt-2 mb-3">
+                            <p className="font-medium text-redlink">Description:</p>
+                            <p className="text-redlink text-sm">{artist.Description}</p>
+                          </div>
+                          
+                          {artist.Link && artist.Link.length > 0 && (
+                            <div className="mt-2 mb-3">
+                              <p className="font-medium text-redlink">Liens:</p>
+                              <ul className="list-disc list-inside text-sm">
+                                {artist.Link.map((link, idx) => (
+                                  <li key={idx} className="text-redlink truncate">
+                                    <a 
+                                      href={link} 
+                                      target="_blank" 
+                                      rel="noopener noreferrer"
+                                      className="text-blue-800 hover:underline"
+                                    >
+                                      {link}
+                                    </a>
+                                  </li>
+                                ))}
+                              </ul>
+                            </div>
+                          )}
+
+                          <div className="flex justify-end mt-4">
+                            <button
+                              onClick={() => handleDeleteArtist(artist.id)}
+                              className="bg-redlink text-gold px-3 py-1 rounded text-sm"
+                            >
+                              Supprimer
+                            </button>
+                          </div>
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+                )}
+              </div>
+            </>
+          )}
         </div>
       </div>
       

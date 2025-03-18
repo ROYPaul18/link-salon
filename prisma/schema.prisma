@@ -19,3 +19,12 @@ model Event {
   updatedAt DateTime @updatedAt
 }
 
+
+model Tattoueurs{
+  id        String   @id @default(uuid())
+  name String
+  Description String
+  Technique String
+  Style String
+  Link String[]
+}

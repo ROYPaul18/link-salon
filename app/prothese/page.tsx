@@ -4,6 +4,26 @@ import Header from "../ui/header";
 import Footer from "../ui/footer";
 import Link from "next/link";
 
+interface ArtistData {
+
+  gallery: string[];
+}
+interface ArtistsDataMap {
+  [key: string]: ArtistData;
+}
+
+const artistsData: ArtistsDataMap = {
+  chloe:{
+    gallery: [
+      "/img/chloe/ongle1.jpg",
+      "/img/chloe/ongle2.jpg",
+      "/img/chloe/ongle3.jpg",
+      "/img/chloe/ongle4.jpg",
+      "/img/chloe/ongle5.jpg",
+    ],
+  }
+  
+};
 const Page = () => {
   return (
     <div className="relative min-h-screen w-full">
@@ -65,11 +85,11 @@ const Page = () => {
 
           {/* Bottom section with smaller images */}
           <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-5 gap-4 md:gap-6">
-            {[1, 2, 3, 4, 5].map((index) => (
+          {artistsData.chloe.gallery.map((imageSrc, index) => (
               <div key={index} className="aspect-square relative">
                 <Image
-                  src="/img/test.png"
-                  alt={`Image ${index}`}
+                  src={imageSrc}
+                  alt={`Travail de chloe`}
                   fill
                   className="object-cover"
                 />

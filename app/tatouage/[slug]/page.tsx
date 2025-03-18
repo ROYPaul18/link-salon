@@ -63,11 +63,11 @@ const ArtistPage = () => {
       ],
       image: "/img/axel.png",
       gallery: [
-        "/img/test.png",
-        "/img/test.png",
-        "/img/test.png",
-        "/img/test.png",
-        "/img/test.png"
+        "/img/axel/tat1.jpg",
+        "/img/axel/tat2.jpg",
+        "/img/axel/tat3.jpg",
+        "/img/axel/tat4.jpg",
+        "/img/axel/tat5.jpg"
       ]
     },
     chloe: {
@@ -80,11 +80,11 @@ const ArtistPage = () => {
       ],
       image: "/img/chloe.png",
       gallery: [
-        "/img/test.png",
-        "/img/test.png",
-        "/img/test.png",
-        "/img/test.png",
-        "/img/test.png"
+        "/img/chloe/tat1.jpg",
+        "/img/chloe/tat2.jpg",
+        "/img/chloe/tat3.jpg",
+        "/img/chloe/tat4.jpg",
+        "/img/chloe/tat5.jpg"
       ]
     },
     autres: {
@@ -101,7 +101,6 @@ const ArtistPage = () => {
       ]
     }
   };
-
   // Don't render content until client-side mounting is complete
   if (!mounted) {
     return (
