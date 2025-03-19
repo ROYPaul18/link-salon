@@ -1,4 +1,4 @@
-'use client'
+"use client";
 import React, { useState, useEffect } from "react";
 import Image from "next/image";
 import Header from "../../ui/header";
@@ -39,11 +39,20 @@ const ArtistPage = () => {
   const artistsData: ArtistsDataMap = {
     gael: {
       name: "Gaël",
-      description: "Artiste tatoueur depuis 2019\nStyle : Asiatique, celtique et animalier\nTechnique possible : Noir et gris, couleur, cover lourd\nCertifié Label Cosmét'Ink : la prise en charge de vos soins post tattoo est comprise dans votre prestation tatouage.\nPlusieurs prix remportés lors de convention de tatouage\nAccepte de tatouer les mineurs de plus de 16 ans, avec autorisation parentale",
+      description:
+        "Artiste tatoueur depuis 2019\nStyle : Asiatique, celtique et animalier\nTechnique possible : Noir et gris, couleur, cover lourd\nCertifié Label Cosmét'Ink : la prise en charge de vos soins post tattoo est comprise dans votre prestation tatouage.\nPlusieurs prix remportés lors de convention de tatouage\nAccepte de tatouer les mineurs de plus de 16 ans, avec autorisation parentale",
       contacts: [
-        { type: "facebook", label: "Facebook", url: "https://www.facebook.com/linksalondetatouage?" },
-        { type: "instagram", label: "Instagram", url: "https://www.instagram.com/gael_linktatouage?igsh=MTViZXRsaW1tMG1zdA==&utm_source=qr" },
-        { type: "email", label: "Email", url: "gael.tatouage@gmail.com" }
+        {
+          type: "facebook",
+          label: "Facebook",
+          url: "https://www.facebook.com/linksalondetatouage?",
+        },
+        {
+          type: "instagram",
+          label: "Instagram",
+          url: "https://www.instagram.com/gael_linktatouage?igsh=MTViZXRsaW1tMG1zdA==&utm_source=qr",
+        },
+        { type: "email", label: "Email", url: "gael.tatouage@gmail.com" },
       ],
       image: "/img/gael.png",
       gallery: [
@@ -51,15 +60,20 @@ const ArtistPage = () => {
         "/img/gael/img2.jpeg",
         "/img/gael/img3.jpeg",
         "/img/gael/img4.jpeg",
-        "/img/gael/img5.jpeg"
-      ]
+        "/img/gael/img5.jpeg",
+      ],
     },
     axelle: {
       name: "Axelle",
-      description: "Artiste tatoueuse depuis 2019\nStyle : végétal, ornemental et animalier\nCréations personnalisées\nTechnique possible : Noir et gris, couleur, cover, recouvrement de cicatrices et vergetures",
+      description:
+        "Artiste tatoueuse depuis 2019\nStyle : végétal, ornemental et animalier\nCréations personnalisées\nTechnique possible : Noir et gris, couleur, cover, recouvrement de cicatrices et vergetures",
       contacts: [
-        { type: "instagram", label: "Instagram", url: "https://www.instagram.com/axelletattoo?igsh=MTFtYm13NjZ2MndraA==" },
-        { type: "email", label: "Email", url: "tattooaxelle@gmail.com" }
+        {
+          type: "instagram",
+          label: "Instagram",
+          url: "https://www.instagram.com/axelletattoo?igsh=MTFtYm13NjZ2MndraA==",
+        },
+        { type: "email", label: "Email", url: "tattooaxelle@gmail.com" },
       ],
       image: "/img/axel.png",
       gallery: [
@@ -67,16 +81,29 @@ const ArtistPage = () => {
         "/img/axel/tat2.jpg",
         "/img/axel/tat3.jpg",
         "/img/axel/tat4.jpg",
-        "/img/axel/tat5.jpg"
-      ]
+        "/img/axel/tat5.jpg",
+      ],
     },
     chloe: {
       name: "Chloé / Beaudy Ink",
-      description: "Nail artiste depuis 2018, artiste tatoueuse depuis 2021\nStyle : Fantasy, Disney, floral\nTechnique possible : Noir et gris, couleur",
+      description:
+        "Nail artiste depuis 2018, artiste tatoueuse depuis 2021\nStyle : Fantasy, Disney, floral\nTechnique possible : Noir et gris, couleur",
       contacts: [
-        { type: "facebook", label: "Facebook", url: "https://www.facebook.com/profile.php?id=100072912670661" },
-        { type: "instagram", label: "Instagram", url: "https://www.instagram.com/beaudy_ink_tattoo?igsh=MWwwczB5ZmFudjJjbQ==" },
-        { type: "website", label: "Site web", url: "https://www.beaudy-ink.com" }
+        {
+          type: "facebook",
+          label: "Facebook",
+          url: "https://www.facebook.com/profile.php?id=100072912670661",
+        },
+        {
+          type: "instagram",
+          label: "Instagram",
+          url: "https://www.instagram.com/beaudy_ink_tattoo?igsh=MWwwczB5ZmFudjJjbQ==",
+        },
+        {
+          type: "website",
+          label: "Site web",
+          url: "https://www.beaudy-ink.com",
+        },
       ],
       image: "/img/chloe.png",
       gallery: [
@@ -84,12 +111,13 @@ const ArtistPage = () => {
         "/img/chloe/tat2.jpg",
         "/img/chloe/tat3.jpg",
         "/img/chloe/tat4.jpg",
-        "/img/chloe/tat5.jpg"
-      ]
+        "/img/chloe/tat5.jpg",
+      ],
     },
     autres: {
       name: "Autres artistes",
-      description: "Découvrez nos autres artistes invités et collaborateurs qui travaillent occasionnellement dans notre studio.",
+      description:
+        "Découvrez nos autres artistes invités et collaborateurs qui travaillent occasionnellement dans notre studio.",
       contacts: [],
       image: "/img/piercing.png",
       gallery: [
@@ -97,9 +125,9 @@ const ArtistPage = () => {
         "/img/test.png",
         "/img/test.png",
         "/img/test.png",
-        "/img/test.png"
-      ]
-    }
+        "/img/test.png",
+      ],
+    },
   };
   // Don't render content until client-side mounting is complete
   if (!mounted) {
@@ -122,23 +150,32 @@ const ArtistPage = () => {
   }
 
   // Récupérer les données de l'artiste sélectionné ou utiliser des valeurs par défaut
-  const artistData: ArtistData = typeof slug === 'string' && slug in artistsData
-    ? artistsData[slug]
-    : {
-      name: "Artiste",
-      description: "Information non disponible",
-      contacts: [],
-      image: "/img/axel.png",
-      gallery: ["/img/test.png", "/img/test.png", "/img/test.png", "/img/test.png", "/img/test.png"]
-    };
+  const artistData: ArtistData =
+    typeof slug === "string" && slug in artistsData
+      ? artistsData[slug]
+      : {
+          name: "Artiste",
+          description: "Information non disponible",
+          contacts: [],
+          image: "/img/axel.png",
+          gallery: [
+            "/img/test.png",
+            "/img/test.png",
+            "/img/test.png",
+            "/img/test.png",
+            "/img/test.png",
+          ],
+        };
 
   // Formatter la description avec des sauts de ligne
-  const formattedDescription = artistData.description.split('\n').map((line: string, index: number) => (
-    <React.Fragment key={index}>
-      {line}
-      {index < artistData.description.split('\n').length - 1 && <br />}
-    </React.Fragment>
-  ));
+  const formattedDescription = artistData.description
+    .split("\n")
+    .map((line: string, index: number) => (
+      <React.Fragment key={index}>
+        {line}
+        {index < artistData.description.split("\n").length - 1 && <br />}
+      </React.Fragment>
+    ));
 
   return (
     <div className="relative min-h-screen w-full">
@@ -160,8 +197,9 @@ const ArtistPage = () => {
                 <Image
                   src={artistData.image}
                   alt={`Image de ${artistData.name}`}
-                  fill
-                  className="object-fit"
+                  width={600}
+                  height={600}
+                  className="object-cover"
                 />
               </div>
             </div>
@@ -174,32 +212,34 @@ const ArtistPage = () => {
                 {formattedDescription}
               </p>
               <div className="flex flex-wrap gap-4 font-rehat text-base md:text-xl 2xl:text-4xl">
-                {artistData.contacts.map((contact: ContactInfo, index: number) => {
-                  // Déterminer le type de lien
-                  if (contact.type === "email") {
-                    return (
-                      <a
-                        key={index}
-                        href={`mailto:${contact.url}`}
-                        className="text-gold hover:underline"
-                      >
-                        {contact.label}
-                      </a>
-                    );
-                  } else {
-                    return (
-                      <Link
-                        key={index}
-                        href={contact.url}
-                        className="text-gold hover:underline"
-                        target="_blank"
-                        rel="noopener noreferrer"
-                      >
-                        {contact.label}
-                      </Link>
-                    );
+                {artistData.contacts.map(
+                  (contact: ContactInfo, index: number) => {
+                    // Déterminer le type de lien
+                    if (contact.type === "email") {
+                      return (
+                        <a
+                          key={index}
+                          href={`mailto:${contact.url}`}
+                          className="text-gold hover:underline"
+                        >
+                          {contact.label}
+                        </a>
+                      );
+                    } else {
+                      return (
+                        <Link
+                          key={index}
+                          href={contact.url}
+                          className="text-gold hover:underline"
+                          target="_blank"
+                          rel="noopener noreferrer"
+                        >
+                          {contact.label}
+                        </Link>
+                      );
+                    }
                   }
-                })}
+                )}
               </div>
             </div>
           </div>
@@ -211,7 +251,7 @@ const ArtistPage = () => {
                   src={imageSrc}
                   alt={`Travail de ${artistData.name} - ${index + 1}`}
                   fill
-                  className="object-cover"
+                  className="object-fit"
                 />
               </div>
             ))}

@@ -5,7 +5,6 @@ import Footer from "../ui/footer";
 import Link from "next/link";
 
 interface ArtistData {
-
   gallery: string[];
 }
 interface ArtistsDataMap {
@@ -13,7 +12,7 @@ interface ArtistsDataMap {
 }
 
 const artistsData: ArtistsDataMap = {
-  chloe:{
+  chloe: {
     gallery: [
       "/img/chloe/ongle1.jpg",
       "/img/chloe/ongle2.jpg",
@@ -21,8 +20,7 @@ const artistsData: ArtistsDataMap = {
       "/img/chloe/ongle4.jpg",
       "/img/chloe/ongle5.jpg",
     ],
-  }
-  
+  },
 };
 const Page = () => {
   return (
@@ -45,8 +43,9 @@ const Page = () => {
                 <Image
                   src="/img/chloe.png"
                   alt="Image principale"
-                  fill
-                  className="object-fit"
+                  width={600}
+                  height={600}
+                  className="object-cover"
                 />
               </div>
             </div>
@@ -85,7 +84,7 @@ const Page = () => {
 
           {/* Bottom section with smaller images */}
           <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-5 gap-4 md:gap-6">
-          {artistsData.chloe.gallery.map((imageSrc, index) => (
+            {artistsData.chloe.gallery.map((imageSrc, index) => (
               <div key={index} className="aspect-square relative">
                 <Image
                   src={imageSrc}

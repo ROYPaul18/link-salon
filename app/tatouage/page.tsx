@@ -22,7 +22,7 @@ const Page = () => {
         <div className="relative w-full max-w-6xl my-auto">
           {/* Navigation des artistes - Mobile first puis adaptation desktop */}
           <div
-            className="w-full font-rehat text-3xl sm:text-4xl md:text-5xl lg:text-6xl text-gold flex flex-col sm:flex-row sm:space-x-4 md:space-x-8 lg:space-x-12 space-y-6 sm:space-y-0 items-center justify-center"
+            className="w-full font-rehat text-3xl sm:text-4xl md:text-5xl lg:text-6xl 2xl:text-9xl text-gold flex flex-col sm:flex-row sm:space-x-4 md:space-x-8 lg:space-x-12 space-y-6 sm:space-y-0 items-center justify-center"
             style={{
               textShadow:
                 "2px 2px 0 #4C2A27, -2px -2px 0 #4C2A27, 2px -2px 0 #4C2A27, -2px 2px 0 #4C2A27",
@@ -53,7 +53,7 @@ const Page = () => {
             </Link>
           </div>
           
-          <div className="font-rehat text-xl sm:text-2xl text-gold mt-8 text-center">
+          <div className="font-rehat text-xl sm:text-2xl 2xl:text-3xl text-gold mt-8 text-center">
             Choisi ton artiste
           </div>
         </div>
