@@ -5,6 +5,18 @@ import Header from "../../ui/header";
 import Footer from "../../ui/footer";
 import Link from "next/link";
 import { useParams } from "next/navigation";
+import DevisSimulator from "@/app/ui/form/Estimation";
+
+// Définir les types pour PayPal
+declare global {
+  interface Window {
+    paypal: {
+      Buttons: (config: PayPalButtonConfig) => {
+        render: (containerId: string) => void;
+      };
+    };
+  }
+}
 
 // Define types for our data structures
 interface ContactInfo {
@@ -25,15 +37,134 @@ interface ArtistsDataMap {
   [key: string]: ArtistData;
 }
 
+// Types pour les fonctions de PayPal
+interface OrderData {
+  purchase_units: {
+    description: string;
+    amount: {
+      value: string;
+      currency_code: string;
+    };
+  }[];
+  application_context: {
+    shipping_preference: string;
+  };
+}
+
+interface OrderDetails {
+  id: string;
+  status: string;
+  payer: {
+    email_address: string;
+  };
+  [key: string]: unknown;
+}
+
+interface PayPalActions {
+  order: {
+    create: (data: OrderData) => Promise<string>;
+    capture: () => Promise<OrderDetails>;
+  };
+}
+
+interface PayPalButtonConfig {
+  style: {
+    layout: string;
+    color: string;
+    shape: string;
+    label: string;
+    height: number;
+  };
+  createOrder: (data: unknown, actions: PayPalActions) => Promise<string>;
+  onApprove: (data: unknown, actions: PayPalActions) => Promise<void>;
+  onError: (err: Error) => void;
+}
+
 const ArtistPage = () => {
   const params = useParams();
-  const slug = params.slug;
+  const slug = typeof params.slug === "string" ? params.slug : "";
   const [mounted, setMounted] = useState(false);
+  const [amount, setAmount] = useState(50); // Montant par défaut pour les arrhes
 
   // Handle client-side mounting
   useEffect(() => {
     setMounted(true);
   }, []);
+
+  // Script PayPal pour le message d'information sur le paiement en 4 fois
+  useEffect(() => {
+    const script = document.createElement("script");
+    script.src =
+      "https://www.paypal.com/ppcredit/messaging/code?layout=text&logo-type=inline&text-color=black&country.x=FR&locale.x=en_FR";
+    script.async = true;
+    document.body.appendChild(script);
+  }, []);
+
+  // Script PayPal pour le bouton de paiement
+  useEffect(() => {
+    if (!mounted || slug !== "gael") return;
+    
+    if (mounted) {
+      // Supprime tout script PayPal existant pour éviter les doublons
+      const existingScript = document.getElementById("paypal-script");
+      if (existingScript) {
+        existingScript.remove();
+      }
+
+      // Crée et ajoute le nouveau script PayPal
+      const script = document.createElement("script");
+      script.id = "paypal-script";
+      script.src =
+        "https://www.paypal.com/sdk/js?client-id=ASMZTL9ga3WDTk72pnLjRzt4puDA-VD6g_llf4BB5ckQ3Oqn38uJwgblg2yMpQxtK93fbEcyeHsIBUKs&currency=EUR&components=buttons,funding-eligibility,payment-fields";
+      script.async = true;
+
+      script.onload = () => {
+        if (window.paypal) {
+          // Bouton de paiement standard (paiement immédiat)
+          window.paypal
+            .Buttons({
+              style: {
+                layout: "vertical",
+                color: "gold",
+                shape: "rect",
+                label: "paypal",
+                height: 40,
+              },
+              createOrder: function (data: unknown, actions: PayPalActions) {
+                return actions.order.create({
+                  purchase_units: [
+                    {
+                      description: `Arrhes pour séance de tatouage avec ${slug}`,
+                      amount: {
+                        value: amount.toString(),
+                        currency_code: "EUR",
+                      },
+                    },
+                  ],
+                  application_context: {
+                    shipping_preference: "NO_SHIPPING",
+                  },
+                });
+              },
+              onApprove: function (data: unknown, actions: PayPalActions) {
+                return actions.order.capture().then(function () {
+                  alert("Paiement réussi! Merci pour votre réservation.");
+                });
+              },
+              onError: function (err: Error) {
+                console.error("Erreur lors du paiement:", err);
+                alert(
+                  "Une erreur est survenue lors du paiement. Veuillez réessayer."
+                );
+              },
+            })
+            .render("#paypal-button-container");
+        }
+      };
+
+      document.body.appendChild(script);
+    }
+  }, [mounted, amount, slug]);
 
   // Données des artistes
   const artistsData: ArtistsDataMap = {
@@ -129,6 +260,7 @@ const ArtistPage = () => {
       ],
     },
   };
+
   // Don't render content until client-side mounting is complete
   if (!mounted) {
     return (
@@ -151,7 +283,7 @@ const ArtistPage = () => {
 
   // Récupérer les données de l'artiste sélectionné ou utiliser des valeurs par défaut
   const artistData: ArtistData =
-    typeof slug === "string" && slug in artistsData
+    slug in artistsData
       ? artistsData[slug]
       : {
           name: "Artiste",
@@ -200,6 +332,7 @@ const ArtistPage = () => {
                   width={600}
                   height={600}
                   className="object-cover"
+                  priority
                 />
               </div>
             </div>
@@ -245,17 +378,68 @@ const ArtistPage = () => {
           </div>
           {/* Bottom section with gallery images */}
           <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-5 gap-4 md:gap-12">
-            {artistData.gallery.map((imageSrc, index) => (
+            {artistData.gallery.map((imageSrc: string, index: number) => (
               <div key={index} className="aspect-square relative">
                 <Image
                   src={imageSrc}
                   alt={`Travail de ${artistData.name} - ${index + 1}`}
                   fill
+                  sizes="(max-width: 768px) 100vw, 33vw"	
                   className="object-fit"
                 />
               </div>
             ))}
           </div>
+          {slug === "gael" && (
+            <div className="flex flex-col md:flex-row items-start md:items-center gap-8">
+              <div className="w-full md:w-1/2">
+                {slug === "gael" && <DevisSimulator />}
+              </div>
+              <div className="w-full md:w-1/2">
+                <h1 className="font-rehat text-gold text-4xl md:text-6xl 2xl:text-8xl mb-6 md:mb-10">
+                  Régler les arrhes
+                </h1>
+                <p className="font-rehat text-gold text-base md:text-xl 2xl:text-4xl mb-4">
+                  (toute annulation moins de 14 jours avant la séance entraînera
+                  la perte des arrhes, ou une majoration de 10% du prix du
+                  projet. Le règlement par ce lien vaut pour accord du
+                  règlement.)
+                </p>
+
+                {/* Sélection du montant */}
+                <div className="mb-6">
+                  <label
+                    htmlFor="amount"
+                    className="font-rehat text-gold text-xl block mb-2"
+                  >
+                    Montant des arrhes (€):
+                  </label>
+                  <select
+                    id="amount"
+                    value={amount}
+                    onChange={(e) => setAmount(Number(e.target.value))}
+                    className="bg-redlink text-gold border border-gold p-2 w-full max-w-xs font-rehat"
+                  >
+                    <option value="50">50 €</option>
+                    <option value="100">100 €</option>
+                    <option value="150">150 €</option>
+                    <option value="200">200 €</option>
+                  </select>
+                </div>
+
+                {/* Message d'information PayPal */}
+                <div
+                  id="paypal-credit-message"
+                  className="mt-4 mb-6 text-gold"
+                ></div>
+
+                {/* Boutons de paiement PayPal */}
+                <div className="flex flex-col gap-4">
+                  <div id="paypal-button-container" className="max-w-md"></div>
+                </div>
+              </div>
+            </div>
+          )}
         </section>
       </main>
       <Footer />

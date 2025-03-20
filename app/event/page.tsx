@@ -84,7 +84,7 @@ const EventsPage = () => {
 
       <div className="relative flex-grow">
         <div className="relative z-10 py-16 px-4 max-w-6xl mx-auto">
-          <h1 className="text-center font-artisual-deco text-gold text-4xl 2xl:text-8xl mb-10">
+          <h1 className="text-center font-rehat text-gold text-6xl 2xl:text-8xl mb-10">
             Événements
           </h1>
 

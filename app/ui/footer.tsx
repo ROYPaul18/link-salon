@@ -16,6 +16,7 @@ const Footer = () => {
                 height={96}
                 alt="logo"
                 className="w-16 md:w-24"
+                priority
               />
             </Link>
           </div>
