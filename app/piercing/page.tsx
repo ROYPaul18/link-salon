@@ -42,8 +42,8 @@ const Page = () => {
                 <Image
                   src="/img/piercing.png"
                   alt="Image principale"
-                  width={600}
-                  height={600}
+                  width={1000}
+                  height={1000}
                   className="object-cover"
                 />
               </div>

@@ -57,7 +57,7 @@ export default function Home() {
           {
             title: "Événements",
             desc: "L'ink House organise régulièrement des évènements, consultez-ici ceux passés et ceux à venir.",
-            img: "/img/test.png",
+            img: "/img/event.jpg",
           },
         ].map(({ title, desc, img, video, reverse }, index) => (
           <section
@@ -82,7 +82,7 @@ export default function Home() {
               </div>
             </div>
             <div className="w-full md:w-1/2 px-4 md:px-8 flex flex-col">
-              <h1 className="text-5xl 2xl:text-8xl font-artisual-deco text-gold my-4 md:mb-8 text-left">
+              <h1 className="text-5xl 2xl:text-8xl font-artisual-deco text-gold my-4 md:mb-12 text-left">
                 {title}
               </h1>
               <p className="text-xl 2xl:text-3xl font-reglarik text-gold leading-relaxed">

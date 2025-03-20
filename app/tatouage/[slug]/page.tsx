@@ -329,9 +329,9 @@ const ArtistPage = () => {
                 <Image
                   src={artistData.image}
                   alt={`Image de ${artistData.name}`}
-                  width={600}
-                  height={600}
-                  className="object-cover"
+                  width={1000}
+                  height={1000}
+                  className="object-contain"
                   priority
                 />
               </div>
