@@ -1,4 +1,4 @@
-'use client'
+"use client";
 import React, { useState } from "react";
 import Link from "next/link";
 import Image from "next/image";
@@ -15,45 +15,91 @@ const Header = () => {
       <div className="flex justify-between lg:justify-center items-center p-4 md:p-8">
         <div className="z-30 mr-24">
           <Link href={"/"}>
-            <Image src={"/img/logo.png"} width={72} height={72} alt="logo" className="w-16 md:w-24" priority/>
+            <Image
+              src={"/img/logo.png"}
+              width={72}
+              height={72}
+              alt="logo"
+              className="w-16 md:w-24"
+              priority
+            />
           </Link>
         </div>
 
         {/* Bouton hamburger pour mobile */}
-        <button 
+        <button
           className="z-30 md:hidden flex flex-col justify-center items-center w-10 h-10"
           onClick={toggleMenu}
           aria-label="Toggle menu"
         >
-          <span className={`block w-6 h-0.5 bg-gold mb-1.5 transition-transform duration-300 ${menuOpen ? 'rotate-45 translate-y-2' : ''}`}></span>
-          <span className={`block w-6 h-0.5 bg-gold mb-1.5 transition-opacity duration-300 ${menuOpen ? 'opacity-0' : 'opacity-100'}`}></span>
-          <span className={`block w-6 h-0.5 bg-gold transition-transform duration-300 ${menuOpen ? '-rotate-45 -translate-y-2' : ''}`}></span>
+          <span
+            className={`block w-6 h-0.5 bg-gold mb-1.5 transition-transform duration-300 ${
+              menuOpen ? "rotate-45 translate-y-2" : ""
+            }`}
+          ></span>
+          <span
+            className={`block w-6 h-0.5 bg-gold mb-1.5 transition-opacity duration-300 ${
+              menuOpen ? "opacity-0" : "opacity-100"
+            }`}
+          ></span>
+          <span
+            className={`block w-6 h-0.5 bg-gold transition-transform duration-300 ${
+              menuOpen ? "-rotate-45 -translate-y-2" : ""
+            }`}
+          ></span>
         </button>
 
         {/* Navigation bureau */}
         <nav className="hidden md:block">
           <ul className="flex justify-center items-center space-x-8 lg:space-x-12 text-lg xl:text-2xl 2xl:text-4xl">
             <li>
-              <Link href={"/tatouage"} className="hover:text-white transition-colors duration-300">Tatouage</Link>
+              <Link
+                href={"/tatouage"}
+                className="hover:text-white transition-colors duration-300"
+              >
+                Tatouage
+              </Link>
             </li>
             <li>
-              <Link href={"/salon"} className="hover:text-white transition-colors duration-300">Salon de thé</Link>
+              <Link
+                href={"/salon"}
+                className="hover:text-white transition-colors duration-300"
+              >
+                Salon de thé
+              </Link>
             </li>
             <li>
-              <Link href={"/prothese"} className="hover:text-white transition-colors duration-300">Prothésiste</Link>
+              <Link
+                href={"/prothese"}
+                className="hover:text-white transition-colors duration-300"
+              >
+                Prothésiste
+              </Link>
             </li>
             <li>
-              <Link href={"/piercing"} className="hover:text-white transition-colors duration-300">Piercing</Link>
+              <Link
+                href={"/piercing"}
+                className="hover:text-white transition-colors duration-300"
+              >
+                Piercing
+              </Link>
             </li>
             <li>
-              <Link href={"/event"} className="hover:text-white transition-colors duration-300">Événement</Link>
+              <Link
+                href={"/event"}
+                className="hover:text-white transition-colors duration-300"
+              >
+                Événement
+              </Link>
             </li>
           </ul>
         </nav>
 
         {/* Overlay de navigation mobile */}
-        <div 
-          className={`fixed inset-0  z-20 transition-opacity duration-300 md:hidden ${menuOpen ? 'opacity-100' : 'opacity-0 pointer-events-none'}`}
+        <div
+          className={`fixed inset-0  z-20 transition-opacity duration-300 md:hidden ${
+            menuOpen ? "opacity-100" : "opacity-0 pointer-events-none"
+          }`}
         >
           {/* Image de fond */}
           {menuOpen && (
@@ -70,8 +116,8 @@ const Header = () => {
           <nav className="h-full flex items-center justify-center">
             <ul className="flex flex-col items-center space-y-8 text-2xl">
               <li>
-                <Link 
-                  href={"/tatouage"} 
+                <Link
+                  href={"/tatouage"}
                   className="hover:text-white transition-colors duration-300"
                   onClick={() => setMenuOpen(false)}
                 >
@@ -79,8 +125,8 @@ const Header = () => {
                 </Link>
               </li>
               <li>
-                <Link 
-                  href={"/salon"} 
+                <Link
+                  href={"/salon"}
                   className="hover:text-white transition-colors duration-300"
                   onClick={() => setMenuOpen(false)}
                 >
@@ -88,8 +134,8 @@ const Header = () => {
                 </Link>
               </li>
               <li>
-                <Link 
-                  href={"/prothese"} 
+                <Link
+                  href={"/prothese"}
                   className="hover:text-white transition-colors duration-300"
                   onClick={() => setMenuOpen(false)}
                 >
@@ -97,8 +143,8 @@ const Header = () => {
                 </Link>
               </li>
               <li>
-                <Link 
-                  href={"/piercing"} 
+                <Link
+                  href={"/piercing"}
                   className="hover:text-white transition-colors duration-300"
                   onClick={() => setMenuOpen(false)}
                 >
@@ -106,8 +152,8 @@ const Header = () => {
                 </Link>
               </li>
               <li>
-                <Link 
-                  href={"/event"} 
+                <Link
+                  href={"/event"}
                   className="hover:text-white transition-colors duration-300"
                   onClick={() => setMenuOpen(false)}
                 >
