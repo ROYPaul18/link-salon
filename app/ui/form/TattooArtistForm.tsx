@@ -13,12 +13,16 @@ export default function TattooArtistForm({ onSuccess }: TattooArtistFormProps) {
     Technique: "",
     Style: "",
     Link: [""],
+    image: "", // URL de l'image principale
+    projectImages: [] as string[], // URLs des images de projets
   });
 
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [error, setError] = useState("");
 
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+  const handleChange = (
+    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
+  ) => {
     const { name, value } = e.target;
     setFormData((prev) => ({ ...prev, [name]: value }));
   };
@@ -39,13 +43,62 @@ export default function TattooArtistForm({ onSuccess }: TattooArtistFormProps) {
     setFormData((prev) => ({ ...prev, Link: newLinks }));
   };
 
+  // Fonction d'upload vers Cloudinary
+  const uploadImage = async (file: File) => {
+    const formData = new FormData();
+    formData.append("file", file);
+    formData.append("upload_preset", "ton_upload_preset"); // Remplace par ton preset Cloudinary
+
+    try {
+      const response = await fetch(
+        "https://api.cloudinary.com/v1_1/ton_cloud_name/image/upload",
+        {
+          method: "POST",
+          body: formData,
+        }
+      );
+      const data = await response.json();
+      return data.secure_url;
+    } catch (error) {
+      console.error("Erreur d'upload Cloudinary", error);
+      return null;
+    }
+  };
+
+  // Gestion de l'upload de l'image principale
+  const handleImageUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
+    if (e.target.files && e.target.files[0]) {
+      const url = await uploadImage(e.target.files[0]);
+      if (url) {
+        setFormData((prev) => ({ ...prev, image: url }));
+      }
+    }
+  };
+
+  // Gestion de l'upload des images de projets
+  const handleProjectImagesUpload = async (
+    e: React.ChangeEvent<HTMLInputElement>
+  ) => {
+    if (e.target.files) {
+      const files = Array.from(e.target.files);
+      const urls = await Promise.all(files.map((file) => uploadImage(file)));
+      setFormData((prev) => ({
+        ...prev,
+        projectImages: [
+          ...prev.projectImages,
+          ...urls.filter((url) => url !== null),
+        ],
+      }));
+    }
+  };
+
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     setIsSubmitting(true);
     setError("");
 
     try {
-      // Filter out empty links
+      // Filtrer les liens vides
       const filteredLinks = formData.Link.filter((link) => link.trim() !== "");
 
       const response = await fetch("/api/tatoueur", {
@@ -60,13 +113,15 @@ export default function TattooArtistForm({ onSuccess }: TattooArtistFormProps) {
       });
 
       if (response.ok) {
-        // Reset form
+        // Réinitialisation du formulaire
         setFormData({
           name: "",
           Description: "",
           Technique: "",
           Style: "",
           Link: [""],
+          image: "",
+          projectImages: [],
         });
 
         if (onSuccess) onSuccess();
@@ -75,7 +130,7 @@ export default function TattooArtistForm({ onSuccess }: TattooArtistFormProps) {
         setError(data.error || "Une erreur est survenue");
       }
     } catch (error) {
-      console.error("Error submitting form:", error);
+      console.error("Erreur lors de l'envoi du formulaire", error);
       setError("Erreur lors de l'envoi du formulaire");
     } finally {
       setIsSubmitting(false);
@@ -83,9 +138,9 @@ export default function TattooArtistForm({ onSuccess }: TattooArtistFormProps) {
   };
 
   return (
-    <div className="bg-gray-800 p-6 rounded-lg mb-8">
-      <h2 className="text-xl font-bold mb-4 text-gold">
-        Ajouter un tatoueur vacataire
+    <div className="bg-gold p-6 rounded-lg mb-8">
+      <h2 className="text-xl font-bold mb-4 text-redlink">
+        Ajouter un tatoueur
       </h2>
 
       {error && (
@@ -93,88 +148,81 @@ export default function TattooArtistForm({ onSuccess }: TattooArtistFormProps) {
       )}
 
       <form onSubmit={handleSubmit}>
+        {/* Nom */}
         <div className="mb-4">
-          <label className="block text-gold mb-2">Nom</label>
+          <label className="block text-redlink mb-2">Nom</label>
           <input
             type="text"
             name="name"
             value={formData.name}
             onChange={handleChange}
             required
-            className="w-full px-3 py-2 bg-gray-700 text-white rounded"
+            className="w-full px-3 py-2 bg-redlink text-white rounded"
           />
         </div>
 
+        {/* Image principale */}
         <div className="mb-4">
-          <label className="block text-gold mb-2">Description</label>
+          <label className="block text-redlink mb-2">Image principale</label>
+          <input
+            type="file"
+            accept="image/*"
+            onChange={handleImageUpload}
+            className="w-full px-3 py-2 bg-redlink text-white rounded"
+          />
+        </div>
+        {/* Description */}
+        <div className="mb-4">
+          <label className="block text-redlink mb-2">Description</label>
           <textarea
             name="Description"
             value={formData.Description}
             onChange={handleChange}
             required
             rows={4}
-            className="w-full px-3 py-2 bg-gray-700 text-white rounded"
+            className="w-full px-3 py-2 bg-redlink text-white rounded"
           />
         </div>
 
+        {/* Technique */}
         <div className="mb-4">
-          <label className="block text-gold mb-2">Technique</label>
+          <label className="block text-redlink mb-2">Technique</label>
           <input
             type="text"
             name="Technique"
             value={formData.Technique}
             onChange={handleChange}
             required
-            className="w-full px-3 py-2 bg-gray-700 text-white rounded"
+            className="w-full px-3 py-2 bg-redlink text-white rounded"
           />
         </div>
 
+        {/* Style */}
         <div className="mb-4">
-          <label className="block text-gold mb-2">Style</label>
+          <label className="block text-redlink mb-2">Style</label>
           <input
             type="text"
             name="Style"
             value={formData.Style}
             onChange={handleChange}
             required
-            className="w-full px-3 py-2 bg-gray-700 text-white rounded"
+            className="w-full px-3 py-2 bg-redlink text-white rounded"
           />
         </div>
 
+        {/* Images de projets */}
         <div className="mb-4">
-          <label className="block text-gold mb-2">
-            Liens (portfolio, réseaux sociaux, etc.)
-          </label>
-
-          {formData.Link.map((link, index) => (
-            <div key={index} className="flex mb-2">
-              <input
-                type="url"
-                value={link}
-                onChange={(e) => handleLinkChange(index, e.target.value)}
-                placeholder="https://..."
-                className="flex-grow px-3 py-2 bg-gray-700 text-white rounded-l"
-              />
-              <button
-                type="button"
-                onClick={() => removeLinkField(index)}
-                disabled={formData.Link.length === 1}
-                className="bg-red-700 text-white px-3 py-2 rounded-r disabled:bg-gray-600"
-              >
-                &times;
-              </button>
-            </div>
-          ))}
-
-          <button
-            type="button"
-            onClick={addLinkField}
-            className="bg-blue-700 text-white px-3 py-1 rounded text-sm mt-2"
-          >
-            + Ajouter un lien
-          </button>
+          <label className="block text-redlink mb-2">Images de projets</label>
+          <input
+            type="file"
+            accept="image/*"
+            multiple
+            onChange={handleProjectImagesUpload}
+            className="w-full px-3 py-2 bg-redlink text-white rounded"
+          />
         </div>
 
+        {/* Bouton d'envoi */}
         <div className="flex justify-end">
           <button
             type="submit"
