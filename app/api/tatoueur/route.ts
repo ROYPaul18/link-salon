@@ -1,6 +1,5 @@
-import { NextResponse } from "next/server";
+import { NextResponse, NextRequest } from "next/server";
 import { PrismaClient } from "@prisma/client";
-import { NextRequest } from "next/server";
 import { v2 as cloudinary } from "cloudinary";
 
 const prisma = new PrismaClient();
@@ -11,23 +10,20 @@ cloudinary.config({
   api_secret: process.env.CLOUDINARY_API_SECRET,
 });
 
-async function uploadToCloudinary(file) {
+async function uploadToCloudinary(file: string): Promise<string> {
   const uploadedResponse = await cloudinary.uploader.upload(file, {
     folder: "tattoo_artists",
   });
   return uploadedResponse.secure_url;
 }
 
-// GET - Récupérer tous les tatoueurs ou un tatoueur spécifique
-export async function GET(request) {
+export async function GET(request: NextRequest) {
   try {
     const { searchParams } = new URL(request.url);
     const id = searchParams.get("id");
 
     if (id) {
-      const tattooArtist = await prisma.tattoueurs.findUnique({
-        where: { id },
-      });
+      const tattooArtist = await prisma.tattoueurs.findUnique({ where: { id } });
       if (!tattooArtist) {
         return NextResponse.json({ error: "Tatoueur non trouvé" }, { status: 404 });
       }
@@ -42,8 +38,7 @@ export async function GET(request) {
   }
 }
 
-// POST - Créer un nouveau tatoueur
-export async function POST(request) {
+export async function POST(request: NextRequest) {
   try {
     const data = await request.json();
 
@@ -51,16 +46,14 @@ export async function POST(request) {
       return NextResponse.json({ error: "Tous les champs sont requis" }, { status: 400 });
     }
 
-    let imageUrl = null;
+    let imageUrl: string | null = null;
     if (data.image) {
-      imageUrl = await uploadToCloudinary(data.image);
+      imageUrl = await uploadToCloudinary(data.image as string);
     }
 
-    let projectImages = [];
+    let projectImages: string[] = [];
     if (Array.isArray(data.projectImages)) {
-      for (const img of data.projectImages) {
-        projectImages.push(await uploadToCloudinary(img));
-      }
+      projectImages = await Promise.all(data.projectImages.map((img: string) => uploadToCloudinary(img)));
     }
 
     const tattooArtist = await prisma.tattoueurs.create({
@@ -80,8 +73,7 @@ export async function POST(request) {
   }
 }
 
-// PUT - Mettre à jour un tatoueur
-export async function PUT(request) {
+export async function PUT(request: NextRequest) {
   try {
     const { searchParams } = new URL(request.url);
     const id = searchParams.get("id");
@@ -98,15 +90,12 @@ export async function PUT(request) {
 
     let imageUrl = existingArtist.image;
     if (data.image) {
-      imageUrl = await uploadToCloudinary(data.image);
+      imageUrl = await uploadToCloudinary(data.image as string);
     }
 
-    let projectImages = existingArtist.projectImages;
+    let projectImages = existingArtist.projectImages || [];
     if (Array.isArray(data.projectImages)) {
-      projectImages = [];
-      for (const img of data.projectImages) {
-        projectImages.push(await uploadToCloudinary(img));
-      }
+      projectImages = await Promise.all(data.projectImages.map((img: string) => uploadToCloudinary(img)));
     }
 
     const updatedArtist = await prisma.tattoueurs.update({
@@ -127,8 +116,7 @@ export async function PUT(request) {
   }
 }
 
-// DELETE - Supprimer un tatoueur
-export async function DELETE(request) {
+export async function DELETE(request: NextRequest) {
   try {
     const { searchParams } = new URL(request.url);
     const id = searchParams.get("id");
@@ -147,9 +135,7 @@ export async function DELETE(request) {
     }
 
     if (existingArtist.projectImages) {
-      for (const img of existingArtist.projectImages) {
-        await cloudinary.uploader.destroy(img);
-      }
+      await Promise.all(existingArtist.projectImages.map((img: string) => cloudinary.uploader.destroy(img)));
     }
 
     await prisma.tattoueurs.delete({ where: { id } });

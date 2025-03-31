@@ -26,17 +26,17 @@ export default function TattooArtistForm({ onSuccess }: TattooArtistFormProps) {
     const { name, value } = e.target;
     setFormData((prev) => ({ ...prev, [name]: value }));
   };
-
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const handleLinkChange = (index: number, value: string) => {
     const newLinks = [...formData.Link];
     newLinks[index] = value;
     setFormData((prev) => ({ ...prev, Link: newLinks }));
   };
-
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const addLinkField = () => {
     setFormData((prev) => ({ ...prev, Link: [...prev.Link, ""] }));
   };
-
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const removeLinkField = (index: number) => {
     const newLinks = [...formData.Link];
     newLinks.splice(index, 1);
