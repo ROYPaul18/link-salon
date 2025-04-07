@@ -12,7 +12,7 @@ const Header = () => {
 
   return (
     <header className="relative z-20 text-gold font-arcane-nine">
-      <div className="flex justify-between lg:justify-center items-center p-4 md:p-8">
+      <div className="flex justify-between lg:justify-center items-center p-4 md:p-8 md:pb-2">
         <div className="z-30 mr-24">
           <Link href={"/"}>
             <Image
@@ -25,7 +25,6 @@ const Header = () => {
             />
           </Link>
         </div>
-
         {/* Bouton hamburger pour mobile */}
         <button
           className="z-30 md:hidden flex flex-col justify-center items-center w-10 h-10"
@@ -114,7 +113,7 @@ const Header = () => {
             />
           )}
           <nav className="h-full flex items-center justify-center">
-            <ul className="flex flex-col items-center space-y-8 text-2xl">
+            <ul className="flex flex-col items-center space-y-8 text-2xl font-rehat">
               <li>
                 <Link
                   href={"/tatouage"}

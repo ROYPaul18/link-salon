@@ -36,7 +36,7 @@ export default function Dashboard() {
   const [loadingArtists, setLoadingArtists] = useState(true);
   const [showEventForm, setShowEventForm] = useState(false);
   const [showArtistForm, setShowArtistForm] = useState(false);
-  const [activeTab, setActiveTab] = useState("events"); // 'events' ou 'artists'
+  const [activeTab, setActiveTab] = useState("events");
   const router = useRouter();
 
   useEffect(() => {
@@ -68,10 +68,10 @@ export default function Dashboard() {
   const fetchTattooArtists = async () => {
     try {
       setLoadingArtists(true);
-      const response = await fetch("/api/tattooArtist");
+      const response = await fetch("/api/tatoueur");
       if (response.ok) {
         const data = await response.json();
-        setTattooArtists(data);
+        setTattooArtists(Array.isArray(data) ? data : []);
       }
     } catch (error) {
       console.error("Erreur lors de la récupération des tatoueurs:", error);
@@ -87,7 +87,7 @@ export default function Dashboard() {
           method: "DELETE",
         });
 
-        if (response.ok) {
+        if (response.ok) {  
           fetchEvents();
         } else {
           alert("Erreur lors de la suppression de l'événement");
@@ -101,7 +101,7 @@ export default function Dashboard() {
   const handleDeleteArtist = async (id: string) => {
     if (confirm("Êtes-vous sûr de vouloir supprimer ce tatoueur ?")) {
       try {
-        const response = await fetch(`/api/tattooArtist?id=${id}`, {
+        const response = await fetch(`/api/tatoueur?id=${id}`, {
           method: "DELETE",
         });
 
@@ -284,7 +284,6 @@ export default function Dashboard() {
 
               <div className="mb-8">
                 <h2 className="text-2xl font-bold mb-4 text-gold">Liste des tatoueurs vacataires</h2>
-
                 {loadingArtists ? (
                   <p className="text-gray-500">Chargement des tatoueurs...</p>
                 ) : tattooArtists.length === 0 ? (

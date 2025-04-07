@@ -37,6 +37,20 @@ interface ArtistsDataMap {
   [key: string]: ArtistData;
 }
 
+// Interface pour les tatoueurs depuis l'API
+interface TattooArtist {
+  id: string;
+  name: string;
+  Description: string;
+  Technique: string;
+  Style: string;
+  image: string | null;
+  projectImages: string[];
+  facebookLink: string | null;
+  instagramLink: string | null;
+  websiteLink: string | null;
+}
+
 // Types pour les fonctions de PayPal
 interface OrderData {
   purchase_units: {
@@ -85,11 +99,39 @@ const ArtistPage = () => {
   const slug = typeof params.slug === "string" ? params.slug : "";
   const [mounted, setMounted] = useState(false);
   const [amount, setAmount] = useState(50); // Montant par défaut pour les arrhes
+  const [apiArtists, setApiArtists] = useState<TattooArtist[]>([]);
+  const [apiLoading, setApiLoading] = useState(false);
 
   // Handle client-side mounting
   useEffect(() => {
     setMounted(true);
   }, []);
+
+  // Fetch API tattoo artists when needed
+  useEffect(() => {
+    if (!mounted || slug !== "autres") return;
+
+    const fetchTattooArtists = async () => {
+      try {
+        setApiLoading(true);
+        const response = await fetch("/api/tatoueur");
+
+        if (!response.ok) {
+          throw new Error(`Erreur: ${response.status}`);
+        }
+
+        const data = await response.json();
+        console.log(data);
+        setApiArtists(data);
+      } catch (err) {
+        console.error("Erreur lors de la récupération des tatoueurs:", err);
+      } finally {
+        setApiLoading(false);
+      }
+    };
+
+    fetchTattooArtists();
+  }, [mounted, slug]);
 
   // Script PayPal pour le message d'information sur le paiement en 4 fois
   useEffect(() => {
@@ -103,7 +145,7 @@ const ArtistPage = () => {
   // Script PayPal pour le bouton de paiement
   useEffect(() => {
     if (!mounted || slug !== "gael") return;
-    
+
     if (mounted) {
       // Supprime tout script PayPal existant pour éviter les doublons
       const existingScript = document.getElementById("paypal-script");
@@ -245,20 +287,6 @@ const ArtistPage = () => {
         "/img/chloe/tat5.jpg",
       ],
     },
-    autres: {
-      name: "Autres artistes",
-      description:
-        "Découvrez nos autres artistes invités et collaborateurs qui travaillent occasionnellement dans notre studio.",
-      contacts: [],
-      image: "/img/piercing.png",
-      gallery: [
-        "/img/test.png",
-        "/img/test.png",
-        "/img/test.png",
-        "/img/test.png",
-        "/img/test.png",
-      ],
-    },
   };
 
   // Don't render content until client-side mounting is complete
@@ -309,6 +337,138 @@ const ArtistPage = () => {
       </React.Fragment>
     ));
 
+  if (slug === "autres") {
+    return (
+      <div className="relative min-h-screen w-full">
+        <Image
+          src="/img/bg.jpeg"
+          alt="Background image"
+          fill
+          priority
+          className="object-fit fixed top-0 left-0 z-0"
+        />
+        <Header />
+        <main className="relative z-10 min-h-screen">
+          {apiLoading ? (
+            <div className="flex items-center justify-center min-h-screen">
+              <p className="text-gold text-xl">Chargement des tatoueurs...</p>
+            </div>
+          ) : (
+            <section className="flex flex-col gap-12 px-4 sm:px-8 md:px-16 mt-8 mb-12">
+              {apiArtists && apiArtists.length > 0 ? (
+                apiArtists.map((artist, index) => (
+                  <div key={artist.id || index} className="mb-12">
+                    {/* Top section with main image and text */}
+                    <div className="flex flex-col md:flex-row gap-6 md:gap-12 mb-8">
+                      {/* Left side - Main image */}
+                      <div className="w-full md:w-6/12">
+                        <div className="w-full aspect-[4/3] relative">
+                          <Image
+                            src={artist.image || "/img/default-artist.png"}
+                            alt={`Image de ${artist.name}`}
+                            width={1000}
+                            height={1000}
+                            className="object-contain"
+                            priority
+                          />
+                        </div>
+                      </div>
+                      {/* Right side - Text content */}
+                      <div className="w-full md:w-6/12 text-gold flex flex-col justify-between">
+                        <h1 className="text-3xl md:text-5xl 2xl:text-8xl font-artisual-deco mb-4 md:mb-6">
+                          {artist.name}
+                        </h1>
+                        <div className="font-reglarik mb-4 md:mb-8 leading-relaxed text-base md:text-xl 2xl:text-4xl">
+                          {artist.Description && (
+                            <p className="mb-4">{artist.Description}</p>
+                          )}
+                          {artist.Style && (
+                            <p className="mb-4">Style : {artist.Style}</p>
+                          )}
+                          {artist.Technique && (
+                            <p>Technique : {artist.Technique}</p>
+                          )}
+                        </div>
+                        <div className="flex flex-wrap gap-4 font-rehat text-base md:text-xl 2xl:text-4xl">
+                          {artist.facebookLink && (
+                            <Link
+                              href={artist.facebookLink}
+                              className="text-gold hover:underline"
+                              target="_blank"
+                              rel="noopener noreferrer"
+                            >
+                              Facebook
+                            </Link>
+                          )}
+                          {artist.instagramLink && (
+                            <Link
+                              href={artist.instagramLink}
+                              className="text-gold hover:underline"
+                              target="_blank"
+                              rel="noopener noreferrer"
+                            >
+                              Instagram
+                            </Link>
+                          )}
+                          {artist.websiteLink && (
+                            <Link
+                              href={artist.websiteLink}
+                              className="text-gold hover:underline"
+                              target="_blank"
+                              rel="noopener noreferrer"
+                            >
+                              Site web
+                            </Link>
+                          )}
+                        </div>
+                      </div>
+                    </div>
+
+                    {/* Bottom section with gallery images */}
+                    {artist.projectImages &&
+                      artist.projectImages.length > 0 && (
+                        <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-5 gap-4 md:gap-12">
+                          {artist.projectImages.map((imageSrc, imgIndex) => (
+                            <div
+                              key={imgIndex}
+                              className="aspect-square relative"
+                            >
+                              <Image
+                                src={imageSrc}
+                                alt={`Travail de ${artist.name} - ${
+                                  imgIndex + 1
+                                }`}
+                                fill
+                                sizes="(max-width: 768px) 100vw, 33vw"
+                                className="object-cover"
+                              />
+                            </div>
+                          ))}
+                        </div>
+                      )}
+
+                    {/* Séparateur entre artistes sauf pour le dernier */}
+                    {index < apiArtists.length - 1 && (
+                      <div className="border-b border-gold/30 mt-12"></div>
+                    )}
+                  </div>
+                ))
+              ) : (
+                <div className="text-center py-12">
+                  <p className="text-gold text-xl">
+                    Aucun tatoueur disponible pour le moment.
+                  </p>
+                </div>
+              )}
+            </section>
+          )}
+        </main>
+        <Footer />
+      </div>
+    );
+  }
+
+  // Render standard pour les autres artistes (gael, axelle, chloe)
   return (
     <div className="relative min-h-screen w-full">
       <Image
@@ -384,7 +544,7 @@ const ArtistPage = () => {
                   src={imageSrc}
                   alt={`Travail de ${artistData.name} - ${index + 1}`}
                   fill
-                  sizes="(max-width: 768px) 100vw, 33vw"	
+                  sizes="(max-width: 768px) 100vw, 33vw"
                   className="object-fit"
                 />
               </div>

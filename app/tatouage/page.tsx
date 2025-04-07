@@ -18,9 +18,7 @@ const Page = () => {
       <div className="absolute top-0 left-0 w-full h-full bg-black opacity-70 -z-10"></div>
       <Header />      
       <div className="flex-grow flex items-center justify-center px-4 py-8">
-        {/* Conteneur de l'image et des liens */}
         <div className="relative w-full max-w-6xl my-auto">
-          {/* Navigation des artistes - Mobile first puis adaptation desktop */}
           <div
             className="w-full font-rehat text-3xl sm:text-4xl md:text-5xl lg:text-6xl 2xl:text-9xl text-gold flex flex-col sm:flex-row sm:space-x-4 md:space-x-8 lg:space-x-12 space-y-6 sm:space-y-0 items-center justify-center"
             style={{

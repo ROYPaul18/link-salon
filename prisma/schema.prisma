@@ -21,12 +21,16 @@ model Event {
 
 
 model Tattoueurs {
-  id             String   @id @default(uuid())
-  name           String
-  Description    String
-  Technique      String
-  Style          String
-  Link           String[]
-  image          String?  // URL de l'image principale (Cloudinary)
-  projectImages  String[] // Liste des images des projets (Cloudinary)
+  id            String   @id @default(uuid())
+  name          String
+  Description   String?  
+  Technique     String? 
+  Style         String?  
+  image         String?
+  projectImages String[]
+  facebookLink  String?
+  instagramLink String?
+  websiteLink   String?
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
 }

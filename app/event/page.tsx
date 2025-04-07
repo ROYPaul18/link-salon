@@ -127,7 +127,7 @@ const EventsPage = () => {
                   key={event.id}
                   className="flex flex-col md:flex-row bg-gold overflow-hidden"
                 >
-                  <div className="w-full md:w-1/5 min-h-[180px] bg-gray-200 relative">
+                  <div className="w-full md:w-2/5 min-h-[200px] bg-gray-200 relative">
                     {event.image ? (
                       <Image
                         src={event.image}
@@ -146,13 +146,13 @@ const EventsPage = () => {
                   </div>
 
                   <div className="w-full md:w-4/5 p-6">
-                    <p className="text-redlink font-medium font-rehat">
+                    <p className="text-redlink text-xl 2xl:text-3xl font-medium font-rehat">
                       {formatDateTime(event.time)}
                     </p>
-                    <h2 className="text-redlink font-rehat text-2xl font-script mt-8 mb-8">
+                    <h2 className="text-redlink font-rehat text-2xl 2xl:text-3xl font-script mt-8 mb-8">
                       {event.title}
                     </h2>
-                    <p className="text-redlink font-rehat">{event.location}</p>
+                    <p className="text-redlink font-rehat text-xl 2xl:text-3xl">{event.location}</p>
                   </div>
                 </div>
               ))
