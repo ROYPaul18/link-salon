@@ -1,6 +1,6 @@
 // app/api/events/route.ts
 import { NextResponse } from "next/server";
-import { PrismaClient } from "@prisma/client";
+import { PrismaClient, Prisma } from "@prisma/client";
 import cloudinary from "@/lib/cloudinary";
 import { promises as fs } from "fs";
 
@@ -84,7 +84,7 @@ export async function POST(request: Request) {
         title: fields.title,
         image: imageUrl || "",
         adresse: fields.adresse || "",
-      } as any,
+      } as unknown as Prisma.EventCreateInput,
     });
 
     return NextResponse.json(newEvent, { status: 201 });
@@ -217,7 +217,7 @@ export async function PUT(request: Request) {
     }
 
     // Préparation des données de mise à jour
-    const updateData: any = {
+    const updateData: Prisma.EventUpdateInput = {
       ...fields,
       time: fields.time ? new Date(fields.time) : undefined,
     };

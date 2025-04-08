@@ -1,7 +1,7 @@
 "use client";
 
 import { useState, useRef } from "react";
-
+import Image from "next/image";
 interface TattooArtistFormProps {
   onSuccess?: () => void;
 }
@@ -24,7 +24,9 @@ export default function TattooArtistForm({ onSuccess }: TattooArtistFormProps) {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [error, setError] = useState("");
   const [previewImage, setPreviewImage] = useState<string | null>(null);
-  const [previewProjectImages, setPreviewProjectImages] = useState<string[]>([]);
+  const [previewProjectImages, setPreviewProjectImages] = useState<string[]>(
+    []
+  );
 
   const handleChange = (
     e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
@@ -57,7 +59,7 @@ export default function TattooArtistForm({ onSuccess }: TattooArtistFormProps) {
   const handleImageUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
     if (e.target.files && e.target.files[0]) {
       const file = e.target.files[0];
-      
+
       if (file.size > 3 * 1024 * 1024) {
         setError("L'image ne doit pas dépasser 3 Mo");
         return;
@@ -106,7 +108,10 @@ export default function TattooArtistForm({ onSuccess }: TattooArtistFormProps) {
       const urls = await Promise.all(files.map((file) => uploadImage(file)));
       setFormData((prev) => ({
         ...prev,
-        workPics: [...prev.workPics, ...urls.filter((url) => url !== null) as string[]],
+        workPics: [
+          ...prev.workPics,
+          ...(urls.filter((url) => url !== null) as string[]),
+        ],
       }));
     }
   };
@@ -183,7 +188,9 @@ export default function TattooArtistForm({ onSuccess }: TattooArtistFormProps) {
 
       if (onSuccess) onSuccess();
     } catch (error) {
-      setError(error instanceof Error ? error.message : "Erreur lors de l'envoi");
+      setError(
+        error instanceof Error ? error.message : "Erreur lors de l'envoi"
+      );
     } finally {
       setIsSubmitting(false);
     }
@@ -236,15 +243,19 @@ export default function TattooArtistForm({ onSuccess }: TattooArtistFormProps) {
                   Parcourir
                 </button>
               </div>
-              <small className="text-gray-400 block mt-1">Taille max: 3 Mo (JPEG, PNG, WebP)</small>
+              <small className="text-gray-400 block mt-1">
+                Taille max: 3 Mo (JPEG, PNG, WebP)
+              </small>
             </div>
             <div className="w-full md:w-1/2 flex items-center justify-center">
               {previewImage ? (
                 <div className="relative">
-                  <img
+                  <Image
                     src={previewImage}
                     alt="Aperçu"
-                    className="w-40 h-40 object-cover rounded border-2 border-[#b8860b]"
+                    width={160} 
+                    height={160}
+                    className="object-cover rounded border-2 border-[#b8860b]"
                   />
                   <button
                     type="button"
@@ -386,7 +397,9 @@ export default function TattooArtistForm({ onSuccess }: TattooArtistFormProps) {
               Parcourir
             </button>
           </div>
-          <small className="text-gray-400 block mt-1">Taille max par image: 3 Mo (JPEG, PNG, WebP)</small>
+          <small className="text-gray-400 block mt-1">
+            Taille max par image: 3 Mo (JPEG, PNG, WebP)
+          </small>
 
           {previewProjectImages.length > 0 && (
             <div className="mt-4">
@@ -394,8 +407,10 @@ export default function TattooArtistForm({ onSuccess }: TattooArtistFormProps) {
               <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-2">
                 {previewProjectImages.map((src, index) => (
                   <div key={index} className="relative">
-                    <img
+                    <Image
                       src={src}
+                      width={160} 
+                      height={160}
                       alt={`Aperçu projet ${index + 1}`}
                       className="w-full h-24 object-cover rounded border border-[#444]"
                     />

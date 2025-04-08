@@ -1,6 +1,5 @@
 import { NextResponse } from "next/server";
 import { PrismaClient } from "@prisma/client";
-import { IncomingForm } from 'formidable';
 import { promises as fs } from 'fs';
 import cloudinary from "@/lib/cloudinary";
 import { z } from "zod";
@@ -127,6 +126,7 @@ export async function POST(req: Request) {
   } catch (err) {
     console.error("Erreur POST /api/tatoueur:", err);
 
+    // Vérifier que l'erreur est un objet avant de la renvoyer
     if (err instanceof z.ZodError) {
       return NextResponse.json(
         {
@@ -140,6 +140,7 @@ export async function POST(req: Request) {
       );
     }
 
+    // Vérifier si 'err' est une instance d'Error et fournir une réponse adéquate
     return NextResponse.json(
       { message: err instanceof Error ? err.message : "Erreur serveur lors de l'ajout." },
       { status: 500 }

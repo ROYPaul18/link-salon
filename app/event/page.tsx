@@ -13,6 +13,7 @@ interface Event {
   duration: number;
   location: string;
   image: string;
+  adresse: string;
 }
 
 const EventsPage = () => {
@@ -146,13 +147,15 @@ const EventsPage = () => {
                   </div>
 
                   <div className="w-full md:w-4/5 p-6">
-                    <p className="text-redlink text-xl 2xl:text-3xl font-medium font-rehat">
+                    <p className="text-redlink text-xl 2xl:text-2xl font-medium font-rehat">
                       {formatDateTime(event.time)}
                     </p>
-                    <h2 className="text-redlink font-rehat text-2xl 2xl:text-3xl font-script mt-8 mb-8">
+                    <h2 className="text-redlink font-rehat text-2xl 2xl:text-2xl font-script mt-8 mb-8">
                       {event.title}
                     </h2>
-                    <p className="text-redlink font-rehat text-xl 2xl:text-3xl">{event.location}</p>
+                    <p className="text-redlink font-rehat text-xl 2xl:text-2xl">
+                      {event.location} / {event.adresse}
+                    </p>
                   </div>
                 </div>
               ))

@@ -330,14 +330,6 @@ const ArtistPage = () => {
         {index < artistData.description.split("\n").length - 1 && <br />}
       </React.Fragment>
     ));
-
-  const getImageUrl = (
-    url: string | null | undefined,
-    defaultImage: string
-  ) => {
-    return url && url.startsWith("http") ? url : defaultImage;
-  };
-
   if (slug === "autres") {
     return (
       <div className="relative min-h-screen w-full">

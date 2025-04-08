@@ -2,6 +2,7 @@
 
 import { useState, useRef } from "react";
 import { useRouter } from "next/navigation";
+import Image from "next/image";
 
 interface EventFormProps {
   onSuccess?: () => void;
@@ -120,7 +121,7 @@ export default function EventForm({ onSuccess }: EventFormProps) {
       <form onSubmit={handleSubmit}>
         <div className="mb-4">
           <label className="block text-gray-700 mb-2" htmlFor="title">
-            Titre de l'événement *
+            Titre de l&apos;événement *
           </label>
           <input
             type="text"
@@ -194,7 +195,7 @@ export default function EventForm({ onSuccess }: EventFormProps) {
 
         <div className="mb-4">
           <label className="block text-gray-700 mb-2" htmlFor="image">
-            Image de l'événement (max 3 Mo)
+            Image de l&apos;événement (max 3 Mo)
           </label>
           <input
             type="file"
@@ -208,7 +209,7 @@ export default function EventForm({ onSuccess }: EventFormProps) {
           {previewImage && (
             <div className="mt-2">
               <p className="text-sm text-gray-500 mb-1">Aperçu :</p>
-              <img
+              <Image
                 src={previewImage}
                 alt="Aperçu de l'image"
                 className="max-h-40 rounded-md"
