@@ -3,34 +3,54 @@ generator client {
 }
 
 datasource db {
-  provider = "postgresql"
-  url      = env("DATABASE_URL")
+  provider  = "postgresql"
+  url       = env("DATABASE_URL")
   directUrl = env("DIRECT_URL")
 }
 
 model Event {
-  id        String   @id @default(uuid())
+  id        Int      @id @default(autoincrement())
   time      DateTime
   duration  Int
   location  String
   image     String
   title     String
-  createdAt DateTime @default(now()) 
+  createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
+  adresse   String
 }
 
-
 model Tattoueurs {
-  id            String   @id @default(uuid())
+  id            Int      @id @default(autoincrement())
   name          String
-  Description   String?  
-  Technique     String? 
-  Style         String?  
-  image         String?
-  projectImages String[]
+  Description   String?
+  Technique     String?
+  Style         String?
   facebookLink  String?
   instagramLink String?
   websiteLink   String?
   createdAt     DateTime @default(now())
   updatedAt     DateTime @updatedAt
+
+  profilPic ProfilPic?
+  workPics  WorkPics[] @relation("TatoueurWorkPics")
+}
+
+model ProfilPic {
+  id         Int      @id @default(autoincrement())
+  url        String
+  TatoueurId Int      @unique
+  createdAt  DateTime @default(now())
+  updatedAt  DateTime @updatedAt
+
+  tatoueur Tattoueurs @relation(fields: [TatoueurId], references: [id])
+}
+
+model WorkPics {
+  id         Int        @id @default(autoincrement())
+  url        String
+  TatoueurId Int
+  createdAt  DateTime   @default(now())
+  updatedAt  DateTime   @updatedAt
+  tatoueur   Tattoueurs @relation("TatoueurWorkPics", fields: [TatoueurId], references: [id])
 }

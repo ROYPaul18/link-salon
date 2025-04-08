@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useRef } from "react";
 import { useRouter } from "next/navigation";
 
 interface EventFormProps {
@@ -12,28 +12,53 @@ interface FormData {
   time: string;
   duration: number;
   location: string;
-  image: string;
+  adresse: string;
 }
 
 export default function EventForm({ onSuccess }: EventFormProps) {
   const router = useRouter();
+  const fileInputRef = useRef<HTMLInputElement>(null);
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState("");
+  const [previewImage, setPreviewImage] = useState<string | null>(null);
 
   const [formData, setFormData] = useState<FormData>({
     title: "",
     time: "",
     duration: 60,
     location: "",
-    image: "",
+    adresse: "",
   });
 
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+  const handleChange = (
+    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
+  ) => {
     const { name, value } = e.target;
     setFormData((prev) => ({
       ...prev,
       [name]: name === "duration" ? parseInt(value) || 0 : value,
     }));
+  };
+
+  const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    if (e.target.files && e.target.files[0]) {
+      const file = e.target.files[0];
+
+      // Vérifier que le fichier fait moins de 3 Mo
+      if (file.size > 3 * 1024 * 1024) {
+        setError("L'image ne doit pas dépasser 3 Mo.");
+        if (fileInputRef.current) fileInputRef.current.value = "";
+        setPreviewImage(null);
+        return;
+      }
+
+      // Créer un aperçu
+      const reader = new FileReader();
+      reader.onload = (event) => {
+        setPreviewImage(event.target?.result as string);
+      };
+      reader.readAsDataURL(file);
+    }
   };
 
   const handleSubmit = async (e: React.FormEvent) => {
@@ -42,39 +67,41 @@ export default function EventForm({ onSuccess }: EventFormProps) {
     setError("");
 
     try {
+      const formDataToSend = new FormData();
+
+      formDataToSend.append("title", formData.title);
+      formDataToSend.append("time", formData.time);
+      formDataToSend.append("duration", formData.duration.toString());
+      formDataToSend.append("location", formData.location);
+      formDataToSend.append('adresse', formData.adresse);
+
+      if (fileInputRef.current?.files?.[0]) {
+        formDataToSend.append("image", fileInputRef.current.files[0]);
+      }
+
       const response = await fetch("/api/event", {
         method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(formData),
+        body: formDataToSend,
       });
 
       if (!response.ok) {
         const data = await response.json();
-        throw new Error(data.error || "Une erreur s&apos;est produite");
+        throw new Error(data.error || "Une erreur s'est produite");
       }
 
-      // Réinitialiser le formulaire
-      setFormData({
-        title: "",
-        time: "",
-        duration: 60,
-        location: "",
-        image: "",
-      });
+      // Réinitialisation
+      setFormData({ title: "", time: "", duration: 60, location: "", adresse:"" });
+      setPreviewImage(null);
+      if (fileInputRef.current) fileInputRef.current.value = "";
 
-      if (onSuccess) {
-        onSuccess();
-      }
-
+      onSuccess?.();
       router.refresh();
     } catch (err: unknown) {
-      if (err instanceof Error) {
-        setError(err.message);
-      } else {
-        setError("Une erreur inconnue s&apos;est produite");
-      }
+      setError(
+        err instanceof Error
+          ? err.message
+          : "Une erreur inconnue s'est produite"
+      );
     } finally {
       setIsLoading(false);
     }
@@ -93,7 +120,7 @@ export default function EventForm({ onSuccess }: EventFormProps) {
       <form onSubmit={handleSubmit}>
         <div className="mb-4">
           <label className="block text-gray-700 mb-2" htmlFor="title">
-            Titre de l&apos;événement *
+            Titre de l'événement *
           </label>
           <input
             type="text"
@@ -151,28 +178,51 @@ export default function EventForm({ onSuccess }: EventFormProps) {
             required
           />
         </div>
+        <div className="mb-4">
+          <label className="block text-gray-700 mb-2" htmlFor="adresse">
+            Adresse complète
+          </label>
+          <input
+            type="text"
+            id="adresse"
+            name="adresse"
+            value={formData.adresse}
+            onChange={handleChange}
+            className="w-full px-3 py-2 border rounded-md"
+          />
+        </div>
 
         <div className="mb-4">
           <label className="block text-gray-700 mb-2" htmlFor="image">
-            URL de l&apos;image
+            Image de l'événement (max 3 Mo)
           </label>
           <input
-            type="url"
+            type="file"
             id="image"
             name="image"
-            value={formData.image}
-            onChange={handleChange}
+            ref={fileInputRef}
+            onChange={handleImageChange}
+            accept="image/*"
             className="w-full px-3 py-2 border rounded-md"
-            placeholder="https://exemple.com/image.jpg"
           />
+          {previewImage && (
+            <div className="mt-2">
+              <p className="text-sm text-gray-500 mb-1">Aperçu :</p>
+              <img
+                src={previewImage}
+                alt="Aperçu de l'image"
+                className="max-h-40 rounded-md"
+              />
+            </div>
+          )}
         </div>
 
         <button
           type="submit"
           disabled={isLoading}
-          className="bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline disabled:bg-blue-300"
+          className="bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded disabled:bg-blue-300"
         >
-          {isLoading ? "Création en cours..." : "Créer l&apos;événement"}
+          {isLoading ? "Création en cours..." : "Créer l'événement"}
         </button>
       </form>
     </div>

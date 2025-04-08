@@ -17,7 +17,6 @@ declare global {
     };
   }
 }
-
 // Define types for our data structures
 interface ContactInfo {
   type: string;
@@ -30,25 +29,24 @@ interface ArtistData {
   description: string;
   contacts: ContactInfo[];
   image: string;
-  gallery: string[]; // Array of image paths
+  gallery: string[];
 }
 
 interface ArtistsDataMap {
   [key: string]: ArtistData;
 }
 
-// Interface pour les tatoueurs depuis l'API
 interface TattooArtist {
-  id: string;
+  id: number;
   name: string;
   Description: string;
   Technique: string;
   Style: string;
-  image: string | null;
-  projectImages: string[];
   facebookLink: string | null;
   instagramLink: string | null;
   websiteLink: string | null;
+  profilPic: string;
+  workPics: string[]
 }
 
 // Types pour les fonctions de PayPal
@@ -288,8 +286,6 @@ const ArtistPage = () => {
       ],
     },
   };
-
-  // Don't render content until client-side mounting is complete
   if (!mounted) {
     return (
       <div className="relative min-h-screen w-full">
@@ -308,8 +304,6 @@ const ArtistPage = () => {
       </div>
     );
   }
-
-  // Récupérer les données de l'artiste sélectionné ou utiliser des valeurs par défaut
   const artistData: ArtistData =
     slug in artistsData
       ? artistsData[slug]
@@ -337,6 +331,13 @@ const ArtistPage = () => {
       </React.Fragment>
     ));
 
+  const getImageUrl = (
+    url: string | null | undefined,
+    defaultImage: string
+  ) => {
+    return url && url.startsWith("http") ? url : defaultImage;
+  };
+
   if (slug === "autres") {
     return (
       <div className="relative min-h-screen w-full">
@@ -358,13 +359,13 @@ const ArtistPage = () => {
               {apiArtists && apiArtists.length > 0 ? (
                 apiArtists.map((artist, index) => (
                   <div key={artist.id || index} className="mb-12">
-                    {/* Top section with main image and text */}
+                    {/* Section principale avec image et texte */}
                     <div className="flex flex-col md:flex-row gap-6 md:gap-12 mb-8">
-                      {/* Left side - Main image */}
+                      {/* Image principale */}
                       <div className="w-full md:w-6/12">
                         <div className="w-full aspect-[4/3] relative">
                           <Image
-                            src={artist.image || "/img/default-artist.png"}
+                            src={artist.profilPic || "/img/default-artist.png"}
                             alt={`Image de ${artist.name}`}
                             width={1000}
                             height={1000}
@@ -373,21 +374,15 @@ const ArtistPage = () => {
                           />
                         </div>
                       </div>
-                      {/* Right side - Text content */}
+                      {/* Texte descriptif */}
                       <div className="w-full md:w-6/12 text-gold flex flex-col justify-between">
                         <h1 className="text-3xl md:text-5xl 2xl:text-8xl font-artisual-deco mb-4 md:mb-6">
                           {artist.name}
                         </h1>
                         <div className="font-reglarik mb-4 md:mb-8 leading-relaxed text-base md:text-xl 2xl:text-4xl">
-                          {artist.Description && (
-                            <p className="mb-4">{artist.Description}</p>
-                          )}
-                          {artist.Style && (
-                            <p className="mb-4">Style : {artist.Style}</p>
-                          )}
-                          {artist.Technique && (
-                            <p>Technique : {artist.Technique}</p>
-                          )}
+                          <p className="mb-4">{artist.Description}</p>
+                          <p className="mb-4">Style : {artist.Style}</p>
+                          <p>Technique : {artist.Technique}</p>
                         </div>
                         <div className="flex flex-wrap gap-4 font-rehat text-base md:text-xl 2xl:text-4xl">
                           {artist.facebookLink && (
@@ -423,31 +418,25 @@ const ArtistPage = () => {
                         </div>
                       </div>
                     </div>
-
-                    {/* Bottom section with gallery images */}
-                    {artist.projectImages &&
-                      artist.projectImages.length > 0 && (
-                        <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-5 gap-4 md:gap-12">
-                          {artist.projectImages.map((imageSrc, imgIndex) => (
-                            <div
-                              key={imgIndex}
-                              className="aspect-square relative"
-                            >
-                              <Image
-                                src={imageSrc}
-                                alt={`Travail de ${artist.name} - ${
-                                  imgIndex + 1
-                                }`}
-                                fill
-                                sizes="(max-width: 768px) 100vw, 33vw"
-                                className="object-cover"
-                              />
-                            </div>
-                          ))}
-                        </div>
-                      )}
-
-                    {/* Séparateur entre artistes sauf pour le dernier */}
+  
+                    {/* Galerie d'images */}
+                    {artist.workPics && artist.workPics.length > 0 && (
+                      <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-5 gap-4 md:gap-12">
+                        {artist.workPics.map((imageUrl, imgIndex) => (
+                          <div key={imgIndex} className="aspect-square relative">
+                            <Image
+                              src={imageUrl}
+                              alt={`Travail de ${artist.name} - ${imgIndex + 1}`}
+                              fill
+                              sizes="(max-width: 768px) 100vw, 33vw"
+                              className="object-cover"
+                            />
+                          </div>
+                        ))}
+                      </div>
+                    )}
+  
+                    {/* Séparateur entre artistes */}
                     {index < apiArtists.length - 1 && (
                       <div className="border-b border-gold/30 mt-12"></div>
                     )}

@@ -3,7 +3,7 @@
 import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import EventForm from "@/app/ui/form/EventForm";
-import TattooArtistForm from "@/app/ui/form/TattooArtistForm"; 
+import TattooArtistForm from "@/app/ui/form/TattooArtistForm";
 import Header from "../ui/header";
 import Footer from "../ui/footer";
 import Image from "next/image";
@@ -17,6 +17,7 @@ interface Event {
   image: string;
   createdAt: string;
   updatedAt: string;
+  adresse: string
 }
 
 interface TattooArtist {
@@ -25,7 +26,11 @@ interface TattooArtist {
   Description: string;
   Technique: string;
   Style: string;
-  Link: string[];
+  profilPic?: string;
+  worksPics?: string[];
+  facebookLink: string | null;
+  instagramLink: string | null;
+  websiteLink: string | null;
 }
 
 export default function Dashboard() {
@@ -69,9 +74,14 @@ export default function Dashboard() {
     try {
       setLoadingArtists(true);
       const response = await fetch("/api/tatoueur");
+      console.log("Réponse brute:", response);
+
       if (response.ok) {
         const data = await response.json();
+        console.log("Données reçues:", data); // Ajout pour déboguer
         setTattooArtists(Array.isArray(data) ? data : []);
+      } else {
+        console.error("Erreur API:", response.status, response.statusText);
       }
     } catch (error) {
       console.error("Erreur lors de la récupération des tatoueurs:", error);
@@ -79,7 +89,6 @@ export default function Dashboard() {
       setLoadingArtists(false);
     }
   };
-
   const handleDeleteEvent = async (id: string) => {
     if (confirm("Êtes-vous sûr de vouloir supprimer cet événement ?")) {
       try {
@@ -87,7 +96,7 @@ export default function Dashboard() {
           method: "DELETE",
         });
 
-        if (response.ok) {  
+        if (response.ok) {
           fetchEvents();
         } else {
           alert("Erreur lors de la suppression de l'événement");
@@ -137,7 +146,7 @@ export default function Dashboard() {
   return (
     <div className="flex flex-col min-h-screen relative">
       <Header />
-
+  
       <Image
         src="/img/bg.jpeg"
         alt="Background image"
@@ -145,7 +154,7 @@ export default function Dashboard() {
         priority
         className="object-fit fixed top-0 left-0 z-0"
       />
-
+  
       <div className="flex-grow z-10 relative py-8">
         <div className="max-w-6xl mx-auto px-4">
           <div className="flex justify-between items-center mb-6">
@@ -157,7 +166,7 @@ export default function Dashboard() {
               Se déconnecter
             </button>
           </div>
-
+  
           {/* Onglets */}
           <div className="flex border-b border-gold mb-6">
             <button
@@ -181,7 +190,7 @@ export default function Dashboard() {
               Tatoueurs Vacataires
             </button>
           </div>
-
+  
           {/* Section Événements */}
           {activeTab === "events" && (
             <>
@@ -192,7 +201,7 @@ export default function Dashboard() {
                 >
                   {showEventForm ? "Masquer le formulaire" : "Ajouter un événement"}
                 </button>
-
+  
                 {showEventForm && (
                   <EventForm
                     onSuccess={() => {
@@ -202,10 +211,10 @@ export default function Dashboard() {
                   />
                 )}
               </div>
-
+  
               <div className="mb-8">
                 <h2 className="text-2xl font-bold mb-4 text-gold">Liste des événements</h2>
-
+  
                 {loading ? (
                   <p className="text-gray-500">Chargement des événements...</p>
                 ) : events.length === 0 ? (
@@ -228,7 +237,7 @@ export default function Dashboard() {
                             />
                           </div>
                         )}
-
+  
                         <div className="p-4">
                           <h3 className="text-xl font-bold mb-2 text-redlink">{event.title}</h3>
                           <p className="text-redlink mb-1">
@@ -243,7 +252,11 @@ export default function Dashboard() {
                             <span className="font-medium">Lieu:</span>{" "}
                             {event.location}
                           </p>
-
+                          <p className="text-redlink mb-3">
+                            <span className="font-medium">Lieu:</span>{" "}
+                            {event.adresse}
+                          </p>
+  
                           <div className="flex justify-end mt-4">
                             <button
                               onClick={() => handleDeleteEvent(event.id)}
@@ -260,7 +273,7 @@ export default function Dashboard() {
               </div>
             </>
           )}
-
+  
           {/* Section Tatoueurs Vacataires */}
           {activeTab === "artists" && (
             <>
@@ -271,7 +284,7 @@ export default function Dashboard() {
                 >
                   {showArtistForm ? "Masquer le formulaire" : "Ajouter un tatoueur"}
                 </button>
-
+  
                 {showArtistForm && (
                   <TattooArtistForm
                     onSuccess={() => {
@@ -281,7 +294,7 @@ export default function Dashboard() {
                   />
                 )}
               </div>
-
+  
               <div className="mb-8">
                 <h2 className="text-2xl font-bold mb-4 text-gold">Liste des tatoueurs vacataires</h2>
                 {loadingArtists ? (
@@ -313,26 +326,48 @@ export default function Dashboard() {
                             <p className="text-redlink text-sm">{artist.Description}</p>
                           </div>
                           
-                          {artist.Link && artist.Link.length > 0 && (
-                            <div className="mt-2 mb-3">
-                              <p className="font-medium text-redlink">Liens:</p>
-                              <ul className="list-disc list-inside text-sm">
-                                {artist.Link.map((link, idx) => (
-                                  <li key={idx} className="text-redlink truncate">
-                                    <a 
-                                      href={link} 
-                                      target="_blank" 
-                                      rel="noopener noreferrer"
-                                      className="text-blue-800 hover:underline"
-                                    >
-                                      {link}
-                                    </a>
-                                  </li>
-                                ))}
-                              </ul>
-                            </div>
-                          )}
-
+                          <div className="mt-2 mb-3">
+                            <p className="font-medium text-redlink">Liens:</p>
+                            <ul className="list-disc list-inside text-sm">
+                              {artist.facebookLink && (
+                                <li className="text-redlink truncate">
+                                  <a 
+                                    href={artist.facebookLink} 
+                                    target="_blank" 
+                                    rel="noopener noreferrer"
+                                    className="text-blue-800 hover:underline"
+                                  >
+                                    Facebook
+                                  </a>
+                                </li>
+                              )}
+                              {artist.instagramLink && (
+                                <li className="text-redlink truncate">
+                                  <a 
+                                    href={artist.instagramLink} 
+                                    target="_blank" 
+                                    rel="noopener noreferrer"
+                                    className="text-blue-800 hover:underline"
+                                  >
+                                    Instagram
+                                  </a>
+                                </li>
+                              )}
+                              {artist.websiteLink && (
+                                <li className="text-redlink truncate">
+                                  <a 
+                                    href={artist.websiteLink} 
+                                    target="_blank" 
+                                    rel="noopener noreferrer"
+                                    className="text-blue-800 hover:underline"
+                                  >
+                                    Site web
+                                  </a>
+                                </li>
+                              )}
+                            </ul>
+                          </div>
+  
                           <div className="flex justify-end mt-4">
                             <button
                               onClick={() => handleDeleteArtist(artist.id)}

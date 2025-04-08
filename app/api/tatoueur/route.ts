@@ -1,168 +1,195 @@
 import { NextResponse } from "next/server";
 import { PrismaClient } from "@prisma/client";
-import { Readable } from "stream";
+import { IncomingForm } from 'formidable';
+import { promises as fs } from 'fs';
 import cloudinary from "@/lib/cloudinary";
 import { z } from "zod";
 
 const prisma = new PrismaClient();
+const MAX_FILE_SIZE = 3 * 1024 * 1024; // 3 Mo
 
-cloudinary.config({
-  cloud_name: process.env.CLOUDINARY_CLOUD_NAME,
-  api_key: process.env.CLOUDINARY_API_KEY,
-  api_secret: process.env.CLOUDINARY_API_SECRET,
-});
-// Schéma de validation des données
+export const config = {
+  api: {
+    bodyParser: false,
+  },
+};
+
 const tattooArtistSchema = z.object({
   name: z.string().min(1, "Le nom est requis"),
-  description: z.string().optional(),
-  technique: z.string().optional(),
-  style: z.string().optional(),
-  facebookLink: z.string().url().optional(),
-  instagramLink: z.string().url().optional(),
-  websiteLink: z.string().url().optional(),
+  description: z.string().min(1, "La description est requise"),
+  technique: z.string().min(1, "La technique est requise"),
+  style: z.string().min(1, "Le style est requis"),
+  facebookLink: z.string().url("URL Facebook invalide").or(z.literal("")).transform(v => v || null),
+  instagramLink: z.string().url("URL Instagram invalide").or(z.literal("")).transform(v => v || null),
+  websiteLink: z.string().url("URL Site Web invalide").or(z.literal("")).transform(v => v || null),
+  profilPic: z.string().url("URL de l'image de profil invalide").min(1, "L'image de profil est requise"),
+  workPics: z.array(z.string().url("URL d'image de travail invalide")).default([]),
 });
 
-// Convertir un buffer en ReadableStream pour Cloudinary
-const bufferToStream = (buffer: Buffer): Readable => {
-  const stream = new Readable();
-  stream.push(buffer);
-  stream.push(null);
-  return stream;
+const uploadImageToCloudinary = async (filePath: string, folder: string): Promise<string> => {
+  try {
+    const result = await cloudinary.uploader.upload(filePath, {
+      folder: 'tattoo_artists',
+      transformation: [{ width: 1200, height: 1200, crop: "limit" }],
+    });
+    return result.secure_url;
+  } catch (error) {
+    console.error("Erreur d'upload Cloudinary:", error);
+    throw new Error("Échec de l'upload vers Cloudinary");
+  }
 };
 
-// Upload d'image sur Cloudinary
-const uploadImageToCloudinary = async (
-  buffer: Buffer,
-  folder: string
-): Promise<string> => {
-  const stream = bufferToStream(buffer);
-  return new Promise((resolve, reject) => {
-    const uploadStream = cloudinary.uploader.upload_stream(
-      {
-        folder,
-        transformation: [{ width: 1200, height: 1200, crop: "limit" }],
-      },
-      (error, result) => {
-        if (error) {
-          reject(error);
-        } else {
-          resolve(result!.secure_url);
-        }
-      }
-    );
-    stream.pipe(uploadStream);
-  });
-};
-
-// Extraire le `public_id` d'une image Cloudinary
 const extractPublicIdFromUrl = (url: string): string | null => {
   const matches = url.match(/\/(?:v\d+\/)?([^/]+)\.\w+$/);
   return matches ? matches[1] : null;
 };
 
-// 🚀 **Créer un tatoueur**
 export async function POST(req: Request) {
   try {
-    // Parse the request body
-    let body;
-    try {
-      body = await req.json();
-    } catch (error) {
-      console.error("Failed to parse request body:", error);
+    const formData = await req.formData();
+    const files: Record<string, File[]> = {};
+    const fields: Record<string, string> = {};
+
+    for (const [key, value] of formData.entries()) {
+      if (value instanceof File) {
+        if (!files[key]) files[key] = [];
+        files[key].push(value);
+      } else {
+        fields[key] = value as string;
+      }
+    }
+
+    let profilPicUrl = '';
+    if (files.profilPic?.[0]) {
+      const file = files.profilPic[0];
+      if (file.size > MAX_FILE_SIZE) {
+        return NextResponse.json(
+          { message: "L'image de profil ne doit pas dépasser 3 Mo" },
+          { status: 400 }
+        );
+      }
+      const buffer = await file.arrayBuffer();
+      const tempFilePath = `/tmp/${file.name}`;
+      await fs.writeFile(tempFilePath, Buffer.from(buffer));
+      profilPicUrl = await uploadImageToCloudinary(tempFilePath, 'profile_pics');
+      await fs.unlink(tempFilePath);
+    }
+
+    const workPicUrls: string[] = [];
+    if (files.workPics) {
+      for (const file of files.workPics) {
+        if (file.size > MAX_FILE_SIZE) {
+          return NextResponse.json(
+            { message: `L'image ${file.name} ne doit pas dépasser 3 Mo` },
+            { status: 400 }
+          );
+        }
+        const buffer = await file.arrayBuffer();
+        const tempFilePath = `/tmp/${file.name}`;
+        await fs.writeFile(tempFilePath, Buffer.from(buffer));
+        const url = await uploadImageToCloudinary(tempFilePath, 'work_pics');
+        workPicUrls.push(url);
+        await fs.unlink(tempFilePath);
+      }
+    }
+
+    const validatedData = tattooArtistSchema.parse({
+      ...fields,
+      profilPic: profilPicUrl,
+      workPics: workPicUrls,
+    });
+
+    const newTattooArtist = await prisma.tattoueurs.create({
+      data: {
+        name: validatedData.name,
+        Description: validatedData.description,
+        Technique: validatedData.technique,
+        Style: validatedData.style,
+        facebookLink: validatedData.facebookLink,
+        instagramLink: validatedData.instagramLink,
+        websiteLink: validatedData.websiteLink,
+        profilPic: {
+          create: {
+            url: validatedData.profilPic,
+          },
+        },
+        workPics: {
+          create: validatedData.workPics.map(url => ({ url })),
+        },
+      },
+      include: {
+        profilPic: true,
+        workPics: true,
+      },
+    });
+
+    return NextResponse.json(newTattooArtist, { status: 201 });
+  } catch (err) {
+    console.error("Erreur POST /api/tatoueur:", err);
+
+    if (err instanceof z.ZodError) {
       return NextResponse.json(
-        { message: "Invalid JSON body" },
+        {
+          message: "Données invalides",
+          errors: err.errors.map(e => ({
+            path: e.path.join('.'),
+            message: e.message
+          }))
+        },
         { status: 400 }
       );
     }
 
-    // Create the tattoo artist record
-    try {
-      const tattooArtist = await prisma.tattoueurs.create({
-        data: {
-          name: body.name,
-          Description: body.Description || "",
-          Technique: body.Technique || "",
-          Style: body.Style || "",
-          image: body.image || null,
-          projectImages: Array.isArray(body.projectImages)
-            ? body.projectImages
-            : [],
-          facebookLink: body.facebookLink || null,
-          instagramLink: body.instagramLink || null,
-          websiteLink: body.websiteLink || null,
-        },
-      });
-
-      return NextResponse.json(
-        { success: true, tattooArtist },
-        { status: 201 }
-      );
-    } catch (dbError) {
-      console.error("Database error:", dbError);
-      return NextResponse.json(
-        {
-          message: "Failed to create record in database",
-          error:
-            dbError instanceof Error
-              ? dbError.message
-              : "Unknown database error",
-        },
-        { status: 500 }
-      );
-    }
-  } catch (error) {
-    console.error("Unhandled error:", error);
     return NextResponse.json(
-      {
-        message: "Server error",
-        error: error instanceof Error ? error.message : "Unknown error",
-      },
+      { message: err instanceof Error ? err.message : "Erreur serveur lors de l'ajout." },
       { status: 500 }
     );
   }
 }
 
-// 🚀 **Supprimer un tatoueur**
 export async function DELETE(req: Request) {
   try {
     const url = new URL(req.url);
     const id = url.searchParams.get("id");
 
-    if (!id)
-      return NextResponse.json({ message: "ID requis" }, { status: 400 });
+    if (!id) return NextResponse.json({ message: "ID requis" }, { status: 400 });
+
+    const intId = parseInt(id);
+    if (isNaN(intId)) return NextResponse.json({ message: "ID invalide" }, { status: 400 });
 
     await prisma.$transaction(async (tx) => {
       const tattooArtist = await tx.tattoueurs.findUnique({
-        where: { id },
+        where: { id: intId },
+        include: { profilPic: true, workPics: true },
       });
 
-      if (!tattooArtist) {
-        throw new Error("Tatoueur introuvable");
-      }
+      if (!tattooArtist) throw new Error("Tatoueur introuvable");
 
-      if (tattooArtist.image) {
-        const publicId = extractPublicIdFromUrl(tattooArtist.image);
+      if (tattooArtist.profilPic?.url) {
+        const publicId = extractPublicIdFromUrl(tattooArtist.profilPic.url);
         if (publicId) await cloudinary.uploader.destroy(publicId);
       }
 
-      await Promise.all(
-        tattooArtist.projectImages.map(async (img) => {
-          const publicId = extractPublicIdFromUrl(img);
-          if (publicId) await cloudinary.uploader.destroy(publicId);
-        })
-      );
+      for (const pic of tattooArtist.workPics) {
+        const publicId = extractPublicIdFromUrl(pic.url);
+        if (publicId) await cloudinary.uploader.destroy(publicId);
+      }
 
-      await tx.tattoueurs.delete({ where: { id } });
+      await tx.profilPic.deleteMany({ where: { TatoueurId: intId } });
+      await tx.workPics.deleteMany({ where: { TatoueurId: intId } });
+      await tx.tattoueurs.delete({ where: { id: intId } });
     });
 
     return NextResponse.json({ message: "Tatoueur supprimé" }, { status: 200 });
   } catch (error) {
-    console.error("Erreur lors de la suppression:", error);
-    return NextResponse.json({ message: "Erreur serveur" }, { status: 500 });
+    console.error("DELETE error:", error);
+    return NextResponse.json(
+      { message: error instanceof Error ? error.message : "Erreur serveur" },
+      { status: 500 }
+    );
   }
 }
 
-// 🚀 **Récupérer un ou plusieurs tatoueurs**
 export async function GET(req: Request) {
   try {
     const url = new URL(req.url);
@@ -170,20 +197,60 @@ export async function GET(req: Request) {
 
     if (id) {
       const tattooArtist = await prisma.tattoueurs.findUnique({
-        where: { id },
+        where: { id: parseInt(id) },
+        include: {
+          profilPic: true,
+          workPics: true,
+        },
       });
-      if (!tattooArtist)
-        return NextResponse.json(
-          { message: "Tatoueur non trouvé" },
-          { status: 404 }
-        );
-      return NextResponse.json({ tattooArtist });
+
+      if (!tattooArtist) {
+        return NextResponse.json({ message: "Tatoueur non trouvé" }, { status: 404 });
+      }
+      const formattedResponse = {
+        id: tattooArtist.id,
+        name: tattooArtist.name,
+        Description: tattooArtist.Description,
+        Technique: tattooArtist.Technique,
+        Style: tattooArtist.Style,
+        facebookLink: tattooArtist.facebookLink,
+        instagramLink: tattooArtist.instagramLink,
+        websiteLink: tattooArtist.websiteLink,
+        profilPic: tattooArtist.profilPic?.url || null,
+        workPics: tattooArtist.workPics.map(pic => pic.url) || []
+      };
+
+      return NextResponse.json(formattedResponse);
     }
 
-    const tattooArtists = await prisma.tattoueurs.findMany();
-    return NextResponse.json({ tattooArtists });
+    // Récupération de tous les tatoueurs
+    const tattooArtists = await prisma.tattoueurs.findMany({
+      include: {
+        profilPic: true,
+        workPics: true,
+      },
+    });
+
+    // Formatage de la réponse pour tous les tatoueurs
+    const formattedResponse = tattooArtists.map(artist => ({
+      id: artist.id,
+      name: artist.name,
+      Description: artist.Description,
+      Technique: artist.Technique,
+      Style: artist.Style,
+      facebookLink: artist.facebookLink,
+      instagramLink: artist.instagramLink,
+      websiteLink: artist.websiteLink,
+      profilPic: artist.profilPic?.url || null,
+      workPics: artist.workPics.map(pic => pic.url) || []
+    }));
+
+    return NextResponse.json(formattedResponse);
   } catch (error) {
-    console.error("Erreur lors de la récupération:", error);
-    return NextResponse.json({ message: "Erreur serveur" }, { status: 500 });
+    console.error("GET error:", error);
+    return NextResponse.json(
+      { message: error instanceof Error ? error.message : "Erreur serveur" },
+      { status: 500 }
+    );
   }
 }
