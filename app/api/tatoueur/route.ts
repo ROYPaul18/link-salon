@@ -25,7 +25,7 @@ const tattooArtistSchema = z.object({
   workPics: z.array(z.string().url("URL d'image de travail invalide")).default([]),
 });
 
-const uploadImageToCloudinary = async (filePath: string, folder: string): Promise<string> => {
+const uploadImageToCloudinary = async (filePath: string): Promise<string> => {
   try {
     const result = await cloudinary.uploader.upload(filePath, {
       folder: 'tattoo_artists',
@@ -70,7 +70,7 @@ export async function POST(req: Request) {
       const buffer = await file.arrayBuffer();
       const tempFilePath = `/tmp/${file.name}`;
       await fs.writeFile(tempFilePath, Buffer.from(buffer));
-      profilPicUrl = await uploadImageToCloudinary(tempFilePath, 'profile_pics');
+      profilPicUrl = await uploadImageToCloudinary(tempFilePath);
       await fs.unlink(tempFilePath);
     }
 
@@ -86,7 +86,7 @@ export async function POST(req: Request) {
         const buffer = await file.arrayBuffer();
         const tempFilePath = `/tmp/${file.name}`;
         await fs.writeFile(tempFilePath, Buffer.from(buffer));
-        const url = await uploadImageToCloudinary(tempFilePath, 'work_pics');
+        const url = await uploadImageToCloudinary(tempFilePath);
         workPicUrls.push(url);
         await fs.unlink(tempFilePath);
       }
