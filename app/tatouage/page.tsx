@@ -16,9 +16,12 @@ const Page = () => {
         playsInline
       />
       <div className="absolute top-0 left-0 w-full h-full bg-black opacity-70 -z-10"></div>
-      <Header />      
+      <Header />
       <div className="flex-grow flex items-center justify-center px-4 py-8">
         <div className="relative w-full max-w-6xl my-auto">
+          <div className="font-rehat text-xl sm:text-2xl 2xl:text-3xl text-gold mb-8 text-center">
+            Choisi ton artiste
+          </div>
           <div
             className="w-full font-rehat text-3xl sm:text-4xl md:text-5xl lg:text-6xl 2xl:text-9xl text-gold flex flex-col sm:flex-row sm:space-x-4 md:space-x-8 lg:space-x-12 space-y-6 sm:space-y-0 items-center justify-center"
             style={{
@@ -27,32 +30,40 @@ const Page = () => {
             }}
           >
             <Link href="/tatouage/gael">
-              <div className="cursor-pointer rounded-lg transition-transform duration-300 hover:scale-110" title="Gaël">
+              <div
+                className="cursor-pointer rounded-lg transition-transform duration-300 hover:scale-110"
+                title="Gaël"
+              >
                 Gael
               </div>
             </Link>
-            
+
             <Link href="/tatouage/chloe">
-              <div className="cursor-pointer rounded-lg transition-transform duration-300 hover:scale-110" title="Chloé">
+              <div
+                className="cursor-pointer rounded-lg transition-transform duration-300 hover:scale-110"
+                title="Chloé"
+              >
                 Chloé
               </div>
             </Link>
-            
+
             <Link href="/tatouage/axelle">
-              <div className="cursor-pointer rounded-lg transition-transform duration-300 hover:scale-110" title="Axelle">
+              <div
+                className="cursor-pointer rounded-lg transition-transform duration-300 hover:scale-110"
+                title="Axelle"
+              >
                 Axelle
               </div>
             </Link>
-            
+
             <Link href="/tatouage/autres">
-              <div className="cursor-pointer rounded-lg transition-transform duration-300 hover:scale-110" title="Autres">
+              <div
+                className="cursor-pointer rounded-lg transition-transform duration-300 hover:scale-110"
+                title="Autres"
+              >
                 Autres
               </div>
             </Link>
-          </div>
-          
-          <div className="font-rehat text-xl sm:text-2xl 2xl:text-3xl text-gold mt-8 text-center">
-            Choisi ton artiste
           </div>
         </div>
       </div>

@@ -15,6 +15,9 @@ const geistMono = Geist_Mono({
 
 // Configuration des métadonnées
 export const metadata: Metadata = {
+  icons: {
+    icon: "/img/favicon.ico",
+  },
   metadataBase: new URL('https://link-salon.com'),
   keywords: [
     'Link Salon',
@@ -61,7 +64,7 @@ export default function RootLayout({
     <html lang="fr">
       <head>
         <link rel="stylesheet" href={googleFontsURL} />
-        <link rel="icon" href="/logo.ico" sizes="any" />
+        <link rel="icon" href="/img/logo.ico" sizes="any" />
       </head>
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}

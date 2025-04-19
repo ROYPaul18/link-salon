@@ -2,6 +2,7 @@
 import Image from "next/image";
 import Header from "./ui/header";
 import Footer from "./ui/footer";
+import Link from "next/link";
 
 export default function Home() {
   return (
@@ -18,7 +19,7 @@ export default function Home() {
       <Header />
       <main className="relative z-10 min-h-screen  md:px-8 2xl:px-20 space-y-16 md:space-y-24">
         {/* Section d'introduction */}
-        <section className="flex flex-col md:flex-row justify-between md:space-x-2 min-h-[40vh] md:min-h-[50vh] mt-6 md:mt-12">
+        <section className="flex flex-col md:flex-row justify-between items-center md:space-x-2 min-h-[40vh] md:min-h-[50vh]">
           <div className="w-full text-center">
             <h1 className="text-6xl md:text-7xl 2xl:text-8xl font-artisual-deco text-gold mb-4 md:mb-8">
               L&apos;Ink House
@@ -36,30 +37,35 @@ export default function Home() {
             title: "Tatouage",
             desc: "Chez L'Ink House votre projet tatouage est étudié sérieusement : - Nous prenons le temps de comprendre l'intention de votre projet, la signification du tatouage. - Nous vous proposons des éléments, une composition qui répondent à votre envie - Nous trouvons avec vous la taille adaptée ainsi que le meilleur emplacement. - Nous fournissons le dessin à l'avance pour vous laisser le contrôle. Bref. Nous construisons votre projet ensemble et vous repartez avec ce que vous espériez !",
             video: "/video/tattoo.mp4",
+            link:"/tatouage"
           },
           {
             title: "Salon de thé",
             desc: "L'espace détente L'ink est à votre disposition, en libre service, pour vous permettre de vous servir une boisson (chaude ou froide), jouer à un jeu de société, lire un livre, travailler, ou simplement discuter entre amis. Servez-vous, installez-vous et profitez !",
             video: "/video/salon.mp4",
             reverse: true,
+            link:"/salon"
           },
           {
             title: "Prothésiste ongulaire",
             desc: "Chloé vous accueille sur rendez vous pour embellir vos ongles. Egalement tatoueuse, sa maîtrise du dessin vous permettra d'arborer des décors uniques.",
             img: "/img/test.png",
+            link:"/prothese"
           },
           {
             title: "Piercing",
             desc: "Clothilde vous offre une prestation piercing de précision, dans les normes d'hygiène et de sécurité. Ses conseils vous aideront à choisir l'emplacement idéal pour votre futur bijou !",
             img: "/img/test.png",
             reverse: true,
+            link:"/piercing"
           },
           {
             title: "Événements",
             desc: "L'ink House organise régulièrement des évènements, consultez-ici ceux passés et ceux à venir.",
             img: "/img/event.jpg",
+            link:"/event"
           },
-        ].map(({ title, desc, img, video, reverse }, index) => (
+        ].map(({ title, desc, img, video, reverse, link }, index) => (
           <section
             key={index}
             className={`flex flex-col md:flex-row justify-between mt-16 md:mt-24 sm:px-0 md:px-8 lg:px-12 ${
@@ -68,6 +74,7 @@ export default function Home() {
           >
             <div className="w-full md:w-1/2 flex justify-center md:justify-start">
               <div className="w-full">
+              <Link href={link} className="w-full">
                 {video ? (
                   <video src={video} autoPlay muted loop disablePictureInPicture playsInline className="" />
                 ) : (
@@ -79,6 +86,7 @@ export default function Home() {
                     className="w-full h-auto sm:py-2"
                   />
                 )}
+                </Link>
               </div>
             </div>
             <div className="w-full md:w-1/2 px-4 md:px-8 flex flex-col">

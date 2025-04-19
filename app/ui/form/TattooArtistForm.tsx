@@ -197,7 +197,7 @@ export default function TattooArtistForm({ onSuccess }: TattooArtistFormProps) {
   };
 
   return (
-    <div className="bg-[#1a1a1a] p-8 rounded-lg shadow-lg mb-8 border-2 border-[#b8860b]">
+    <div className="bg-redlink p-8 rounded-lg shadow-lg mb-8 border-2 border-[#b8860b]">
       <h2 className="text-2xl font-bold mb-6 text-[#b8860b] border-b-2 border-[#b8860b] pb-2">
         Ajouter un tatoueur
       </h2>
@@ -217,7 +217,7 @@ export default function TattooArtistForm({ onSuccess }: TattooArtistFormProps) {
             value={formData.name}
             onChange={handleChange}
             required
-            className="w-full px-4 py-3 bg-[#2c2c2c] text-white rounded border border-[#444] focus:border-[#b8860b] focus:outline-none focus:ring-1 focus:ring-[#b8860b] transition-colors"
+            className="w-full px-4 py-3 bg-gold text-black rounded border border-[#444] focus:border-[#b8860b] focus:outline-none focus:ring-1 focus:ring-[#b8860b] transition-colors"
           />
         </div>
 
@@ -233,12 +233,12 @@ export default function TattooArtistForm({ onSuccess }: TattooArtistFormProps) {
                   accept="image/jpeg, image/png, image/webp"
                   onChange={handleImageUpload}
                   ref={fileInputRef}
-                  className="w-full px-4 py-3 bg-[#2c2c2c] text-white rounded border border-[#444] focus:border-[#b8860b] focus:outline-none"
+                  className="w-full px-4 py-3 bg-gold text-white rounded border border-[#444] focus:border-[#b8860b] focus:outline-none"
                 />
                 <button
                   type="button"
                   onClick={() => fileInputRef.current?.click()}
-                  className="absolute right-0 top-0 h-full px-4 bg-[#b8860b] text-black rounded-r hover:bg-[#9c7209] transition-colors"
+                  className="absolute right-0 top-0 h-full px-4 bg-gold text-black rounded-r hover:bg-[#9c7209] transition-colors"
                 >
                   Parcourir
                 </button>
@@ -266,7 +266,7 @@ export default function TattooArtistForm({ onSuccess }: TattooArtistFormProps) {
                   </button>
                 </div>
               ) : (
-                <div className="w-40 h-40 border-2 border-dashed border-[#444] rounded flex items-center justify-center text-gray-400">
+                <div className="w-40 h-40 border-2 border-dashed border-gold rounded flex items-center justify-center text-gray-400">
                   Aperçu image
                 </div>
               )}
@@ -275,7 +275,7 @@ export default function TattooArtistForm({ onSuccess }: TattooArtistFormProps) {
         </div>
 
         <div>
-          <label className="block text-[#b8860b] mb-2 font-medium">
+          <label className="block text-gold mb-2 font-medium">
             Description
           </label>
           <textarea
@@ -284,13 +284,13 @@ export default function TattooArtistForm({ onSuccess }: TattooArtistFormProps) {
             onChange={handleChange}
             required
             rows={4}
-            className="w-full px-4 py-3 bg-[#2c2c2c] text-white rounded border border-[#444] focus:border-[#b8860b] focus:outline-none focus:ring-1 focus:ring-[#b8860b] transition-colors"
+            className="w-full px-4 py-3 bg-gold text-black rounded border border-[#444] focus:border-[#b8860b] focus:outline-none focus:ring-1 focus:ring-[#b8860b] transition-colors"
           />
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
           <div>
-            <label className="block text-[#b8860b] mb-2 font-medium">
+            <label className="block text-gold mb-2 font-medium">
               Technique
             </label>
             <input
@@ -299,12 +299,12 @@ export default function TattooArtistForm({ onSuccess }: TattooArtistFormProps) {
               value={formData.Technique}
               onChange={handleChange}
               required
-              className="w-full px-4 py-3 bg-[#2c2c2c] text-white rounded border border-[#444] focus:border-[#b8860b] focus:outline-none focus:ring-1 focus:ring-[#b8860b] transition-colors"
+              className="w-full px-4 py-3 bg-gold text-black rounded border border-[#444] focus:border-[#b8860b] focus:outline-none focus:ring-1 focus:ring-[#b8860b] transition-colors"
             />
           </div>
 
           <div>
-            <label className="block text-[#b8860b] mb-2 font-medium">
+            <label className="block text-gold mb-2 font-medium">
               Style
             </label>
             <input
@@ -313,12 +313,12 @@ export default function TattooArtistForm({ onSuccess }: TattooArtistFormProps) {
               value={formData.Style}
               onChange={handleChange}
               required
-              className="w-full px-4 py-3 bg-[#2c2c2c] text-white rounded border border-[#444] focus:border-[#b8860b] focus:outline-none focus:ring-1 focus:ring-[#b8860b] transition-colors"
+              className="w-full px-4 py-3 bg-gold text-black rounded border border-[#444] focus:border-[#b8860b] focus:outline-none focus:ring-1 focus:ring-[#b8860b] transition-colors"
             />
           </div>
         </div>
 
-        <div className="bg-[#2a2a2a] p-4 rounded-lg border border-[#444]">
+        <div className="bg-gold p-4 rounded-lg border border-[#444]">
           <h3 className="text-[#b8860b] mb-4 font-medium border-b border-[#444] pb-2">
             Liens sociaux
           </h3>
@@ -335,7 +335,7 @@ export default function TattooArtistForm({ onSuccess }: TattooArtistFormProps) {
                   value={formData.facebookLink}
                   onChange={handleChange}
                   placeholder="https://facebook.com/..."
-                  className="w-full pl-10 pr-4 py-3 bg-[#2c2c2c] text-white rounded border border-[#444] focus:border-[#b8860b] focus:outline-none"
+                  className="w-full pl-10 pr-4 py-3 bg-gold text-black rounded border border-[#444] focus:border-[#b8860b] focus:outline-none"
                 />
               </div>
             </div>
@@ -352,7 +352,7 @@ export default function TattooArtistForm({ onSuccess }: TattooArtistFormProps) {
                   value={formData.instagramLink}
                   onChange={handleChange}
                   placeholder="https://instagram.com/..."
-                  className="w-full pl-10 pr-4 py-3 bg-[#2c2c2c] text-white rounded border border-[#444] focus:border-[#b8860b] focus:outline-none"
+                  className="w-full pl-10 pr-4 py-3 bg-gold text-black rounded border border-[#444] focus:border-[#b8860b] focus:outline-none"
                 />
               </div>
             </div>
@@ -369,7 +369,7 @@ export default function TattooArtistForm({ onSuccess }: TattooArtistFormProps) {
                   value={formData.websiteLink}
                   onChange={handleChange}
                   placeholder="https://..."
-                  className="w-full pl-10 pr-4 py-3 bg-[#2c2c2c] text-white rounded border border-[#444] focus:border-[#b8860b] focus:outline-none"
+                  className="w-full pl-10 pr-4 py-3 bg-gold text-black rounded border border-[#444] focus:border-[#b8860b] focus:outline-none"
                 />
               </div>
             </div>
@@ -387,12 +387,12 @@ export default function TattooArtistForm({ onSuccess }: TattooArtistFormProps) {
               multiple
               ref={multipleFileInputRef}
               onChange={handleProjectImagesUpload}
-              className="w-full px-4 py-3 bg-[#2c2c2c] text-white rounded border border-[#444] focus:border-[#b8860b] focus:outline-none"
+              className="w-full px-4 py-3 bg-gold text-black rounded border border-[#444] focus:border-[#b8860b] focus:outline-none"
             />
             <button
               type="button"
               onClick={() => multipleFileInputRef.current?.click()}
-              className="absolute right-0 top-0 h-full px-4 bg-[#b8860b] text-black rounded-r hover:bg-[#9c7209] transition-colors"
+              className="absolute right-0 top-0 h-full px-4 bg-[#b8860b] text-black rounded hover:bg-[#9c7209] transition-colors"
             >
               Parcourir
             </button>
@@ -400,7 +400,7 @@ export default function TattooArtistForm({ onSuccess }: TattooArtistFormProps) {
           <small className="text-gray-400 block mt-1">
             Taille max par image: 3 Mo (JPEG, PNG, WebP)
           </small>
-
+ 
           {previewProjectImages.length > 0 && (
             <div className="mt-4">
               <h4 className="text-[#b8860b] mb-2">Aperçu des projets</h4>
