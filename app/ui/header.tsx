@@ -2,7 +2,7 @@
 import React, { useState } from "react";
 import Link from "next/link";
 import Image from "next/image";
-
+ 
 const Header = () => {
   const [menuOpen, setMenuOpen] = useState(false);
 
@@ -11,7 +11,7 @@ const Header = () => {
   };
 
   return (
-    <header className="relative z-20 text-gold font-arcane-nine">
+    <header className="fixed top-0 left-0 right-0 z-20 text-gold font-arcane-nine backdrop-blur-md">
       <div className="flex justify-between lg:justify-center items-center p-4 md:p-8 md:pb-2">
         <div className="z-30 mr-24">
           <Link href={"/"}>

@@ -83,7 +83,7 @@ const EventsPage = () => {
         />
       </div>
 
-      <div className="relative flex-grow">
+      <main className="relative z-10 min-h-screen pt-20 md:pt-32">
         <div className="relative z-10 py-16 px-4 max-w-6xl mx-auto">
           <h1 className="text-center font-rehat text-gold text-6xl 2xl:text-8xl mb-10">
             Événements
@@ -162,7 +162,7 @@ const EventsPage = () => {
             )}
           </div>
         </div>
-      </div>
+      </main>
       <Footer />
     </div>
   );

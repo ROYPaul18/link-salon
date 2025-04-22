@@ -23,7 +23,7 @@ const artistsData: ArtistsDataMap = {
 };
 const Page = () => {
   return (
-    <div className="relative min-h-screen w-full">
+    <div className="absolute min-h-screen w-full">
       <Image
         src="/img/bg.jpeg"
         alt="Background image"
@@ -32,7 +32,7 @@ const Page = () => {
         className="object-fit fixed top-0 left-0 z-0"
       />
       <Header />
-      <main className="relative z-10 min-h-screen">
+      <main className="relative z-10 min-h-screen pt-20 md:pt-32">
         <section className="flex flex-col gap-6 md:gap-12 px-4 sm:px-8 md:px-16 mt-4 md:mt-8">
           {/* Top section with main image and text */}
           <div className="flex flex-col md:flex-row gap-6 md:gap-12">
@@ -64,12 +64,6 @@ const Page = () => {
                 prendre votre rendez vous :
               </p>
               <div className="flex space-x-4 font-rehat text-base md:text-xl 2xl:text-4xl">
-                <a
-                  href="tattooaxelle@gmail.com"
-                  className=" text-gold hover:underline"
-                >
-                  tattooaxelle@gmail.com
-                </a>
                 <Link
                   href="https://www.instagram.com/axelletattoo?igsh=MTFtYm13NjZ2MndraA%3D%3D"
                   className="text-gold hover:underline"

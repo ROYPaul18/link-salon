@@ -17,7 +17,7 @@ const Page = () => {
         sizes="100vw"
       />
       <Header />
-      <main className="relative z-10 min-h-screen">
+      <main className="relative z-10 min-h-screen pt-20 md:pt-32">
         {/* Section harmonisée - celle-ci reste identique */}
         <section className="flex flex-col-reverse md:flex-row justify-between md:space-x-2 min-h-[50vh] md:min-h-[60vh] mt-6 md:mt-12 ml-0 md:ml-12 ">
           <div className="w-full md:w-1/3 my-8  md:mb-0 text-left md:text-left px-4 ">
