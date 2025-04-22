@@ -39,16 +39,29 @@ interface TattooArtist {
 }
 
 // Interfaces pour PayPal
+interface PayPalOrderData {
+  purchase_units: Array<{
+    description: string;
+    amount: {
+      value: string;
+      currency_code: string;
+    };
+  }>;
+  application_context?: {
+    shipping_preference: string;
+  };
+}
+
 interface PayPalActions {
   order: {
-    create: (orderData: any) => Promise<string>;
-    capture: () => Promise<any>;
+    create: (orderData: PayPalOrderData) => Promise<string>;
+    capture: () => Promise<Record<string, unknown>>;
   };
 }
 
 interface PayPalData {
   orderID?: string;
-  [key: string]: any;
+  [key: string]: unknown;
 }
 
 const Page = () => {
@@ -190,7 +203,7 @@ const Page = () => {
                 label: "paypal",
                 height: 40,
               },
-              createOrder: function (data: unknown, actions: PayPalActions) {
+              createOrder: function (data: PayPalData, actions: PayPalActions) {
                 return actions.order.create({
                   purchase_units: [
                     {
@@ -206,7 +219,7 @@ const Page = () => {
                   },
                 });
               },
-              onApprove: function (data: unknown, actions: PayPalActions) {
+              onApprove: function (data: PayPalData, actions: PayPalActions) {
                 return actions.order.capture().then(function () {
                   alert("Paiement réussi! Merci pour votre réservation.");
                 });
@@ -614,6 +627,7 @@ const Page = () => {
 declare global {
   interface Window {
     paypal: {
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
       Buttons: (config: any) => {
         render: (containerId: string) => void;
       };
