@@ -13,6 +13,20 @@ interface ContactInfo {
   url: string;
 }
 
+// Define the PayPal button configuration interface
+interface PayPalButtonConfig {
+  style?: {
+    layout?: 'vertical' | 'horizontal';
+    color?: 'gold' | 'blue' | 'silver' | 'white' | 'black';
+    shape?: 'rect' | 'pill';
+    label?: 'paypal' | 'checkout' | 'buynow' | 'pay';
+    height?: number;
+  };
+  createOrder: (data: PayPalData, actions: PayPalActions) => Promise<string>;
+  onApprove: (data: PayPalData, actions: PayPalActions) => Promise<void | Record<string, unknown>>;
+  onError?: (err: Error) => void;
+  onCancel?: (data: PayPalData) => void;
+}
 interface ArtistData {
   name: string;
   description: string;
@@ -623,12 +637,11 @@ const Page = () => {
   );
 };
 
-// Pour TypeScript, ajoutez la déclaration pour PayPal
+// For TypeScript, add proper PayPal declaration
 declare global {
   interface Window {
     paypal: {
-      
-      Buttons: (config: any) => {
+      Buttons: (config: PayPalButtonConfig) => {
         render: (containerId: string) => void;
       };
     };
