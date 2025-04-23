@@ -366,7 +366,7 @@ const Page = () => {
       <div className="absolute top-0 left-0 w-full h-full bg-black opacity-70 -z-10"></div>
       <Header />
 
-      <main className="flex-grow relative z-10 pt-20 md:pt-36 pb-12">
+      <main className="flex-grow relative z-10 min-h-screen pt-28 md:pt-36">
         <div className="container mx-auto px-4">
           {/* Section tatoueurs fixes (Gael, Axelle, Chloé) */}
           {Object.keys(artistsData).map((artistKey) => {
@@ -627,7 +627,7 @@ const Page = () => {
 declare global {
   interface Window {
     paypal: {
-      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      
       Buttons: (config: any) => {
         render: (containerId: string) => void;
       };

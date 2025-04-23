@@ -13,7 +13,7 @@ const Header = () => {
   return (
     <header className="fixed top-0 left-0 right-0 z-20 text-gold font-arcane-nine backdrop-blur-md">
       <div className="flex justify-between lg:justify-center items-center p-4 md:p-8 md:pb-2">
-        <div className="z-30 mr-24">
+        <div className="z-30 md:mr-8">
           <Link href={"/"}>
             <Image
               src={"/img/chloe/logo.png"}
@@ -96,7 +96,7 @@ const Header = () => {
 
         {/* Overlay de navigation mobile */}
         <div
-          className={`fixed inset-0  z-20 transition-opacity duration-300 md:hidden ${
+          className={`fixed inset-0 top-0 z-20 h-[100vh] w-full transition-opacity duration-300 md:hidden ${
             menuOpen ? "opacity-100" : "opacity-0 pointer-events-none"
           }`}
         >
@@ -113,7 +113,7 @@ const Header = () => {
             />
           )}
           <nav className="h-full flex items-center justify-center">
-            <ul className="flex flex-col items-center space-y-8 text-2xl font-rehat">
+            <ul className="flex flex-col items-center space-y-6 text-2xl font-rehat">
               <li>
                 <Link
                   href={"/tatouage"}

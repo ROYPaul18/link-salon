@@ -17,7 +17,7 @@ export default function Home() {
         quality={100}
       />
       <Header />
-      <main className="relative z-10 min-h-screen  md:px-8 2xl:px-20 space-y-16 md:space-y-24">
+      <main className="relative z-10 min-h-screen  pt-28 md:pt-32 md:px-8 2xl:px-20 space-y-16 md:space-y-24">
         {/* Section d'introduction */}
         <section className="flex flex-col md:flex-row justify-between items-center md:space-x-2 min-h-[40vh] md:min-h-[50vh]">
           <div className="w-full text-center">
