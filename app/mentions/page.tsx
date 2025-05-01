@@ -26,7 +26,7 @@ const LegalMentions = () => {
           <section>
             <h2 className="text-2xl font-artisual-deco text-gold mb-2">Éditeur du site</h2>
             <p className="font-alte text-gold text-lg leading-relaxed">
-              Raison sociale : L’ink<br />
+              Raison sociale : L&rsquo;ink<br />
               Forme juridique : SASU<br />
               Capital social : 1 000 euros<br />
               Siège social : 7 rue de la mairie, 18340 Soye-en-Septaine, France<br />
@@ -79,8 +79,8 @@ const LegalMentions = () => {
           <section>
             <h2 className="text-2xl font-artisual-deco text-gold mb-2">Propriété intellectuelle</h2>
             <p className="font-alte text-gold text-lg leading-relaxed">
-              L’ensemble du contenu présent sur ce site (textes, images, graphismes, logo, icônes, etc.)
-              est la propriété exclusive de L’ink, sauf mention contraire. Toute reproduction,
+              L&rsquo;ensemble du contenu présent sur ce site (textes, images, graphismes, logo, icônes, etc.)
+              est la propriété exclusive de L&rsquo;ink, sauf mention contraire. Toute reproduction,
               représentation, modification, publication, adaptation de tout ou partie des éléments
               du site, quel que soit le moyen ou le procédé utilisé, est interdite, sauf autorisation écrite préalable.
             </p>
@@ -90,9 +90,9 @@ const LegalMentions = () => {
           <section>
             <h2 className="text-2xl font-artisual-deco text-gold mb-2">Responsabilité</h2>
             <p className="font-alte text-gold text-lg leading-relaxed">
-              L’ink ne pourra être tenue responsable des dommages directs et indirects causés
-              au matériel de l’utilisateur lors de l’accès au site. Le site peut contenir des liens
-              vers d'autres sites ; L’ink décline toute responsabilité quant au contenu de ces sites externes.
+              L&rsquo;ink ne pourra être tenue responsable des dommages directs et indirects causés
+              au matériel de l&rsquo;utilisateur lors de l&rsquo;accès au site. Le site peut contenir des liens
+              vers d&rsquo;autres sites ; L&rsquo;ink décline toute responsabilité quant au contenu de ces sites externes.
             </p>
           </section>
 
