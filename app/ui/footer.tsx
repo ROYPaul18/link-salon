@@ -33,7 +33,7 @@ const Footer = () => {
             </li>
             <li>
               <Link
-                href={"/salon"}
+                href={"/mentions"}
                 className="hover:text-white transition-colors duration-300"
               >
                 Mentions légales
