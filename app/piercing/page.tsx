@@ -14,7 +14,7 @@ interface ArtistsDataMap {
 const artistsData: ArtistsDataMap = {
   chloe:{
     gallery: [
-      "/img/axel/pier1.jpg",
+      "/img/axel/pier1.png",
       "/img/axel/pier2.jpg",
       "/img/axel/pier3.jpg",
       "/img/axel/pier4.jpg",

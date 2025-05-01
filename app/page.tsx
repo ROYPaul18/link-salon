@@ -24,7 +24,7 @@ export default function Home() {
             <h1 className="text-6xl md:text-7xl 2xl:text-8xl font-artisual-deco text-gold mb-4 md:mb-8">
               L&apos;Ink House
             </h1>
-            <p className="font-reglarik text-gold text-xl md:text-2xl 2xl:text-3xl leading-relaxed ">
+            <p className="font-alte text-gold text-xl md:text-2xl 2xl:text-3xl leading-relaxed ">
               Découvrez un espace unique combinant tatouage, salon de thé,
               piercing et événements artistiques.
             </p>
@@ -93,7 +93,7 @@ export default function Home() {
               <h1 className="text-5xl 2xl:text-8xl font-artisual-deco text-gold my-4 md:mb-12 text-left">
                 {title}
               </h1>
-              <p className="text-xl 2xl:text-3xl font-reglarik text-gold leading-relaxed">
+              <p className="text-xl 2xl:text-3xl font-alte text-gold leading-relaxed">
                 {desc}
               </p>
             </div>

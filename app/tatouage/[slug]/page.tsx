@@ -119,10 +119,10 @@ const ArtistPage = () => {
       ],
       image: "/img/axel.png",
       gallery: [
-        "/img/axel/tat1.jpg",
+        "/img/axel/tat4.jpg",
+        "/img/chloe/tat1.jpg",
         "/img/axel/tat2.jpg",
         "/img/axel/tat3.jpg",
-        "/img/axel/tat4.jpg",
         "/img/axel/tat5.jpg",
       ],
     },
@@ -149,8 +149,9 @@ const ArtistPage = () => {
       ],
       image: "/img/chloe.png",
       gallery: [
-        "/img/chloe/tat1.jpg",
+        "/img/axel/tat4.jpg",
         "/img/chloe/tat2.jpg",
+        
         "/img/chloe/tat3.jpg",
         "/img/chloe/tat4.jpg",
         "/img/chloe/tat5.jpg",
