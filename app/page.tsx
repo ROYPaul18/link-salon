@@ -55,7 +55,7 @@ export default function Home() {
           {
             title: "Piercing",
             desc: "Clothilde vous offre une prestation piercing de précision, dans les normes d'hygiène et de sécurité. Ses conseils vous aideront à choisir l'emplacement idéal pour votre futur bijou !",
-            img: "/img/axel/pier1.jpg",
+            img: "/img/axel/pier1.png",
             reverse: true,
             link:"/piercing"
           },
