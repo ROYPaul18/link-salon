@@ -54,20 +54,20 @@ const Page = () => {
               <h1 className="text-3xl md:text-5xl 2xl:text-8xl font-artisual-deco mb-4 md:mb-6">
                 Chloé / Beaudy Ink
               </h1>
-              <p className="font-reglarik mb-4 md:mb-8 leading-relaxed text-base md:text-xl 2xl:text-4xl">
+              <p className="font-alte mb-4 md:mb-8 leading-relaxed text-base md:text-xl 2xl:text-4xl">
                 Chloé vous accueille pour repousser vos cuticules et colorer vos
                 ongles. Direction son site internet pour découvrir ses
                 prestations et prendre rendez-vous en ligne :
               </p>
               <div className="flex space-x-4 font-rehat text-base md:text-xl 2xl:text-4xl">
                 <Link
-                  href="https://www.facebook.com/profile.php?id=100072912670661"
+                  href="https://www.facebook.com/profile.php?id=100067657688370"
                   className="text-gold hover:underline"
                 >
                   Facebook
                 </Link>
                 <Link
-                  href="https://www.instagram.com/beaudy_ink_tattoo?igsh=MWwwczB5ZmFudjJjbQ%3D%3D"
+                  href="https://www.instagram.com/beaudy_ink/"
                   className=" text-gold hover:underline"
                 >
                   Instagram

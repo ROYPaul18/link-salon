@@ -54,7 +54,7 @@ const Page = () => {
               <h1 className="text-3xl md:text-5xl 2xl:text-8xl font-artisual-deco mb-4 md:mb-6">
                 Clothilde
               </h1>
-              <p className="font-reglarik mb-4 md:mb-8 leading-relaxed text-base md:text-xl 2xl:text-4xl">
+              <p className="font-alte mb-4 md:mb-8 leading-relaxed text-base md:text-xl 2xl:text-4xl">
                 Clothilde est à votre disposition pour implanter de nouveaux
                 bijoux sur votre corps. Laissez son professionnalisme vous aider
                 à choisir l&apos;emplacement de votre piercing, et en un tour de

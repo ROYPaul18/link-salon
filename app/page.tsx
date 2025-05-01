@@ -49,13 +49,13 @@ export default function Home() {
           {
             title: "Prothésiste ongulaire",
             desc: "Chloé vous accueille sur rendez vous pour embellir vos ongles. Egalement tatoueuse, sa maîtrise du dessin vous permettra d'arborer des décors uniques.",
-            img: "/img/test.png",
+            img: "/img/chloe/ongle2.jpg",
             link:"/prothese"
           },
           {
             title: "Piercing",
             desc: "Clothilde vous offre une prestation piercing de précision, dans les normes d'hygiène et de sécurité. Ses conseils vous aideront à choisir l'emplacement idéal pour votre futur bijou !",
-            img: "/img/test.png",
+            img: "/img/axel/pier1.jpg",
             reverse: true,
             link:"/piercing"
           },
@@ -83,7 +83,7 @@ export default function Home() {
                     height={800}
                     width={800}
                     alt={title}
-                    className="w-full h-auto sm:py-2"
+                    className="w-full h-auto sm:py-2 object-fit"
                   />
                 )}
                 </Link>

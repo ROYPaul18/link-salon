@@ -1,33 +1,75 @@
 "use client";
 import { useState } from "react";
 
+// Tableau des tarifs par surface
+const priceTable = [
+  { maxCm2: 25, price: 80 },
+  { maxCm2: 36, price: 90 },
+  { maxCm2: 49, price: 110 },
+  { maxCm2: 64, price: 130 },
+  { maxCm2: 81, price: 180 },
+  { maxCm2: 100, price: 220 },
+  { maxCm2: 150, price: 300 },
+  { maxCm2: 200, price: 380 },
+  { maxCm2: 300, price: 450 },
+  { maxCm2: 400, price: 500 },
+  { maxCm2: 500, price: 580 },
+  { maxCm2: 600, price: 650 },
+];
+
 const DevisSimulator = () => {
   const [hauteur, setHauteur] = useState("");
   const [largeur, setLargeur] = useState("");
   const [couleur, setCouleur] = useState(false);
 
-  // Calculate the total
   const calculateTotal = () => {
-    if (hauteur && largeur) {
-      const base = Number(hauteur) * Number(largeur);
-      return (base * (couleur ? 1.2 : 1)).toFixed(0);
+    const h = Number(hauteur);
+    const l = Number(largeur);
+    if (!h || !l) return { price: "0", note: null };
+
+    const surface = h * l;
+
+    let lower = null;
+    let upper = null;
+
+    for (let i = 0; i < priceTable.length; i++) {
+      if (surface <= priceTable[i].maxCm2) {
+        upper = priceTable[i];
+        lower = priceTable[i - 1] || priceTable[i];
+        break;
+      }
     }
-    return "0";
+
+    if (!upper) {
+      lower = priceTable[priceTable.length - 1];
+      upper = null;
+    }
+
+    const factor = couleur ? 1.2 : 1;
+    const lowerPrice = lower ? Math.round(lower.price * factor) : 0;
+    const upperPrice = upper ? Math.round(upper.price * factor) : null;
+
+    const price =
+      upperPrice && lowerPrice !== upperPrice
+        ? `Entre ${lowerPrice} € et ${upperPrice} €`
+        : `${lowerPrice} €`;
+
+    const note =
+      surface > 600
+        ? "Pièce considérée comme une grande pièce — les tarifs sont à la session : 300 € (4h), 450 € (7h), 600 € (9h)."
+        : null;
+
+    return { price, note };
   };
+
+  const { price, note } = calculateTotal();
 
   return (
     <div className="text-gold font-rehat flex flex-col h-full">
-      <h3 className="font-rehat text-gold text-4xl md:text-5xl 2xl:text-6xl mb-6 md:mb-10">
-        Estimation du projet
-      </h3>
-
       <div className="space-y-6">
-        {/* Longueur */}
+        {/* Hauteur */}
         <div className="mb-4">
-          <label 
-            htmlFor="hauteur" 
-            className="font-rehat text-gold text-xl block mb-2"
-          >
+          <label htmlFor="hauteur" className="font-rehat text-gold text-xl block mb-2">
             Longueur (cm):
           </label>
           <div className="flex items-center bg-redlink border border-gold rounded p-2">
@@ -45,10 +87,7 @@ const DevisSimulator = () => {
 
         {/* Largeur */}
         <div className="mb-4">
-          <label 
-            htmlFor="largeur" 
-            className="font-rehat text-gold text-xl block mb-2"
-          >
+          <label htmlFor="largeur" className="font-rehat text-gold text-xl block mb-2">
             Largeur (cm):
           </label>
           <div className="flex items-center bg-redlink border border-gold rounded p-2">
@@ -79,17 +118,20 @@ const DevisSimulator = () => {
           </label>
         </div>
 
-        {/* Total */}
+        {/* Résultat */}
         <div className="mt-8">
           <div className="text-center mb-2 font-rehat text-gold text-xl">
             Prix estimé:
           </div>
           <div className="bg-redlink border-2 border-gold rounded p-4 text-center">
-            <span className="font-bold text-3xl text-gold">{calculateTotal()} €</span>
+            <span className="font-bold text-3xl text-gold">{price}</span>
           </div>
           <p className="text-gold text-sm mt-2 italic">
             (Cette estimation est approximative et peut varier selon la complexité du design)
           </p>
+          {note && (
+            <p className="text-gold text-sm mt-2 italic">{note}</p>
+          )}
         </div>
       </div>
     </div>

@@ -23,6 +23,7 @@ export default {
         "artisual-deco": ["Artisual Deco", "sans-serif"],
         reglarik: ["Reglarik", "sans-serif"],
         rehat: ["Rehat", "sans-serif"],
+        alte: ['"Alte Haas Grotesk"', 'sans-serif'],
       },
     },
   },

@@ -24,9 +24,9 @@ const Page = () => {
             <h1 className="text-5xl md:text-5xl 2xl:text-8xl font-artisual-deco text-gold sm:my-4 mb-4 md:mb-8">
               Salon de thé
             </h1>
-            <p className="font-reglarik text-gold text-base md:text-2xl 2xl:text-3xl leading-relaxed max-w-xl mx-auto md:mx-0">
-              Détendez-vous au milieu des plantes et profitez d&apos;un instant
-              calme, hors du temps. Le salon en libre accès vous propose :
+            <p className="font-alte text-gold text-lg md:text-2xl 2xl:text-3xl leading-relaxed max-w-xl mx-auto md:mx-0">
+              La clientèle et leurs accompagnants peuvent profiter, lors du
+              rendez vous des services suivants :
             </p>
           </div>
           <div className="w-full md:w-2/3 flex justify-center">
@@ -61,7 +61,7 @@ const Page = () => {
               <h1 className="text-5xl 2xl:text-8xl font-artisual-deco text-gold mb-6 md:mb-10 text-left">
                 Boissons non alcoolisées
               </h1>
-              <p className="font-reglarik text-gold text-lg md:text-xl 2xl:text-3xl leading-relaxed">
+              <p className="font-alte text-gold text-lg md:text-xl 2xl:text-3xl leading-relaxed">
                 Faites couler une boisson chaude (café, cappuccino, thé,…) ou
                 désaltérez-vous avec un soda dans le réfrigérateur. Puis laissez
                 votre paiement dans la tirelire sur le comptoir et
@@ -76,7 +76,7 @@ const Page = () => {
               <h1 className="text-5xl 2xl:text-8xl font-artisual-deco text-gold mb-6 md:mb-12 2x:mb-12 text-left">
                 Jeux de société
               </h1>
-              <p className="font-reglarik text-gold text-xl 2xl:text-3xl  leading-relaxed">
+              <p className="font-alte text-gold text-lg 2xl:text-3xl  leading-relaxed">
                 L&apos;ink House vous met gratuitement à disposition un lot de
                 jeux de société à utiliser sur place. Que vous soyez seul ou en
                 groupe, différents univers vous attendent pour votre plus grand
@@ -116,13 +116,10 @@ const Page = () => {
               <h1 className="text-5xl 2xl:text-8xl font-artisual-deco text-gold mb-6 md:mb-12 2xl:mb-24 text-left">
                 Espace de travail
               </h1>
-              <p className="font-reglarik text-gold text-xl 2xl:text-3xl leading-relaxed">
+              <p className="font-alte text-gold text-lg 2xl:text-3xl leading-relaxed">
                 Prenez place dans votre coin favori, pour lire, travailler (seul
-                ou entre amis), ou étudier. Invitez vos collaborateurs pour vos
-                réunions de travail, vos camarades de classe pour réviser ou vos
-                clients pour vos discussions professionnelles. Quelques livres
-                sont consultables sur place, essentiellement des livres autour
-                du dessin et des BD.
+                ou entre amis), ou étudier. Quelques livres sont consultables sur
+                place, essentiellement des livres autour du dessin et des BD.
               </p>
             </div>
           </section>
@@ -133,7 +130,7 @@ const Page = () => {
               <h1 className="text-5xl 2xl:text-8xl font-artisual-deco text-gold mb-6 md:mb-10 text-left">
                 Musique
               </h1>
-              <p className="font-reglarik text-gold text-xl 2xl:text-3xl leading-relaxed">
+              <p className="font-alte text-gold text-lg 2xl:text-3xl leading-relaxed">
                 Une enceinte connectée diffuse de la musique, que vous pouvez
                 changer à votre guise par un simple « Écho, mets du (nom du
                 groupe) ». Pas trop fort, ça reste un lieu de détente ;)
