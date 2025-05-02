@@ -356,7 +356,7 @@ const ArtistPage = () => {
             </div>
             {/* Right side - Text content */}
             <div className="w-full md:w-6/12 text-gold flex flex-col justify-between">
-              <h1 className="text-3xl md:text-5xl 2xl:text-8xl font-artisual-deco mb-4 md:mb-6">
+              <h1 className="text-3xl md:text-5xl 2xl:text-8xl font-alte mb-4 md:mb-6">
                 {artistData.name}
               </h1>
               <p className="font-alte mb-4 md:mb-8 leading-relaxed text-base md:text-xl 2xl:text-4xl">
@@ -412,7 +412,7 @@ const ArtistPage = () => {
             <div className="flex flex-col md:flex-row gap-8">
               {/* Section DevisSimulator */}
               <div className="w-full md:w-1/2">
-                <h1 className="font-rehat text-gold text-4xl md:text-6xl 2xl:text-8xl mb-6 md:mb-10">
+                <h1 className="font-alte text-gold text-4xl md:text-6xl 2xl:text-8xl mb-6 md:mb-10">
                   Estimation du projet
                 </h1>
                 <DevisSimulator />
@@ -420,10 +420,10 @@ const ArtistPage = () => {
 
               {/* Section Paiement */}
               <div className="w-full md:w-1/2 flex flex-col">
-                <h1 className="font-rehat text-gold text-4xl md:text-6xl 2xl:text-8xl mb-6 md:mb-10">
+                <h1 className="font-alte text-gold text-4xl md:text-6xl 2xl:text-8xl mb-6 md:mb-10">
                   Régler les arrhes
                 </h1>
-                <p className="font-rehat text-gold text-base md:text-xl 2xl:text-4xl mb-4">
+                <p className="font-alte text-gold text-base md:text-xl 2xl:text-4xl mb-4">
                   (toute annulation moins de 14 jours avant la séance entraînera
                   la perte des arrhes, ou une majoration de 10% du prix du
                   projet. Le règlement par ce lien vaut pour accord du
@@ -436,7 +436,7 @@ const ArtistPage = () => {
                     href="https://pay.sumup.com/b2c/QB7J4I1V"
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="bg-gold text-redlink font-rehat py-3 px-6 text-center text-xl hover:bg-opacity-90 transition-colors"
+                    className="bg-gold text-redlink font-alte py-3 px-6 text-center text-xl hover:bg-opacity-90 transition-colors"
                   >
                     Payer avec SumUp (50€)
                   </Link>
@@ -444,7 +444,7 @@ const ArtistPage = () => {
                     href="https://pay.sumup.com/b2c/QUE4OZTP"
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="bg-gold text-redlink font-rehat py-3 px-6 text-center text-xl hover:bg-opacity-90 transition-colors"
+                    className="bg-gold text-redlink font-alte py-3 px-6 text-center text-xl hover:bg-opacity-90 transition-colors"
                   >
                     Payer avec SumUp (100€)
                   </Link>

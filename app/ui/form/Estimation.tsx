@@ -65,11 +65,11 @@ const DevisSimulator = () => {
   const { price, note } = calculateTotal();
 
   return (
-    <div className="text-gold font-rehat flex flex-col h-full">
+    <div className="text-gold font-alte flex flex-col h-full">
       <div className="space-y-6">
         {/* Hauteur */}
         <div className="mb-4">
-          <label htmlFor="hauteur" className="font-rehat text-gold text-xl block mb-2">
+          <label htmlFor="hauteur" className="font-alte text-gold text-xl block mb-2">
             Longueur (cm):
           </label>
           <div className="flex items-center bg-redlink border border-gold rounded p-2">
@@ -87,7 +87,7 @@ const DevisSimulator = () => {
 
         {/* Largeur */}
         <div className="mb-4">
-          <label htmlFor="largeur" className="font-rehat text-gold text-xl block mb-2">
+          <label htmlFor="largeur" className="font-alte text-gold text-xl block mb-2">
             Largeur (cm):
           </label>
           <div className="flex items-center bg-redlink border border-gold rounded p-2">
@@ -105,7 +105,7 @@ const DevisSimulator = () => {
 
         {/* Couleur */}
         <div className="mb-6">
-          <label className="font-rehat text-gold text-xl flex items-center gap-3">
+          <label className="font-alte text-gold text-xl flex items-center gap-3">
             <div className="w-6 h-6 border border-gold flex items-center justify-center">
               <input
                 type="checkbox"
@@ -120,17 +120,17 @@ const DevisSimulator = () => {
 
         {/* Résultat */}
         <div className="mt-8">
-          <div className="text-center mb-2 font-rehat text-gold text-xl">
+          <div className="text-center mb-2 font-alte text-gold text-xl">
             Prix estimé:
           </div>
           <div className="bg-redlink border-2 border-gold rounded p-4 text-center">
             <span className="font-bold text-3xl text-gold">{price}</span>
           </div>
-          <p className="text-gold text-sm mt-2 italic">
+          <p className="text-gold text-sm mt-2 font-alte">
             (Cette estimation est approximative et peut varier selon la complexité du design)
           </p>
           {note && (
-            <p className="text-gold text-sm mt-2 italic">{note}</p>
+            <p className="text-gold text-sm mt-2 font-alte">{note}</p>
           )}
         </div>
       </div>

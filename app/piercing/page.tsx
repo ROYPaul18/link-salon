@@ -51,7 +51,7 @@ const Page = () => {
 
             {/* Right side - Text content */}
             <div className="w-full md:w-6/12 text-gold flex flex-col justify-between">
-              <h1 className="text-3xl md:text-5xl 2xl:text-8xl font-artisual-deco mb-4 md:mb-6">
+              <h1 className="text-3xl md:text-5xl 2xl:text-8xl font-alte mb-4 md:mb-6">
                 Clothilde
               </h1>
               <p className="font-alte mb-4 md:mb-8 leading-relaxed text-base md:text-xl 2xl:text-4xl">
