@@ -85,14 +85,14 @@ const EventsPage = () => {
 
       <main className="relative z-10 min-h-screen pt-20 md:pt-32">
         <div className="relative z-10 py-16 px-4 max-w-6xl mx-auto">
-          <h1 className="text-center font-rehat text-gold text-6xl 2xl:text-8xl mb-10">
+          <h1 className="text-center font-alte text-gold text-6xl 2xl:text-8xl mb-10">
             Événements
           </h1>
 
           <div className="flex justify-center gap-4 mb-10">
             <button
               onClick={() => setFilter("upcoming")}
-              className={`px-3 py-1 2xl:px-6 2xl:py-2 border font-rehat ${
+              className={`px-3 py-1 2xl:px-6 2xl:py-2 border font-alte ${
                 filter === "upcoming"
                   ? "bg-gold text-redlink border-gold"
                   : "bg-transparent text-gold border-gold hover:bg-gold/10"
@@ -102,7 +102,7 @@ const EventsPage = () => {
             </button>
             <button
               onClick={() => setFilter("past")}
-              className={`px-3 py-1 2xl:px-6 2xl:py-2 border font-rehat ${
+              className={`px-3 py-1 2xl:px-6 2xl:py-2 border font-alte ${
                 filter === "past"
                   ? "bg-gold text-redlink border-gold"
                   : "bg-transparent text-gold border-gold hover:bg-gold/10"
@@ -147,13 +147,13 @@ const EventsPage = () => {
                   </div>
 
                   <div className="w-full md:w-4/5 p-6">
-                    <p className="text-redlink text-xl 2xl:text-2xl font-medium font-rehat">
+                    <p className="text-redlink text-xl 2xl:text-2xl font-medium font-alte">
                       {formatDateTime(event.time)}
                     </p>
-                    <h2 className="text-redlink font-rehat text-2xl 2xl:text-2xl font-script mt-8 mb-8">
+                    <h2 className="text-redlink font-alte text-2xl 2xl:text-2xl font-script mt-8 mb-8">
                       {event.title}
                     </h2>
-                    <p className="text-redlink font-rehat text-xl 2xl:text-2xl">
+                    <p className="text-redlink font-alte text-xl 2xl:text-2xl">
                       {event.location} / {event.adresse}
                     </p>
                   </div>

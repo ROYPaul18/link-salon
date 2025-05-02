@@ -4,7 +4,7 @@ import Link from "next/link";
 
 const Footer = () => {
   return (
-    <footer className="relative z-10 font-rehat text-gold p-4 mt-8 md:mt-12">
+    <footer className="relative z-10 font-alte text-gold p-4 mt-8 md:mt-12">
       <div className="flex flex-col md:flex-row justify-between items-center gap-6 px-8">
         {/* Logo and links section */}
         <div className="flex flex-col md:flex-row items-center md:items-start gap-6">

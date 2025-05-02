@@ -113,7 +113,7 @@ const Header = () => {
             />
           )}
           <nav className="h-full flex items-center justify-center">
-            <ul className="flex flex-col items-center space-y-6 text-2xl font-rehat">
+            <ul className="flex flex-col items-center space-y-6 text-2xl font-alte">
               <li>
                 <Link
                   href={"/tatouage"}
