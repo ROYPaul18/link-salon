@@ -63,10 +63,10 @@ const Page = () => {
                 Pour consulter ses diverses prestations, ou pour la contacter et
                 prendre votre rendez vous :
               </p>
-              <div className="flex space-x-4 font-rehat text-base md:text-xl 2xl:text-4xl">
+              <div className="flex space-x-4 font-alte text-base md:text-xl 2xl:text-4xl">
                 <Link
                   href="https://www.instagram.com/axelletattoo?igsh=MTFtYm13NjZ2MndraA%3D%3D"
-                  className="text-gold hover:underline"
+                  className="text-gold underline"
                 >
                   Instagram
                 </Link>

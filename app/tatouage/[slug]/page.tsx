@@ -248,7 +248,7 @@ const ArtistPage = () => {
                           <p className="mb-4">Style : {artist.Style}</p>
                           <p>Technique : {artist.Technique}</p>
                         </div>
-                        <div className="flex flex-wrap gap-4 font-rehat text-base md:text-xl 2xl:text-4xl">
+                        <div className="flex flex-wrap gap-4 font-alte text-base md:text-xl 2xl:text-4xl">
                           {artist.facebookLink && (
                             <Link
                               href={artist.facebookLink}
@@ -362,7 +362,7 @@ const ArtistPage = () => {
               <p className="font-alte mb-4 md:mb-8 leading-relaxed text-base md:text-xl 2xl:text-4xl">
                 {formattedDescription}
               </p>
-              <div className="flex flex-wrap gap-4 font-rehat text-base md:text-xl 2xl:text-4xl">
+              <div className="flex flex-wrap gap-4 font-alte text-base md:text-xl 2xl:text-4xl">
                 {artistData.contacts.map(
                   (contact: ContactInfo, index: number) => {
                     // Déterminer le type de lien
@@ -371,7 +371,7 @@ const ArtistPage = () => {
                         <a
                           key={index}
                           href={`mailto:${contact.url}`}
-                          className="text-gold hover:underline"
+                          className="text-gold underline"
                         >
                           {contact.label}
                         </a>
@@ -381,7 +381,7 @@ const ArtistPage = () => {
                         <Link
                           key={index}
                           href={contact.url}
-                          className="text-gold hover:underline"
+                          className="text-gold underline"
                           target="_blank"
                           rel="noopener noreferrer"
                         >

@@ -59,7 +59,7 @@ const Page = () => {
                 ongles. Direction son site internet pour découvrir ses
                 prestations et prendre rendez-vous en ligne :
               </p>
-              <div className="flex space-x-4 font-rehat text-base md:text-xl 2xl:text-4xl">
+              <div className="flex space-x-4 font-alte text-base md:text-xl 2xl:text-4xl underline">
                 <Link
                   href="https://www.facebook.com/profile.php?id=100067657688370"
                   className="text-gold hover:underline"
