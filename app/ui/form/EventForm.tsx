@@ -62,6 +62,11 @@ export default function EventForm({ onSuccess }: EventFormProps) {
     }
   };
 
+  const handleRemoveImage = () => {
+    setPreviewImage(null);
+    if (fileInputRef.current) fileInputRef.current.value = "";
+  };
+
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setIsLoading(true);
@@ -109,19 +114,21 @@ export default function EventForm({ onSuccess }: EventFormProps) {
   };
 
   return (
-    <div className="bg-gold p-6 rounded-lg shadow-md">
-      <h2 className="text-xl font-bold mb-4">Ajouter un événement</h2>
+    <div className="bg-redlink p-8 rounded-lg shadow-lg mb-8 border-2 border-[#b8860b]">
+      <h2 className="text-2xl font-bold mb-6 text-[#b8860b] border-b-2 border-[#b8860b] pb-2">
+        Ajouter un événement
+      </h2>
 
       {error && (
-        <div className="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded mb-4">
+        <div className="bg-red-700 text-white p-4 rounded mb-6 animate-pulse">
           {error}
         </div>
       )}
 
-      <form onSubmit={handleSubmit}>
-        <div className="mb-4">
-          <label className="block text-gray-700 mb-2" htmlFor="title">
-            Titre de l&apos;événement *
+      <form onSubmit={handleSubmit} className="space-y-6">
+        <div>
+          <label className="block text-[#b8860b] mb-2 font-medium">
+            Titre de l&apos;événement
           </label>
           <input
             type="text"
@@ -129,14 +136,14 @@ export default function EventForm({ onSuccess }: EventFormProps) {
             name="title"
             value={formData.title}
             onChange={handleChange}
-            className="w-full px-3 py-2 border rounded-md"
             required
+            className="w-full px-4 py-3 bg-gold text-black rounded border border-[#444] focus:border-[#b8860b] focus:outline-none focus:ring-1 focus:ring-[#b8860b] transition-colors"
           />
         </div>
 
-        <div className="mb-4">
-          <label className="block text-gray-700 mb-2" htmlFor="time">
-            Date et heure *
+        <div>
+          <label className="block text-[#b8860b] mb-2 font-medium">
+            Date et heure
           </label>
           <input
             type="datetime-local"
@@ -144,14 +151,14 @@ export default function EventForm({ onSuccess }: EventFormProps) {
             name="time"
             value={formData.time}
             onChange={handleChange}
-            className="w-full px-3 py-2 border rounded-md"
             required
+            className="w-full px-4 py-3 bg-gold text-black rounded border border-[#444] focus:border-[#b8860b] focus:outline-none focus:ring-1 focus:ring-[#b8860b] transition-colors"
           />
         </div>
 
-        <div className="mb-4">
-          <label className="block text-gray-700 mb-2" htmlFor="duration">
-            Durée (minutes) *
+        <div>
+          <label className="block text-[#b8860b] mb-2 font-medium">
+            Durée (minutes)
           </label>
           <input
             type="number"
@@ -159,72 +166,131 @@ export default function EventForm({ onSuccess }: EventFormProps) {
             name="duration"
             value={formData.duration}
             onChange={handleChange}
-            className="w-full px-3 py-2 border rounded-md"
             min="1"
             required
+            className="w-full px-4 py-3 bg-gold text-black rounded border border-[#444] focus:border-[#b8860b] focus:outline-none focus:ring-1 focus:ring-[#b8860b] transition-colors"
           />
         </div>
 
-        <div className="mb-4">
-          <label className="block text-gray-700 mb-2" htmlFor="location">
-            Lieu *
-          </label>
-          <input
-            type="text"
-            id="location"
-            name="location"
-            value={formData.location}
-            onChange={handleChange}
-            className="w-full px-3 py-2 border rounded-md"
-            required
-          />
-        </div>
-        <div className="mb-4">
-          <label className="block text-gray-700 mb-2" htmlFor="adresse">
-            Adresse complète
-          </label>
-          <input
-            type="text"
-            id="adresse"
-            name="adresse"
-            value={formData.adresse}
-            onChange={handleChange}
-            className="w-full px-3 py-2 border rounded-md"
-          />
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+          <div>
+            <label className="block text-gold mb-2 font-medium">
+              Lieu
+            </label>
+            <input
+              type="text"
+              id="location"
+              name="location"
+              value={formData.location}
+              onChange={handleChange}
+              required
+              className="w-full px-4 py-3 bg-gold text-black rounded border border-[#444] focus:border-[#b8860b] focus:outline-none focus:ring-1 focus:ring-[#b8860b] transition-colors"
+            />
+          </div>
+
+          <div>
+            <label className="block text-gold mb-2 font-medium">
+              Adresse complète
+            </label>
+            <input
+              type="text"
+              id="adresse"
+              name="adresse"
+              value={formData.adresse}
+              onChange={handleChange}
+              className="w-full px-4 py-3 bg-gold text-black rounded border border-[#444] focus:border-[#b8860b] focus:outline-none focus:ring-1 focus:ring-[#b8860b] transition-colors"
+            />
+          </div>
         </div>
 
-        <div className="mb-4">
-          <label className="block text-gray-700 mb-2" htmlFor="image">
-            Image de l&apos;événement (max 3 Mo)
+        <div>
+          <label className="block text-[#b8860b] mb-2 font-medium">
+            Image de l&apos;événement
           </label>
-          <input
-            type="file"
-            id="image"
-            name="image"
-            ref={fileInputRef}
-            onChange={handleImageChange}
-            accept="image/*"
-            className="w-full px-3 py-2 border rounded-md"
-          />
-          {previewImage && (
-            <div className="mt-2">
-              <p className="text-sm text-gray-500 mb-1">Aperçu :</p>
-              <Image
-                src={previewImage}
-                alt="Aperçu de l'image"
-                className="max-h-40 rounded-md"
-              />
+          <div className="flex flex-col md:flex-row gap-4">
+            <div className="w-full md:w-1/2">
+              <div className="relative">
+                <input
+                  type="file"
+                  accept="image/*"
+                  onChange={handleImageChange}
+                  ref={fileInputRef}
+                  className="w-full px-4 py-3 bg-gold text-white rounded border border-[#444] focus:border-[#b8860b] focus:outline-none"
+                />
+                <button
+                  type="button"
+                  onClick={() => fileInputRef.current?.click()}
+                  className="absolute right-0 top-0 h-full px-4 bg-gold text-black rounded-r hover:bg-[#9c7209] transition-colors"
+                >
+                  Parcourir
+                </button>
+              </div>
+              <small className="text-gray-400 block mt-1">
+                Taille max: 3 Mo (JPEG, PNG, WebP)
+              </small>
             </div>
-          )}
+            <div className="w-full md:w-1/2 flex items-center justify-center">
+              {previewImage ? (
+                <div className="relative">
+                  <Image
+                    src={previewImage}
+                    alt="Aperçu"
+                    width={160} 
+                    height={160}
+                    className="object-cover rounded border-2 border-[#b8860b]"
+                  />
+                  <button
+                    type="button"
+                    onClick={handleRemoveImage}
+                    className="absolute -top-2 -right-2 bg-red-600 text-white rounded-full w-6 h-6 flex items-center justify-center hover:bg-red-700"
+                  >
+                    ×
+                  </button>
+                </div>
+              ) : (
+                <div className="w-40 h-40 border-2 border-dashed border-gold rounded flex items-center justify-center text-gray-400">
+                  Aperçu image
+                </div>
+              )}
+            </div>
+          </div>
         </div>
 
-        <button
-          type="submit"
-          disabled={isLoading}
-          className="bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded disabled:bg-blue-300"
-        >
-          {isLoading ? "Création en cours..." : "Créer l'événement"}
-        </button>
+        <div className="flex justify-end pt-4">
+          <button
+            type="submit"
+            disabled={isLoading}
+            className="bg-[#b8860b] text-white px-6 py-3 rounded-lg font-medium hover:bg-[#9c7209] transition-colors transform hover:scale-105 duration-200 disabled:bg-gray-500 disabled:transform-none flex items-center"
+          >
+            {isLoading ? (
+              <>
+                <svg
+                  className="animate-spin -ml-1 mr-3 h-5 w-5 text-white"
+                  xmlns="http://www.w3.org/2000/svg"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                >
+                  <circle
+                    className="opacity-25"
+                    cx="12"
+                    cy="12"
+                    r="10"
+                    stroke="currentColor"
+                    strokeWidth="4"
+                  ></circle>
+                  <path
+                    className="opacity-75"
+                    fill="currentColor"
+                    d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
+                  ></path>
+                </svg>
+                Création en cours...
+              </>
+            ) : (
+              "Créer l'événement"
+            )}
+          </button>
+        </div>
       </form>
     </div>
   );
