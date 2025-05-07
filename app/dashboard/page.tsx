@@ -156,7 +156,7 @@ export default function Dashboard() {
       />
 
       <div className="flex-grow z-10 relative py-8">
-        <div className="max-w-6xl mx-auto px-4">
+        <div className="max-w-6xl mx-auto px-4 py-28">
           <div className="flex justify-between items-center mb-6">
             <h1 className="text-3xl font-bold text-gold">Dashboard Admin</h1>
             <button
