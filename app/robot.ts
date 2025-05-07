@@ -1,7 +1,7 @@
 import type { MetadataRoute } from "next";
 
 export default function robots(): MetadataRoute.Robots {
-  const baseUrl = "https://beaudy-ink.com";
+  const baseUrl = "https://www.salon-link.fr/";
   return {
     rules: {
       userAgent: "*",
@@ -16,7 +16,7 @@ export default function robots(): MetadataRoute.Robots {
         "/tatouage/chloe",
         "/tatouage/axelle",
       ],
-      disallow: "/dashbpard/",
+      disallow:["/admin/","/dashboard"],
     },
     sitemap: `${baseUrl}/sitemap.xml`,
   };

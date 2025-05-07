@@ -338,7 +338,7 @@ export default function Dashboard() {
                             </p>
                             <p className="text-redlink text-sm">
                               {artist.Description}
-                            </p>
+                            </p> 
                           </div>
 
                           <div className="mt-2 mb-3">
