@@ -32,6 +32,8 @@ export const metadata: Metadata = {
     "tatouage floral",
     "tatouage animal",
     "tatouage ornemental",
+    "tatoueur Bourges",
+    "tatoueur région centre"
   ],
   openGraph: {
     title: "Link Salon - Tatouage, Café et Jeux de Société",
