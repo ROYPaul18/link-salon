@@ -13,54 +13,56 @@ const geistMono = Geist_Mono({
   subsets: ["latin"],
 });
 
-// Configuration des métadonnées
+// Déclaration des métadonnées (Next.js les injectera automatiquement dans <head>)
 export const metadata: Metadata = {
-  icons: {
-    icon: "/img/favicon.ico",
-  },
-  metadataBase: new URL('https://link-salon.com'),
-  keywords: [
-    'Link Salon',
-    'salon tatouage Soye-en-Septaine',
-    'salon tatouage Bourges',
-    'salon tatouage Cher',
-    'tatouage asiatique',
-    'tatouage celtique',
-    'tatouage celtique',
-    'tatouage floral',
-    'tatouage animal',
-    'tatouage ornemental',
-  ],
+  metadataBase: new URL("https://link-salon.com"),
   title: {
-    default: 'Link Salon - Tatouage, Café et Jeux de Société à Soye-en-Septaine',
-    template: 'Link Salon - %s',
+    default: "Link Salon - Tatouage, Café et Jeux de Société à Soye-en-Septaine",
+    template: "Link Salon - %s",
   },
   description:
     "Venez découvrir Link Salon à Soye-en-Septaine : un espace unique combinant tatouage, café et jeux de société. Une ambiance conviviale pour se détendre et s'exprimer artistiquement.",
+  keywords: [
+    "Link Salon",
+    "salon tatouage Soye-en-Septaine",
+    "salon tatouage Bourges",
+    "salon tatouage Cher",
+    "tatouage asiatique",
+    "tatouage celtique",
+    "tatouage floral",
+    "tatouage animal",
+    "tatouage ornemental",
+  ],
   openGraph: {
-    title: 'Link Salon - Tatouage, Café et Jeux de Société',
+    title: "Link Salon - Tatouage, Café et Jeux de Société",
     description:
-      "Plongez dans l'univers de Link Salon à Soye-en-Septaine : tatouages artistiques, café chaleureux et jeux de société pour des moments inoubliables.",
-    url: 'https://link-salon.com',
-    type: 'website',
+      "Plongez dans l'univers de Gael à Soye-en-Septaine : tatouages artistiques, café chaleureux et jeux de société pour des moments inoubliables.",
+    url: "https://link-salon.com",
+    type: "website",
+  },
+  icons: {
+    icon: "/favicon.ico", // Assurez-vous que ce fichier est bien dans /public/favicon.ico
   },
 };
 
-
-// Définition des polices personnalisées via URL
 const googleFontsURL =
   "https://fonts.googleapis.com/css2?family=Arcane+Nine&family=Artisual+Deco&family=Reglarik&family=Rehat&display=swap";
 
 export default function RootLayout({
   children,
-}: Readonly<{
+}: {
   children: React.ReactNode;
-}>) {
+}) {
   return (
     <html lang="fr">
       <head>
+        {/* Fallback favicon + description explicite pour Google */}
+        <meta
+          name="description"
+          content="Venez découvrir Link Salon à Soye-en-Septaine : un espace unique combinant tatouage, café et jeux de société. Une ambiance conviviale pour se détendre et s'exprimer artistiquement."
+        />
+        <link rel="icon" href="/favicon.ico" type="image/x-icon" />
         <link rel="stylesheet" href={googleFontsURL} />
-        <link rel="icon" href="/img/logo.ico" sizes="any" />
       </head>
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
