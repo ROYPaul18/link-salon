@@ -37,7 +37,7 @@ export const metadata: Metadata = {
     title: "Link Salon - Tatouage, Café et Jeux de Société",
     description:
       "Plongez dans l'univers de Gael à Soye-en-Septaine : tatouages artistiques, café chaleureux et jeux de société pour des moments inoubliables.",
-    url: "https://link-salon.com",
+    url: "https://link-salon.fr",
     type: "website",
   },
   icons: {
