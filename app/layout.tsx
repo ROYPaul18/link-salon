@@ -40,9 +40,6 @@ export const metadata: Metadata = {
     url: "https://www.salon-link.fr/",
     type: "website",
   },
-  icons: {
-    icon: "/favicon.ico", // Assurez-vous que ce fichier est bien dans /public/favicon.ico
-  },
 };
 
 const googleFontsURL =
