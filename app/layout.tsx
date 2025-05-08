@@ -15,7 +15,7 @@ const geistMono = Geist_Mono({
 
 // Déclaration des métadonnées (Next.js les injectera automatiquement dans <head>)
 export const metadata: Metadata = {
-  metadataBase: new URL("https://link-salon.com"),
+  metadataBase: new URL("https://link-salon.fr"),
   title: {
     default: "Link Salon - Tatouage, Café et Jeux de Société à Soye-en-Septaine",
     template: "Link Salon - %s",
